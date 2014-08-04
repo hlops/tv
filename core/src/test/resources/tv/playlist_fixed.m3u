@@ -1,0 +1,78 @@
+#EXTM3U url-tvg="http://www.cn.ru/data/tv/schedule.zip" m3uautoload=1 cache=500 deinterlace=1 aspect-ratio=4:3 crop=690x550+10+10 reportstat=http://iptv.cn.ru/iptv-stat/post.php reportlog=http://clr.novotelecom.ru/iptv/log.php
+
+#EXTINF:-1 tvg-name=1 group-title="Эфир" ,Первый
+http://192.168.1.1:81/udp/239.1.15.1:1234
+#EXTINF:-1 tvg-name=255 group-title="Эфир" ,Пятый
+http://192.168.1.1:81/udp/239.1.10.3:1234
+#EXTINF:-1 tvg-name=103 group-title="Эфир" ,РЕН-ТВ
+http://192.168.1.1:81/udp/239.1.15.5:1234
+#EXTINF:-1 tvg-name=31 group-title="Эфир" ,ОТС
+http://192.168.1.1:81/udp/239.1.10.6:1234
+#EXTINF:-1 tvg-name=105 group-title="Эфир" ,ТВ3
+http://192.168.1.1:81/udp/239.1.10.4:1234
+#EXTINF:-1 tvg-name=49 group-title="Эфир" ,49 КАНАЛ
+http://192.168.1.1:81/udp/239.1.10.8:1234
+#EXTINF:-1 tvg-name=5 group-title="Эфир" ,Россия К
+http://192.168.1.1:81/udp/239.1.10.7:1234
+#EXTINF:-1 tvg-name=2102 group-title="Эфир" ,TNT1
+http://192.168.1.1:81/udp/239.1.15.50:1234
+#EXTINF:-1 tvg-name=9135 group-title="Детям и мамам" ,Детский
+http://192.168.1.1:81/udp/239.1.3.5:1234
+#EXTINF:-1 tvg-name=807 group-title="Детям и мамам" ,Jim Jam
+http://192.168.1.1:81/udp/239.1.3.2:1234
+#EXTINF:-1 tvg-name=21003 group-title="Детям и мамам" ,Индия ТВ
+http://192.168.1.1:81/udp/239.1.3.15:1234
+#EXTINF:-1 tvg-name=730 group-title="Детям и мамам" ,Русский роман
+http://192.168.1.1:81/udp/239.1.3.17:1234
+#EXTINF:-1 tvg-name=226 group-title="Познавательный" ,Discovery Channel
+http://192.168.1.1:81/udp/239.1.5.1:1234
+#EXTINF:-1 tvg-name=2001 group-title="Познавательный" ,Viasat Nature
+http://192.168.1.1:81/udp/239.1.5.5:1234
+#EXTINF:-1 tvg-name=312 group-title="Познавательный" ,Travel Adventure
+http://192.168.1.1:81/udp/239.1.5.7:1234
+#EXTINF:-1 tvg-name=802 group-title="Познавательный" ,Amazing Life
+http://192.168.1.1:81/udp/239.1.5.19:1234
+#EXTINF:-1 tvg-name=209 group-title="Кино и сериалы" ,SONY TВ
+http://192.168.1.1:81/udp/239.1.4.6:1234
+#EXTINF:-1 tvg-name=2229 group-title="Кино и сериалы" ,TVXXI
+http://192.168.1.1:81/udp/239.1.4.1:1234
+#EXTINF:-1 tvg-name=288 group-title="Кино и сериалы" ,TV1000 Action
+http://192.168.1.1:81/udp/239.1.4.13:1234
+#EXTINF:-1 tvg-name=740 group-title="Кино и сериалы" ,ТВ 1000 Русское кино
+http://192.168.1.1:81/udp/239.1.4.14:1234
+#EXTINF:-1 tvg-name=276 group-title="Хобби и развлечения" ,2x2
+http://192.168.1.1:81/udp/239.1.2.1:1234
+#EXTINF:-1 tvg-name=214 group-title="Хобби и развлечения" ,Драйв
+http://192.168.1.1:81/udp/239.1.2.4:1234
+#EXTINF:-1 tvg-name=217 group-title="Хобби и развлечения" ,Усадьба ТВ
+http://192.168.1.1:81/udp/239.1.2.17:1234
+#EXTINF:-1 tvg-name=737 group-title="Хобби и развлечения" ,Сарафан
+http://192.168.1.1:81/udp/239.1.2.11:1234
+#EXTINF:-1 tvg-name=819 group-title="Хобби и развлечения" ,Первый интернет канал
+http://192.168.1.1:81/udp/239.1.2.16:1234
+#EXTINF:-1 tvg-name=107 group-title="Музыка" ,MTV
+http://192.168.1.1:81/udp/239.1.15.17:1234
+#EXTINF:-1 tvg-name=51 group-title="Музыка" ,ЮТВ
+http://192.168.1.1:81/udp/239.1.15.18:1234
+#EXTINF:-1 tvg-name=503 group-title="Музыка" ,RuTV
+http://192.168.1.1:81/udp/239.1.8.4:1234
+#EXTINF:-1 tvg-name=818 group-title="Музыка" ,EuropaplusTV
+http://192.168.1.1:81/udp/239.1.8.10:1234
+#EXTINF:-1 tvg-name=731 group-title="Музыка" ,Шансон
+http://192.168.1.1:81/udp/239.1.8.12:1234
+#EXTINF:-1 tvg-name=810 group-title="Музыка" ,Ля-минор ТВ
+http://192.168.1.1:81/udp/239.1.8.13:1234
+#EXTINF:-1 tvg-name=235 group-title="Спорт" ,Россия 2
+http://192.168.1.1:81/udp/239.1.15.16:1234
+#EXTINF:-1 tvg-name=739 group-title="Спорт" ,Спорт
+http://192.168.1.1:81/udp/239.1.13.5:1234
+#EXTINF:-1 tvg-name=1313 group-title="Спорт" ,КХЛ
+http://192.168.1.1:81/udp/239.1.13.1:1234
+#EXTINF:-1 tvg-name=3007 group-title="Клуб HD" ,Fox HD
+http://192.168.1.1:81/udp/239.1.9.11:1234
+#EXTINF:-1 tvg-name=620 group-title="Клуб HD" ,Outdoor Channel HD
+http://192.168.1.1:81/udp/239.1.9.10:1234
+#EXTINF:-1 tvg-name=820 group-title="Клуб HD" ,Fashion HD
+http://192.168.1.1:81/udp/239.1.10.20:1234
+#EXTINF:-1 tvg-name=823 group-title="Клуб HD" ,Myzen HD
+http://192.168.1.1:81/udp/239.1.10.21:1234

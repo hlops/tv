@@ -3,9 +3,7 @@ package com.hlops.tv.core.bean;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ public class M3UTest extends Assert {
         {
             ExtInf[] items = m3U.findByTvgName("2");
             assertEquals(1, items.length);
-            assertEquals("-1", items[0].getTimeShift());
+            assertEquals("-1", items[0].getDuration());
             assertEquals("Первый", items[0].getName());
             assertEquals("udp://@239.1.15.1:1234", items[0].getUrl());
             assertEquals("2", items[0].get(ExtInf.Attribute.tvg_name));
@@ -40,7 +38,7 @@ public class M3UTest extends Assert {
         {
             ExtInf[] items = m3U.findByTvgName("81003");
             assertEquals(1, items.length);
-            assertEquals("-1", items[0].getTimeShift());
+            assertEquals("-1", items[0].getDuration());
             assertEquals("Amedia Premium HD", items[0].getName());
             assertEquals("udp://@239.1.17.29:1234", items[0].getUrl());
             assertEquals("81003", items[0].get(ExtInf.Attribute.tvg_name));
@@ -65,5 +63,17 @@ public class M3UTest extends Assert {
         expected.put("d", "\"=4");
         expected.put("e", "");
         assertEquals(expected, M3U.parseLine("aaaa=111   b='2 2'\tc=\"3 3 \" \r\nd='\"=4' e=''"));
+    }
+
+    @Test
+    public void savePlaylist() throws IOException {
+        URL url = getClass().getClassLoader().getResource("playlist.m3u");
+        //noinspection ConstantConditions
+        File inFile = new File(url.getFile());
+        M3U m3U = new M3U(new FileInputStream(inFile), StandardCharsets.UTF_8);
+        File outFile = new File(inFile.getParent(), "result.m3u");
+        PrintStream out = new PrintStream(new FileOutputStream(outFile));
+        m3U.save(out);
+        out.close();
     }
 }

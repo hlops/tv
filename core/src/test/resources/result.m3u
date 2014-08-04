@@ -1,0 +1,322 @@
+#EXTM3U url-tvg="http://www.cn.ru/data/tv/schedule.zip" m3uautoload="1" cache="500" deinterlace="1" aspect-ratio="4:3" crop="690x550+10+10" reportstat="http://iptv.cn.ru/iptv-stat/post.php" reportlog="http://clr.novotelecom.ru/iptv/log.php"
+
+#EXTINF:-1 tvg-name="2" aspect-ratio="4:3" group-title="Эфир", Первый
+http://192.168.1.1:81/udp/239.1.15.1:1234
+#EXTINF:-1 tvg-name="8" aspect-ratio="4:3", Россия 1
+http://192.168.1.1:81/udp/239.1.15.2:1234
+#EXTINF:-1 tvg-name="12" aspect-ratio="4:3", НТВ
+http://192.168.1.1:81/udp/239.1.15.4:1234
+#EXTINF:-1 tvg-name="46" aspect-ratio="4:3", Пятый
+http://192.168.1.1:81/udp/239.1.10.3:1234
+#EXTINF:-1 tvg-name="23" aspect-ratio="4:3", РЕН-ТВ
+http://192.168.1.1:81/udp/239.1.15.5:1234
+#EXTINF:-1 tvg-name="10" aspect-ratio="4:3", СТС
+http://192.168.1.1:81/udp/239.1.15.6:1234
+#EXTINF:-1 tvg-name="6" aspect-ratio="4:3", ТНТ
+http://192.168.1.1:81/udp/239.1.15.7:1234
+#EXTINF:-1 tvg-name="31" aspect-ratio="4:3", ОТС
+http://192.168.1.1:81/udp/239.1.10.6:1234
+#EXTINF:-1 tvg-name="38" aspect-ratio="4:3", Домашний
+http://192.168.1.1:81/udp/239.1.10.5:1234
+#EXTINF:-1 tvg-name="4" aspect-ratio="4:3", ТВ-3
+http://192.168.1.1:81/udp/239.1.10.4:1234
+#EXTINF:-1 tvg-name="49" aspect-ratio="4:3", 49 КАНАЛ
+http://192.168.1.1:81/udp/239.1.10.8:1234
+#EXTINF:-1 tvg-name="36" aspect-ratio="4:3", ТВЦ
+http://192.168.1.1:81/udp/239.1.15.10:1234
+#EXTINF:-1 tvg-name="28" aspect-ratio="4:3", Россия К
+http://192.168.1.1:81/udp/239.1.10.7:1234
+#EXTINF:-1 tvg-name="211" aspect-ratio="4:3", Disney Channel
+http://192.168.1.1:81/udp/239.1.15.12:1234
+#EXTINF:-1 tvg-name="512" aspect-ratio="4:3", Перец
+http://192.168.1.1:81/udp/239.1.15.14:1234
+#EXTINF:-1 tvg-name="777" aspect-ratio="4:3", Союз
+http://192.168.1.1:81/udp/239.1.15.19:1234
+#EXTINF:-1 tvg-name="2703" aspect-ratio="4:3", Мир
+http://192.168.1.1:81/udp/239.1.15.31:1234
+#EXTINF:-1 tvg-name="22005" aspect-ratio="16:9", ОТР
+http://192.168.1.1:81/udp/239.1.15.8:1234
+#EXTINF:-1 tvg-name="43030" aspect-ratio="4:3", 8 канал
+http://192.168.1.1:81/udp/239.1.2.10:1234
+#EXTINF:-1 tvg-name="509" aspect-ratio="4:3" group-title="Детям и мамам", Карусель
+http://192.168.1.1:81/udp/239.1.15.11:1234
+#EXTINF:-1 tvg-name="223" aspect-ratio="4:3", Cartoon Network
+http://192.168.1.1:81/udp/239.1.3.3:1234
+#EXTINF:-1 tvg-name="9135" aspect-ratio="4:3", Детский
+http://192.168.1.1:81/udp/239.1.3.5:1234
+#EXTINF:-1 tvg-name="2008" aspect-ratio="4:3", Детский мир
+http://192.168.1.1:81/udp/239.1.3.7:1234
+#EXTINF:-1 tvg-name="2230" aspect-ratio="16:9", Nickelodeon
+http://192.168.1.1:81/udp/239.1.3.4:1234
+#EXTINF:-1 tvg-name="2006" aspect-ratio="4:3", TiJi
+http://192.168.1.1:81/udp/239.1.3.6:1234
+#EXTINF:-1 tvg-name="807" aspect-ratio="4:3", Jim Jam
+http://192.168.1.1:81/udp/239.1.3.2:1234
+#EXTINF:-1 tvg-name="204" aspect-ratio="4:3", Мать и Дитя
+http://192.168.1.1:81/udp/239.1.3.14:1234
+#EXTINF:-1 tvg-name="2240" aspect-ratio="4:3", TLC
+http://192.168.1.1:81/udp/239.1.3.16:1234
+#EXTINF:-1 tvg-name="101" aspect-ratio="16:9", Fashion TV
+http://192.168.1.1:81/udp/239.1.3.13:1234
+#EXTINF:-1 tvg-name="208" aspect-ratio="4:3", Fox Life
+http://192.168.1.1:81/udp/239.1.3.11:1234
+#EXTINF:-1 tvg-name="21003" aspect-ratio="4:3", Индия ТВ
+http://192.168.1.1:81/udp/239.1.3.15:1234
+#EXTINF:-1 tvg-name="730" aspect-ratio="4:3", Русский роман
+http://192.168.1.1:81/udp/239.1.3.17:1234
+#EXTINF:-1 tvg-name="43010" aspect-ratio="4:3", Мультимания
+http://192.168.1.1:81/udp/239.1.20.8:1234
+#EXTINF:-1 tvg-name="205" aspect-ratio="16:9" group-title="Познавательный", Discovery
+http://192.168.1.1:81/udp/239.1.5.1:1234
+#EXTINF:-1 tvg-name="221" aspect-ratio="4:3", Discovery World
+http://192.168.1.1:81/udp/239.1.5.2:1234
+#EXTINF:-1 tvg-name="222" aspect-ratio="4:3", Discovery Science
+http://192.168.1.1:81/udp/239.1.5.9:1234
+#EXTINF:-1 tvg-name="206" aspect-ratio="16:9", Animal Planet
+http://192.168.1.1:81/udp/239.1.5.3:1234
+#EXTINF:-1 tvg-name="203" aspect-ratio="16:9", National Geographic
+http://192.168.1.1:81/udp/239.1.5.8:1234
+#EXTINF:-1 tvg-name="725" aspect-ratio="16:9", Nat Geo Wild
+http://192.168.1.1:81/udp/239.1.5.16:1234
+#EXTINF:-1 tvg-name="2001" aspect-ratio="16:9", Viasat Nature
+http://192.168.1.1:81/udp/239.1.5.5:1234
+#EXTINF:-1 tvg-name="733" aspect-ratio="16:9", Viasat History
+http://192.168.1.1:81/udp/239.1.5.14:1234
+#EXTINF:-1 tvg-name="734" aspect-ratio="16:9", Viasat Explorer
+http://192.168.1.1:81/udp/239.1.5.15:1234
+#EXTINF:-1 tvg-name="2402" aspect-ratio="4:3", Russian Travel Guide
+http://192.168.1.1:81/udp/239.1.5.13:1234
+#EXTINF:-1 tvg-name="735" aspect-ratio="4:3", Моя планета
+http://192.168.1.1:81/udp/239.1.5.17:1234
+#EXTINF:-1 tvg-name="312" aspect-ratio="4:3", Travel Adventure
+http://192.168.1.1:81/udp/239.1.5.7:1234
+#EXTINF:-1 tvg-name="2005" aspect-ratio="4:3", Da Vinci
+http://192.168.1.1:81/udp/239.1.5.6:1234
+#EXTINF:-1 tvg-name="2235" aspect-ratio="4:3", 24 док
+http://192.168.1.1:81/udp/239.1.20.3:1234
+#EXTINF:-1 tvg-name="2400" aspect-ratio="4:3", 24 техно
+http://192.168.1.1:81/udp/239.1.5.10:1234
+#EXTINF:-1 tvg-name="736" aspect-ratio="4:3", Наука 2.0
+http://192.168.1.1:81/udp/239.1.5.18:1234
+#EXTINF:-1 tvg-name="7313" aspect-ratio="4:3", ВРЕМЯ
+http://192.168.1.1:81/udp/239.1.5.4:1234
+#EXTINF:-1 tvg-name="814" aspect-ratio="4:3", Первый образовательный
+http://192.168.1.1:81/udp/239.1.5.11:1234
+#EXTINF:-1 tvg-name="802" aspect-ratio="4:3", Amazing Life
+http://192.168.1.1:81/udp/239.1.5.19:1234
+#EXTINF:-1 tvg-name="811" aspect-ratio="4:3", 365 Дней
+http://192.168.1.1:81/udp/239.1.5.20:1234
+#EXTINF:-1 tvg-name="816" aspect-ratio="4:3", Интересное ТВ
+http://192.168.1.1:81/udp/239.1.5.12:1234
+#EXTINF:-1 tvg-name="207" aspect-ratio="16:9" group-title="Кино и сериалы", Fox
+http://192.168.1.1:81/udp/239.1.4.5:1234
+#EXTINF:-1 tvg-name="209" aspect-ratio="16:9", SONY TВ
+http://192.168.1.1:81/udp/239.1.4.6:1234
+#EXTINF:-1 tvg-name="210" aspect-ratio="4:3", Sony Sci-Fi
+http://192.168.1.1:81/udp/239.1.4.7:1234
+#EXTINF:-1 tvg-name="2229" aspect-ratio="16:9", TVXXI
+http://192.168.1.1:81/udp/239.1.4.1:1234
+#EXTINF:-1 tvg-name="2241" aspect-ratio="4:3", Комедия ТВ
+http://192.168.1.1:81/udp/239.1.4.3:1234
+#EXTINF:-1 tvg-name="2003" aspect-ratio="16:9", TV1000
+http://192.168.1.1:81/udp/239.1.4.12:1234
+#EXTINF:-1 tvg-name="2004" aspect-ratio="16:9", TV1000 Action
+http://192.168.1.1:81/udp/239.1.4.13:1234
+#EXTINF:-1 tvg-name="740" aspect-ratio="4:3", ТV1000 Русское кино
+http://192.168.1.1:81/udp/239.1.4.14:1234
+#EXTINF:-1 tvg-name="800" aspect-ratio="4:3", Русский иллюзион
+http://192.168.1.1:81/udp/239.1.4.11:1234
+#EXTINF:-1 tvg-name="803" aspect-ratio="4:3", Дом кино
+http://192.168.1.1:81/udp/239.1.4.8:1234
+#EXTINF:-1 tvg-name="708" aspect-ratio="4:3", Universal Channel
+http://192.168.1.1:81/udp/239.1.4.9:1234
+#EXTINF:-1 tvg-name="2707" aspect-ratio="4:3", Русский бестселлер
+http://192.168.1.1:81/udp/239.1.4.2:1234
+#EXTINF:-1 tvg-name="98989" aspect-ratio="4:3", Настоящее страшное ТВ
+http://192.168.1.1:81/udp/239.1.20.1:1234
+#EXTINF:-1 tvg-name="89889" aspect-ratio="4:3", Парк развлечений
+http://192.168.1.1:81/udp/239.1.20.2:1234
+#EXTINF:-1 tvg-name="43011" aspect-ratio="4:3", Любимое кино
+http://192.168.1.1:81/udp/239.1.20.10:1234
+#EXTINF:-1 tvg-name="70007" aspect-ratio="16:9", Кино плюс
+http://192.168.1.1:81/udp/239.1.20.15:1234
+#EXTINF:-1 tvg-name="80023" aspect-ratio="16:9" crop="1920x1080+0+0", Russia Today Doc HD
+http://192.168.1.1:81/udp/239.1.9.5:1234
+#EXTINF:-1 tvg-name="508" aspect-ratio="4:3" group-title="Новости", Россия 24
+http://192.168.1.1:81/udp/239.1.15.3:1234
+#EXTINF:-1 tvg-name="888" aspect-ratio="16:9", Дождь
+http://192.168.1.1:81/udp/239.1.1.6:1234
+#EXTINF:-1 tvg-name="21" aspect-ratio="16:9", РБК
+http://192.168.1.1:81/udp/239.1.1.2:1234
+#EXTINF:-1 tvg-name="511" aspect-ratio="4:3", Мир 24
+http://192.168.1.1:81/udp/239.1.1.3:1234
+#EXTINF:-1 tvg-name="741" aspect-ratio="4:3", Страна
+http://192.168.1.1:81/udp/239.1.1.9:1234
+#EXTINF:-1 tvg-name="220" aspect-ratio="16:9", CNN International
+http://192.168.1.1:81/udp/239.1.1.4:1234
+#EXTINF:-1 tvg-name="2201" aspect-ratio="16:9", EuroNews
+http://192.168.1.1:81/udp/239.1.1.5:1234
+#EXTINF:-1 tvg-name="412" aspect-ratio="16:9", Russia Today
+http://192.168.1.1:81/udp/239.1.1.8:1234
+#EXTINF:-1 tvg-name="80016" aspect-ratio="16:9", Lifenews
+http://192.168.1.1:81/udp/239.1.1.7:1234
+#EXTINF:-1 tvg-name="80024" aspect-ratio="16:9" crop="1920x1080+0+0", Russia Today HD
+http://192.168.1.1:81/udp/239.1.9.4:1234
+#EXTINF:-1 tvg-name="51" aspect-ratio="4:3" group-title="Хобби и развлечения", ЮТВ
+http://192.168.1.1:81/udp/239.1.15.18:1234
+#EXTINF:-1 tvg-name="25" aspect-ratio="4:3", Пятница
+http://192.168.1.1:81/udp/239.1.15.17:1234
+#EXTINF:-1 tvg-name="2612" aspect-ratio="4:3", Investigation Discovery
+http://192.168.1.1:81/udp/239.1.2.8:1234
+#EXTINF:-1 tvg-name="513" aspect-ratio="4:3", 2x2
+http://192.168.1.1:81/udp/239.1.2.1:1234
+#EXTINF:-1 tvg-name="2007" aspect-ratio="4:3", Звезда
+http://192.168.1.1:81/udp/239.1.15.9:1234
+#EXTINF:-1 tvg-name="11003" aspect-ratio="4:3", Живи
+http://192.168.1.1:81/udp/239.1.2.12:1234
+#EXTINF:-1 tvg-name="214" aspect-ratio="4:3", Драйв
+http://192.168.1.1:81/udp/239.1.2.4:1234
+#EXTINF:-1 tvg-name="215" aspect-ratio="4:3", Охота и рыбалка
+http://192.168.1.1:81/udp/239.1.2.5:1234
+#EXTINF:-1 tvg-name="217" aspect-ratio="4:3", Усадьба
+http://192.168.1.1:81/udp/239.1.2.17:1234
+#EXTINF:-1 tvg-name="806" aspect-ratio="4:3", Ностальгия
+http://192.168.1.1:81/udp/239.1.2.13:1234
+#EXTINF:-1 tvg-name="709" aspect-ratio="4:3", Авто плюс
+http://192.168.1.1:81/udp/239.1.2.6:1234
+#EXTINF:-1 tvg-name="813" aspect-ratio="4:3", Оружие
+http://192.168.1.1:81/udp/239.1.2.7:1234
+#EXTINF:-1 tvg-name="737" aspect-ratio="4:3", Сарафан
+http://192.168.1.1:81/udp/239.1.2.11:1234
+#EXTINF:-1 tvg-name="815" aspect-ratio="4:3", Кухня ТВ
+http://192.168.1.1:81/udp/239.1.2.15:1234
+#EXTINF:-1 tvg-name="6313" aspect-ratio="4:3", Телекафе
+http://192.168.1.1:81/udp/239.1.2.18:1234
+#EXTINF:-1 tvg-name="606" aspect-ratio="4:3", Психология21
+http://192.168.1.1:81/udp/239.1.2.9:1234
+#EXTINF:-1 tvg-name="2905" aspect-ratio="4:3", Успех
+http://192.168.1.1:81/udp/239.1.2.3:1234
+#EXTINF:-1 tvg-name="43008" aspect-ratio="4:3", Загородная жизнь
+http://192.168.1.1:81/udp/239.1.20.13:1234
+#EXTINF:-1 tvg-name="43024" aspect-ratio="4:3", Юмор ТВ
+http://192.168.1.1:81/udp/239.1.20.16:1234
+#EXTINF:-1 tvg-name="10033" aspect-ratio="16:9", Shopping Live
+http://192.168.1.1:81/udp/239.1.20.17:1234
+#EXTINF:-1 tvg-name="11017" aspect-ratio="4:3", E!
+http://192.168.1.1:81/udp/239.1.3.12:1234
+#EXTINF:-1 tvg-name="507" aspect-ratio="4:3" group-title="Музыка", A-One
+http://192.168.1.1:81/udp/239.1.8.2:1234
+#EXTINF:-1 tvg-name="503" aspect-ratio="4:3", RU.TV
+http://192.168.1.1:81/udp/239.1.8.4:1234
+#EXTINF:-1 tvg-name="504" aspect-ratio="4:3", Music Box RU
+http://192.168.1.1:81/udp/239.1.8.5:1234
+#EXTINF:-1 tvg-name="505" aspect-ratio="4:3", Music Box TV
+http://192.168.1.1:81/udp/239.1.8.6:1234
+#EXTINF:-1 tvg-name="219" aspect-ratio="4:3", VH1 Classic
+http://192.168.1.1:81/udp/239.1.8.7:1234
+#EXTINF:-1 tvg-name="818" aspect-ratio="16:9", Europa Plus TV
+http://192.168.1.1:81/udp/239.1.8.10:1234
+#EXTINF:-1 tvg-name="227" aspect-ratio="16:9", MCM Top
+http://192.168.1.1:81/udp/239.1.8.9:1234
+#EXTINF:-1 tvg-name="2401" aspect-ratio="4:3", Bridge TV
+http://192.168.1.1:81/udp/239.1.8.8:1234
+#EXTINF:-1 tvg-name="731" aspect-ratio="4:3", Шансон ТВ
+http://192.168.1.1:81/udp/239.1.8.12:1234
+#EXTINF:-1 tvg-name="810" aspect-ratio="4:3", Ля-минор
+http://192.168.1.1:81/udp/239.1.8.13:1234
+#EXTINF:-1 tvg-name="801" aspect-ratio="4:3", Mezzo
+http://192.168.1.1:81/udp/239.1.8.11:1234
+#EXTINF:-1 tvg-name="43042" aspect-ratio="4:3", Муз ТВ
+http://192.168.1.1:81/udp/239.1.15.13:1234
+#EXTINF:-1 tvg-name="80022" aspect-ratio="16:9", Rusong TV
+http://192.168.1.1:81/udp/239.1.8.14:1234
+#EXTINF:-1 tvg-name="41" aspect-ratio="4:3" group-title="Спорт", Россия 2
+http://192.168.1.1:81/udp/239.1.15.16:1234
+#EXTINF:-1 tvg-name="201" aspect-ratio="16:9", Eurosport
+http://192.168.1.1:81/udp/239.1.12.3:1234
+#EXTINF:-1 tvg-name="202" aspect-ratio="16:9", Eurosport 2
+http://192.168.1.1:81/udp/239.1.12.4:1234
+#EXTINF:-1 tvg-name="739" aspect-ratio="4:3", Спорт
+http://192.168.1.1:81/udp/239.1.12.10:1234
+#EXTINF:-1 tvg-name="2232" aspect-ratio="4:3", Футбол
+http://192.168.1.1:81/udp/239.1.12.5:1234
+#EXTINF:-1 tvg-name="1313" aspect-ratio="16:9", КХЛ
+http://192.168.1.1:81/udp/239.1.12.6:1234
+#EXTINF:-1 tvg-name="2002" aspect-ratio="16:9", Viasat Sport
+http://192.168.1.1:81/udp/239.1.12.8:1234
+#EXTINF:-1 tvg-name="738" aspect-ratio="4:3", Бойцовский клуб
+http://192.168.1.1:81/udp/239.1.12.9:1234
+#EXTINF:-1 tvg-name="812" aspect-ratio="4:3", Extreme Sports
+http://192.168.1.1:81/udp/239.1.12.11:1234
+#EXTINF:-1 tvg-name="50003" aspect-ratio="4:3", Боец
+http://192.168.1.1:81/udp/239.1.20.12:1234
+#EXTINF:-1 tvg-name="92000" aspect-ratio="16:9", Наш Футбол
+http://192.168.1.1:81/udp/239.1.20.11:1234
+#EXTINF:-1 tvg-name="601" aspect-ratio="16:9" crop="1920x1080+0+0" group-title="Спорт HD", Eurosport HD
+http://192.168.1.1:81/udp/239.1.11.6:1234
+#EXTINF:-1 tvg-name="610" aspect-ratio="16:9" crop="1920x1080+0+0", Спорт 1 HD
+http://192.168.1.1:81/udp/239.1.18.1:1234
+#EXTINF:-1 tvg-name="2409" aspect-ratio="16:9" crop="1920x1080+0+0", КХЛ HD
+http://192.168.1.1:81/udp/239.1.18.3:1234
+#EXTINF:-1 tvg-name="1608" aspect-ratio="16:9" crop="1920x1080+0+0", Наш Футбол HD
+http://192.168.1.1:81/udp/239.1.16.1:1234
+#EXTINF:-1 tvg-name="622" aspect-ratio="16:9" crop="1920x1080+0+0", Eurosport 2 HD
+http://192.168.1.1:81/udp/239.1.18.2:1234
+#EXTINF:-1 tvg-name="603" aspect-ratio="16:9" crop="1920x1080+0+0" group-title="Клуб HD", Кинопоказ HD 1
+http://192.168.1.1:81/udp/239.1.17.2:1234
+#EXTINF:-1 tvg-name="611" aspect-ratio="16:9" crop="1920x1080+0+0", Кинопоказ HD 2
+http://192.168.1.1:81/udp/239.1.17.9:1234
+#EXTINF:-1 tvg-name="3007" aspect-ratio="16:9" crop="1920x1080+0+0", Fox HD
+http://192.168.1.1:81/udp/239.1.17.5:1234
+#EXTINF:-1 tvg-name="3107" aspect-ratio="16:9" crop="1920x1080+0+0", Fox Life HD
+http://192.168.1.1:81/udp/239.1.9.3:1234
+#EXTINF:-1 tvg-name="409" aspect-ratio="16:9" crop="1920x1080+0+0", MGM HD
+http://192.168.1.1:81/udp/239.1.17.15:1234
+#EXTINF:-1 tvg-name="24092" aspect-ratio="16:9" crop="1920x1080+0+0", SET HD
+http://192.168.1.1:81/udp/239.1.17.18:1234
+#EXTINF:-1 tvg-name="821" aspect-ratio="16:9" crop="1920x1080+0+0", Discovery HD
+http://192.168.1.1:81/udp/239.1.17.17:1234
+#EXTINF:-1 tvg-name="2108" aspect-ratio="16:9" crop="1920x1080+0+0", Animal Planet HD
+http://192.168.1.1:81/udp/239.1.17.16:1234
+#EXTINF:-1 tvg-name="602" aspect-ratio="16:9" crop="1920x1080+0+0", National Geographic HD
+http://192.168.1.1:81/udp/239.1.17.1:1234
+#EXTINF:-1 tvg-name="612" aspect-ratio="16:9" crop="1920x1080+0+0", Nat Geo Wild HD
+http://192.168.1.1:81/udp/239.1.17.6:1234
+#EXTINF:-1 tvg-name="619" aspect-ratio="16:9" crop="1920x1080+0+0", Travel Adventure HD
+http://192.168.1.1:81/udp/239.1.17.4:1234
+#EXTINF:-1 tvg-name="619" aspect-ratio="16:9" crop="1920x1080+0+0", Travel Adventure HD
+http://192.168.1.1:81/udp/239.1.20.18:1234
+#EXTINF:-1 tvg-name="616" aspect-ratio="16:9" crop="1920x1080+0+0", Телепутешествия HD
+http://192.168.1.1:81/udp/239.1.17.11:1234
+#EXTINF:-1 tvg-name="620" aspect-ratio="16:9" crop="1920x1080+0+0", Outdoor Channel HD
+http://192.168.1.1:81/udp/239.1.17.3:1234
+#EXTINF:-1 tvg-name="618" aspect-ratio="16:9" crop="1920x1080+0+0", HD Life
+http://192.168.1.1:81/udp/239.1.9.2:1234
+#EXTINF:-1 tvg-name="24091" aspect-ratio="16:9" crop="1920x1080+0+0", Дождь HD
+http://192.168.1.1:81/udp/239.1.17.19:1234
+#EXTINF:-1 tvg-name="615" aspect-ratio="16:9" crop="1920x1080+0+0", Еда HD
+http://192.168.1.1:81/udp/239.1.17.10:1234
+#EXTINF:-1 tvg-name="820" aspect-ratio="16:9" crop="1920x1080+0+0", Fashion TV HD
+http://192.168.1.1:81/udp/239.1.17.8:1234
+#EXTINF:-1 tvg-name="613" aspect-ratio="16:9" crop="1920x1080+0+0", MTV Live HD
+http://192.168.1.1:81/udp/239.1.17.83:1234
+#EXTINF:-1 tvg-name="823" aspect-ratio="16:9" crop="1920x1080+0+0", Myzen HD
+http://192.168.1.1:81/udp/239.1.10.21:1234
+#EXTINF:-1 tvg-name="24094" aspect-ratio="16:9" crop="1920x1080+0+0", Mezzo Live HD
+http://192.168.1.1:81/udp/239.1.10.1:1234
+#EXTINF:-1 tvg-name="1508" aspect-ratio="16:9" crop="1920x1080+0+0", Russian Travel Guide HD
+http://192.168.1.1:81/udp/239.1.17.22:1234
+#EXTINF:-1 tvg-name="2712" aspect-ratio="16:9" crop="1920x1080+0+0", Первый музыкальный HD
+http://192.168.1.1:81/udp/239.1.9.6:1234
+#EXTINF:-1 tvg-name="2713" aspect-ratio="16:9" crop="1920x1080+0+0", Охотник и рыболов HD
+http://192.168.1.1:81/udp/239.1.17.21:1234
+#EXTINF:-1 tvg-name="1412" aspect-ratio="16:9" crop="1920x1080+0+0", Россия HD
+http://192.168.1.1:81/udp/239.1.10.22:1234
+#EXTINF:-1 tvg-name="2812" aspect-ratio="16:9" crop="1920x1080+0+0", Первый HD
+http://192.168.1.1:81/udp/239.1.9.1:1234
+#EXTINF:-1 tvg-name="172" aspect-ratio="16:9" crop="1920x1080+0+0", Первый Интернет канал HD
+http://192.168.1.1:81/udp/239.1.17.12:1234
+#EXTINF:-1 tvg-name="11030" aspect-ratio="16:9" crop="1920x1080+0+0", IQ HD
+http://192.168.1.1:81/udp/239.1.19.1:1234
+#EXTINF:-1 tvg-name="81003" aspect-ratio="16:9" crop="1920x1080+0+0", Amedia Premium HD
+http://192.168.1.1:81/udp/239.1.17.29:1234

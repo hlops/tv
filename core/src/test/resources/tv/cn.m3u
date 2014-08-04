@@ -1,0 +1,263 @@
+#EXTM3U url-tvg="http://www.cn.ru/data/tv/schedule.zip" m3uautoload=1 cache=500 deinterlace=1 aspect-ratio=4:3 crop=690x550+10+10
+
+#EXTINF:0 tvg-name="Первый канал" group-title="Эфир" ,Первый
+http://192.168.1.1:81/udp/239.1.15.1:1234
+#EXTINF:0 tvg-name="Россия 1" ,Россия 1
+http://192.168.1.1:81/udp/239.1.15.2:1234
+#EXTINF:0 tvg-name="НТВ" ,НТВ
+http://192.168.1.1:81/udp/239.1.15.4:1234
+#EXTINF:0 tvg-name="Пятый Канал" ,Пятый
+http://192.168.1.1:81/udp/239.1.10.3:1234
+#EXTINF:0 tvg-name="РЕН ТВ" ,РЕН-ТВ
+http://192.168.1.1:81/udp/239.1.15.5:1234
+#EXTINF:0 tvg-name="СТС" ,СТС
+http://192.168.1.1:81/udp/239.1.15.6:1234
+#EXTINF:0 tvg-name="ТНТ" ,ТНТ
+http://192.168.1.1:81/udp/239.1.15.7:1234
+#EXTINF:0 tvg-name="ОТС" ,ОТС
+http://192.168.1.1:81/udp/239.1.10.6:1234
+#EXTINF:0 tvg-name="Домашний" ,Домашний
+http://192.168.1.1:81/udp/239.1.10.5:1234
+#EXTINF:0 tvg-name="ТВ-3" ,ТВ3
+http://192.168.1.1:81/udp/239.1.10.4:1234
+#EXTINF:0 tvg-name="49 канал" ,49 КАНАЛ
+http://192.168.1.1:81/udp/239.1.10.8:1234
+#EXTINF:0 tvg-name="Россия Культура" ,Россия К
+http://192.168.1.1:81/udp/239.1.10.7:1234
+#EXTINF:0 tvg-name="ТВЦ" ,ТВЦ
+http://192.168.1.1:81/udp/239.1.15.10:1234
+#EXTINF:0 tvg-name="Перец" ,Перец
+http://192.168.1.1:81/udp/239.1.15.14:1234
+#EXTINF:0 tvg-name="Disney Channel" ,Disney Channel
+http://192.168.1.1:81/udp/239.1.15.12:1234
+#EXTINF:0 tvg-name="Союз" ,Союз
+http://192.168.1.1:81/udp/239.1.15.19:1234
+#EXTINF:0 tvg-name="МИР" ,Мир
+http://192.168.1.1:81/udp/239.1.15.31:1234
+#EXTINF:0 tvg-name="ОТР" ,ОТР
+http://192.168.1.1:81/udp/239.1.15.8:1234
+
+#EXTINF:0 tvg-name="Карусель" group-title="Детям и мамам" ,Карусель
+http://192.168.1.1:81/udp/239.1.15.11:1234
+#EXTINF:0 tvg-name="Cartoon Network" ,Cartoon Network
+http://192.168.1.1:81/udp/239.1.3.3:1234
+#EXTINF:0 tvg-name="Детский канал" ,Детский
+http://192.168.1.1:81/udp/239.1.3.5:1234
+#EXTINF:0 tvg-name="Детский мир" ,Детский мир
+http://192.168.1.1:81/udp/239.1.3.7:1234
+#EXTINF:0 tvg-name="Nickelodeon" aspect-ratio=16:9 ,Nickelodeon
+http://192.168.1.1:81/udp/239.1.3.4:1234
+#EXTINF:0 tvg-name="Tiji " ,TiJi
+http://192.168.1.1:81/udp/239.1.3.6:1234
+#EXTINF:0 tvg-name="JimJam" ,Jim Jam
+http://192.168.1.1:81/udp/239.1.3.2:1234
+#EXTINF:0 tvg-name="Мать и Дитя" ,Мать и Дитя
+http://192.168.1.1:81/udp/239.1.3.14:1234
+#EXTINF:0 tvg-name="TLC" ,TLC
+http://192.168.1.1:81/udp/239.1.3.16:1234
+#EXTINF:0 tvg-name="Fashion TV" ,Fashion TV
+http://192.168.1.1:81/udp/239.1.3.13:1234
+#EXTINF:0 tvg-name="Fox Life" ,Fox Life
+http://192.168.1.1:81/udp/239.1.3.11:1234
+#EXTINF:0 tvg-name="DIVA Universal" ,DIVA Universal
+http://192.168.1.1:81/udp/239.1.3.12:1234
+#EXTINF:0 tvg-name="Индия" ,Индия ТВ
+http://192.168.1.1:81/udp/239.1.3.15:1234
+#EXTINF:0 tvg-name="Русский роман" ,Русский роман
+http://192.168.1.1:81/udp/239.1.3.17:1234
+
+#EXTINF:0 tvg-name="Discovery" group-title="Познавательный" ,Discovery
+http://192.168.1.1:81/udp/239.1.5.1:1234
+#EXTINF:0 tvg-name="Discovery World" ,Discovery World
+http://192.168.1.1:81/udp/239.1.5.2:1234
+#EXTINF:0 tvg-name="Discovery Science" ,Discovery Science
+http://192.168.1.1:81/udp/239.1.5.9:1234
+#EXTINF:0 tvg-name="Animal Planet" ,Animal Planet
+http://192.168.1.1:81/udp/239.1.5.3:1234
+#EXTINF:0 tvg-name="National Geographic" ,National Geographic
+http://192.168.1.1:81/udp/239.1.5.8:1234
+#EXTINF:0 tvg-name="Nat Geo WILD" ,Nat Geo Wild
+http://192.168.1.1:81/udp/239.1.5.16:1234
+#EXTINF:0 tvg-name="Viasat Nature CEE" ,Viasat Nature
+http://192.168.1.1:81/udp/239.1.5.5:1234
+#EXTINF:0 tvg-name="Viasat History" ,Viasat History
+http://192.168.1.1:81/udp/239.1.5.14:1234
+#EXTINF:0 tvg-name="Viasat Explorer" ,Viasat Explorer
+http://192.168.1.1:81/udp/239.1.5.15:1234
+#EXTINF:0 tvg-name="Russian Travel Guide (RTG TV)" ,Russian Travel Guide
+http://192.168.1.1:81/udp/239.1.5.13:1234
+#EXTINF:0 tvg-name="Моя Планета" ,Моя планета
+http://192.168.1.1:81/udp/239.1.5.17:1234
+#EXTINF:0 tvg-name="Travel+Adventure" aspect-ratio=16:9 ,Travel Adventure
+http://192.168.1.1:81/udp/239.1.5.7:1234
+#EXTINF:0 tvg-name="Da Vinci" ,Da Vinci
+http://192.168.1.1:81/udp/239.1.5.6:1234
+#EXTINF:0 tvg-name="24 Техно" ,24 техно
+http://192.168.1.1:81/udp/239.1.5.10:1234
+#EXTINF:0 tvg-name="Наука 2.0" ,Наука 2.0
+http://192.168.1.1:81/udp/239.1.5.18:1234
+#EXTINF:0 tvg-name="ВРЕМЯ: далекое и близкое" ,ВРЕМЯ
+http://192.168.1.1:81/udp/239.1.5.4:1234
+#EXTINF:0 tvg-name="Первый образовательный" ,Первый образовательный
+http://192.168.1.1:81/udp/239.1.5.11:1234
+#EXTINF:0 tvg-name="Amazing Life (Удивительная жизнь)" ,Amazing Life
+http://192.168.1.1:81/udp/239.1.5.19:1234
+#EXTINF:0 tvg-name="365 Дней" ,365 Дней
+http://192.168.1.1:81/udp/239.1.5.20:1234
+#EXTINF:0 tvg-name="Интересное ТВ" ,Интересное ТВ
+http://192.168.1.1:81/udp/239.1.5.12:1234
+
+#EXTINF:0 tvg-name="Fox" group-title="Кино и сериалы" ,Fox
+http://192.168.1.1:81/udp/239.1.4.5:1234
+#EXTINF:0 tvg-name="SONY ТВ" ,SONY TВ
+http://192.168.1.1:81/udp/239.1.4.6:1234
+#EXTINF:0 tvg-name="" ,Sony Sci-Fi
+http://192.168.1.1:81/udp/239.1.4.7:1234
+#EXTINF:0 tvg-name="TV XXI (TV21)" aspect-ratio=16:9 ,TVXXI
+http://192.168.1.1:81/udp/239.1.4.1:1234
+#EXTINF:0 tvg-name="Комедия ТВ" ,Комедия ТВ
+http://192.168.1.1:81/udp/239.1.4.3:1234
+#EXTINF:0 tvg-name="TV1000" ,TV1000
+http://192.168.1.1:81/udp/239.1.4.12:1234
+#EXTINF:0 tvg-name="TV 1000 Action" ,TV1000 Action
+http://192.168.1.1:81/udp/239.1.4.13:1234
+#EXTINF:0 tvg-name="ТВ-1000 Русское кино" ,ТВ 1000 Русское кино
+http://192.168.1.1:81/udp/239.1.4.14:1234
+#EXTINF:0 tvg-name="Русский Иллюзион" ,Русский иллюзион
+http://192.168.1.1:81/udp/239.1.4.11:1234
+#EXTINF:0 tvg-name="Дом кино" ,Дом кино
+http://192.168.1.1:81/udp/239.1.4.8:1234
+#EXTINF:0 tvg-name="Universal Channel" ,Universal Channel
+http://192.168.1.1:81/udp/239.1.4.9:1234
+#EXTINF:0 tvg-name="КИНОЛЮКС" ,Кинолюкс
+http://192.168.1.1:81/udp/239.1.4.10:1234
+#EXTINF:0 tvg-name="Русский бестселлер" ,Русский бестселлер
+http://192.168.1.1:81/udp/239.1.4.2:1234
+#EXTINF:0 tvg-name="" aspect-ratio=16:9 ,Russia Today Doc HD
+http://192.168.1.1:81/udp/239.1.9.5:1234
+
+#EXTINF:0 tvg-name="Россия 24" group-title="Новости" ,Россия 24
+http://192.168.1.1:81/udp/239.1.15.3:1234
+#EXTINF:0 tvg-name="Дождь" aspect-ratio=16:9 ,Дождь
+http://192.168.1.1:81/udp/239.1.1.6:1234
+#EXTINF:0 tvg-name="РБК" aspect-ratio=16:9 ,РБК
+http://192.168.1.1:81/udp/239.1.1.2:1234
+#EXTINF:0 tvg-name="МИР 24" ,Мир 24
+http://192.168.1.1:81/udp/239.1.1.3:1234
+#EXTINF:0 tvg-name="Страна" ,Страна
+http://192.168.1.1:81/udp/239.1.1.9:1234
+#EXTINF:0 tvg-name="CNN International" aspect-ratio=16:9 ,CNN International
+http://192.168.1.1:81/udp/239.1.1.4:1234
+#EXTINF:0 tvg-name="EuroNews" aspect-ratio=16:9 ,EuroNews
+http://192.168.1.1:81/udp/239.1.1.5:1234
+#EXTINF:0 tvg-name="Russia Today" aspect-ratio=16:9 ,Russia Today
+http://192.168.1.1:81/udp/239.1.1.8:1234
+#EXTINF:0 tvg-name="" aspect-ratio=16:9 ,Lifenews
+http://192.168.1.1:81/udp/239.1.1.7:1234
+#EXTINF:0 tvg-name="" aspect-ratio=16:9 ,Russia Today HD
+http://192.168.1.1:81/udp/239.1.9.4:1234
+
+#EXTINF:0 tvg-name="Пятница" group-title="Хобби и развлечения" ,Пятница
+http://192.168.1.1:81/udp/239.1.15.17:1234
+#EXTINF:0 tvg-name="Ю-ТВ" ,ЮТВ
+http://192.168.1.1:81/udp/239.1.15.18:1234
+#EXTINF:0 tvg-name="Investigation Discovery" ,Investigation Discovery
+http://192.168.1.1:81/udp/239.1.2.8:1234
+#EXTINF:0 tvg-name="Канал 2x2" ,2x2
+http://192.168.1.1:81/udp/239.1.2.1:1234
+#EXTINF:0 tvg-name="Звезда" ,Звезда
+http://192.168.1.1:81/udp/239.1.15.9:1234
+#EXTINF:0 tvg-name="Живи" ,Живи
+http://192.168.1.1:81/udp/239.1.2.12:1234
+#EXTINF:0 tvg-name="Драйв ТВ" ,Драйв
+http://192.168.1.1:81/udp/239.1.2.4:1234
+#EXTINF:0 tvg-name="Охота и рыбалка" ,Охота и рыбалка
+http://192.168.1.1:81/udp/239.1.2.5:1234
+#EXTINF:0 tvg-name="Усадьба" ,Усадьба
+http://192.168.1.1:81/udp/239.1.2.17:1234
+#EXTINF:0 tvg-name="Ностальгия" ,Ностальгия
+http://192.168.1.1:81/udp/239.1.2.13:1234
+#EXTINF:0 tvg-name="Авто Плюс" ,Авто плюс
+http://192.168.1.1:81/udp/239.1.2.6:1234
+#EXTINF:0 tvg-name="Оружие" ,Оружие
+http://192.168.1.1:81/udp/239.1.2.7:1234
+#EXTINF:0 tvg-name="Сарафан ТВ" ,Сарафан
+http://192.168.1.1:81/udp/239.1.2.11:1234
+#EXTINF:0 tvg-name="Кухня ТВ" ,Кухня ТВ
+http://192.168.1.1:81/udp/239.1.2.15:1234
+#EXTINF:0 tvg-name="Телекафе" ,Телекафе
+http://192.168.1.1:81/udp/239.1.2.18:1234
+#EXTINF:0 tvg-name="Психология21" ,Психология21
+http://192.168.1.1:81/udp/239.1.2.9:1234
+#EXTINF:0 tvg-name="Успех" ,Успех
+http://192.168.1.1:81/udp/239.1.2.3:1234
+#EXTINF:0 tvg-name="8 Канал" ,8 канал
+http://192.168.1.1:81/udp/239.1.2.10:1234
+
+#EXTINF:0 tvg-name="A-ONE" group-title="Музыка" ,A-One
+http://192.168.1.1:81/udp/239.1.8.2:1234
+#EXTINF:0 tvg-name="О2ТВ" aspect-ratio=16:9 ,О2ТВ
+http://192.168.1.1:81/udp/239.1.8.3:1234
+#EXTINF:0 tvg-name="RU.TV" ,RU.TV
+http://192.168.1.1:81/udp/239.1.8.4:1234
+#EXTINF:0 tvg-name="Music Box RU" ,Music Box RU
+http://192.168.1.1:81/udp/239.1.8.5:1234
+#EXTINF:0 tvg-name="MUSIC Box TV" ,Music Box TV
+http://192.168.1.1:81/udp/239.1.8.6:1234
+#EXTINF:0 tvg-name="VH1 Classic" ,VH1 Classic
+http://192.168.1.1:81/udp/239.1.8.7:1234
+#EXTINF:0 tvg-name="Europa Plus TV" aspect-ratio=16:9 ,Europa Plus TV
+http://192.168.1.1:81/udp/239.1.8.10:1234
+#EXTINF:0 tvg-name="MCM Top" aspect-ratio=16:9 ,MCM Top
+http://192.168.1.1:81/udp/239.1.8.9:1234
+#EXTINF:0 tvg-name="Bridge TV" ,Bridge TV
+http://192.168.1.1:81/udp/239.1.8.8:1234
+#EXTINF:0 tvg-name="Шансон ТВ" ,Шансон ТВ
+http://192.168.1.1:81/udp/239.1.8.12:1234
+#EXTINF:0 tvg-name="Ля-Минор" ,Ля-минор
+http://192.168.1.1:81/udp/239.1.8.13:1234
+#EXTINF:0 tvg-name="Mezzo" ,Mezzo
+http://192.168.1.1:81/udp/239.1.8.11:1234
+#EXTINF:0 tvg-name="МУЗ-ТВ" ,Муз ТВ
+http://192.168.1.1:81/udp/239.1.15.13:1234
+#EXTINF:0 tvg-name="Rusong TV" aspect-ratio=16:9 ,Rusong TV
+http://192.168.1.1:81/udp/239.1.8.14:1234
+
+#EXTINF:0 tvg-name="Россия 2 (Спорт)" group-title="Спорт" ,Россия 2
+http://192.168.1.1:81/udp/239.1.15.16:1234
+#EXTINF:0 tvg-name="Eurosport" aspect-ratio=16:9 ,Eurosport
+http://192.168.1.1:81/udp/239.1.12.3:1234
+#EXTINF:0 tvg-name="Eurosport 2" aspect-ratio=16:9 ,Eurosport 2
+http://192.168.1.1:81/udp/239.1.12.4:1234
+#EXTINF:0 tvg-name="Спорт 1" aspect-ratio=16:9 ,Спорт 1
+http://192.168.1.1:81/udp/239.1.12.7:1234
+#EXTINF:0 tvg-name="Спорт ПЛЮС" ,Спорт
+http://192.168.1.1:81/udp/239.1.12.10:1234
+#EXTINF:0 tvg-name="Футбол" ,Футбол
+http://192.168.1.1:81/udp/239.1.12.5:1234
+#EXTINF:0 tvg-name="КХЛ-ТВ" ,КХЛ
+http://192.168.1.1:81/udp/239.1.12.6:1234
+#EXTINF:0 tvg-name="Viasat Sport" aspect-ratio=16:9 ,Viasat Sport
+http://192.168.1.1:81/udp/239.1.12.8:1234
+#EXTINF:0 tvg-name="Бойцовский клуб" ,Бойцовский клуб
+http://192.168.1.1:81/udp/239.1.12.9:1234
+#EXTINF:0 tvg-name="Extreme Sports" ,Extreme Sports
+http://192.168.1.1:81/udp/239.1.12.11:1234
+
+#EXTINF:0 tvg-name="Eurosport HD" aspect-ratio=16:9 group-title="Спорт HD" ,Eurosport HD
+http://192.168.1.1:81/udp/239.1.11.6:1234
+
+#EXTINF:0 tvg-name="Fox Life HD" aspect-ratio=16:9 group-title="Клуб HD" ,Fox Life HD
+http://192.168.1.1:81/udp/239.1.9.3:1234
+#EXTINF:0 tvg-name="HD Life" aspect-ratio=16:9 ,HD Life
+http://192.168.1.1:81/udp/239.1.9.2:1234
+#EXTINF:0 tvg-name="" aspect-ratio=16:9 ,Myzen HD
+http://192.168.1.1:81/udp/239.1.10.21:1234
+#EXTINF:0 tvg-name="Mezzo Live HD" aspect-ratio=16:9 ,Mezzo Live HD
+http://192.168.1.1:81/udp/239.1.10.1:1234
+#EXTINF:0 tvg-name="" aspect-ratio=16:9 ,Первый музыкальный HD
+http://192.168.1.1:81/udp/239.1.9.6:1234
+#EXTINF:0 tvg-name="Россия HD" aspect-ratio=16:9 ,Россия HD
+http://192.168.1.1:81/udp/239.1.10.22:1234
+#EXTINF:0 tvg-name="Первый HD" aspect-ratio=16:9 ,Первый HD
+http://192.168.1.1:81/udp/239.1.9.1:1234

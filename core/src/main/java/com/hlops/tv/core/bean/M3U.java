@@ -2,13 +2,10 @@ package com.hlops.tv.core.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -49,7 +46,7 @@ public class M3U {
         }
     }
 
-    private final Map<String, String> attrs = new HashMap<String, String>();
+    private final Map<String, String> attrs = new LinkedHashMap<String, String>();
     private final List<ExtInf> items = new ArrayList<ExtInf>();
 
     public M3U(InputStream is, Charset cs) throws IOException {
@@ -87,7 +84,7 @@ public class M3U {
     }
 
     public static Map<String, String> parseLine(String line) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new LinkedHashMap<String, String>();
         Matcher matcher = attributePattern.matcher(line);
         while (matcher.find()) {
             String name = matcher.group(2);
@@ -141,4 +138,32 @@ public class M3U {
         }
         return result.toArray(new ExtInf[result.size()]);
     }
+
+    public void save(PrintStream out) {
+        out.print("#EXTM3U");
+        for (Map.Entry<String, String> entry : attrs.entrySet()) {
+            out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
+        }
+        out.println();
+        out.println();
+
+        String group = "";
+        for (ExtInf item : items) {
+            out.print("#EXTINF:" + item.getDuration());
+            for (Map.Entry<String, String> entry : item.getAttrs().entrySet()) {
+                if (entry.getKey().equals(ExtInf.Attribute.group_title.getAttributeName())) {
+                    if (group.equals(entry.getValue())) {
+                        continue;
+                    }
+                    group = entry.getValue();
+                }
+                out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
+            }
+            out.print(", " + item.getName());
+            out.println();
+
+            out.println("http://192.168.1.1:81/udp/" + item.getUrl().substring(7));
+        }
+    }
+
 }

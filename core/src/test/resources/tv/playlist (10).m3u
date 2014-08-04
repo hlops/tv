@@ -1,0 +1,263 @@
+#EXTM3U url-tvg="http://www.cn.ru/data/tv/schedule.zip" m3uautoload=1 cache=500 deinterlace=1 aspect-ratio=4:3 crop=690x550+10+10 reportstat=http://iptv.cn.ru/iptv-stat/post.php reportlog=http://clr.novotelecom.ru/iptv/log.php
+
+#EXTINF:-1 tvg-name=2 group-title="Эфир" ,Первый
+udp://@239.1.15.1:1234
+#EXTINF:-1 tvg-name=8 ,Россия 1
+udp://@239.1.15.2:1234
+#EXTINF:-1 tvg-name=12 ,НТВ
+udp://@239.1.15.4:1234
+#EXTINF:-1 tvg-name=46 ,Пятый
+udp://@239.1.10.3:1234
+#EXTINF:-1 tvg-name=23 ,РЕН-ТВ
+udp://@239.1.15.5:1234
+#EXTINF:-1 tvg-name=10 ,СТС
+udp://@239.1.15.6:1234
+#EXTINF:-1 tvg-name=6 ,ТНТ
+udp://@239.1.15.7:1234
+#EXTINF:-1 tvg-name=31 ,ОТС
+udp://@239.1.10.6:1234
+#EXTINF:-1 tvg-name=38 ,Домашний
+udp://@239.1.10.5:1234
+#EXTINF:-1 tvg-name=4 ,ТВ3
+udp://@239.1.10.4:1234
+#EXTINF:-1 tvg-name=49 ,49 КАНАЛ
+udp://@239.1.10.8:1234
+#EXTINF:-1 tvg-name=28 ,Россия К
+udp://@239.1.10.7:1234
+#EXTINF:-1 tvg-name=36 ,ТВЦ
+udp://@239.1.15.10:1234
+#EXTINF:-1 tvg-name=512 ,Перец
+udp://@239.1.15.14:1234
+#EXTINF:-1 tvg-name=211 ,Disney Channel
+udp://@239.1.15.12:1234
+#EXTINF:-1 tvg-name=777 ,Союз
+udp://@239.1.15.19:1234
+#EXTINF:-1 tvg-name=2703 ,Мир
+udp://@239.1.15.31:1234
+#EXTINF:-1 tvg-name=22005 ,ОТР
+udp://@239.1.15.8:1234
+
+#EXTINF:-1 tvg-name=509 group-title="Детям и мамам" ,Карусель
+udp://@239.1.15.11:1234
+#EXTINF:-1 tvg-name=223 ,Cartoon Network
+udp://@239.1.3.3:1234
+#EXTINF:-1 tvg-name=9135 ,Детский
+udp://@239.1.3.5:1234
+#EXTINF:-1 tvg-name=2008 ,Детский мир
+udp://@239.1.3.7:1234
+#EXTINF:-1 tvg-name=2230 aspect-ratio=16:9 ,Nickelodeon
+udp://@239.1.3.4:1234
+#EXTINF:-1 tvg-name=2006 ,TiJi
+udp://@239.1.3.6:1234
+#EXTINF:-1 tvg-name=807 ,Jim Jam
+udp://@239.1.3.2:1234
+#EXTINF:-1 tvg-name=204 ,Мать и Дитя
+udp://@239.1.3.14:1234
+#EXTINF:-1 tvg-name=2240 ,TLC
+udp://@239.1.3.16:1234
+#EXTINF:-1 tvg-name=101 ,Fashion TV
+udp://@239.1.3.13:1234
+#EXTINF:-1 tvg-name=208 ,Fox Life
+udp://@239.1.3.11:1234
+#EXTINF:-1 tvg-name=805 ,DIVA Universal
+udp://@239.1.3.12:1234
+#EXTINF:-1 tvg-name=21003 ,Индия ТВ
+udp://@239.1.3.15:1234
+#EXTINF:-1 tvg-name=730 ,Русский роман
+udp://@239.1.3.17:1234
+
+#EXTINF:-1 tvg-name=205 group-title="Познавательный" ,Discovery
+udp://@239.1.5.1:1234
+#EXTINF:-1 tvg-name=221 ,Discovery World
+udp://@239.1.5.2:1234
+#EXTINF:-1 tvg-name=222 ,Discovery Science
+udp://@239.1.5.9:1234
+#EXTINF:-1 tvg-name=206 ,Animal Planet
+udp://@239.1.5.3:1234
+#EXTINF:-1 tvg-name=203 ,National Geographic
+udp://@239.1.5.8:1234
+#EXTINF:-1 tvg-name=725 ,Nat Geo Wild
+udp://@239.1.5.16:1234
+#EXTINF:-1 tvg-name=2001 ,Viasat Nature
+udp://@239.1.5.5:1234
+#EXTINF:-1 tvg-name=733 ,Viasat History
+udp://@239.1.5.14:1234
+#EXTINF:-1 tvg-name=734 ,Viasat Explorer
+udp://@239.1.5.15:1234
+#EXTINF:-1 tvg-name=2402 ,Russian Travel Guide
+udp://@239.1.5.13:1234
+#EXTINF:-1 tvg-name=735 ,Моя планета
+udp://@239.1.5.17:1234
+#EXTINF:-1 tvg-name=312 aspect-ratio=16:9 ,Travel Adventure
+udp://@239.1.5.7:1234
+#EXTINF:-1 tvg-name=2005 ,Da Vinci
+udp://@239.1.5.6:1234
+#EXTINF:-1 tvg-name=2400 ,24 техно
+udp://@239.1.5.10:1234
+#EXTINF:-1 tvg-name=736 ,Наука 2.0
+udp://@239.1.5.18:1234
+#EXTINF:-1 tvg-name=7313 ,ВРЕМЯ
+udp://@239.1.5.4:1234
+#EXTINF:-1 tvg-name=814 ,Первый образовательный
+udp://@239.1.5.11:1234
+#EXTINF:-1 tvg-name=802 ,Amazing Life
+udp://@239.1.5.19:1234
+#EXTINF:-1 tvg-name=811 ,365 Дней
+udp://@239.1.5.20:1234
+#EXTINF:-1 tvg-name=816 ,Интересное ТВ
+udp://@239.1.5.12:1234
+
+#EXTINF:-1 tvg-name=207 group-title="Кино и сериалы" ,Fox
+udp://@239.1.4.5:1234
+#EXTINF:-1 tvg-name=209 ,SONY TВ
+udp://@239.1.4.6:1234
+#EXTINF:-1 tvg-name=210 ,Sony Sci-Fi
+udp://@239.1.4.7:1234
+#EXTINF:-1 tvg-name=2229 aspect-ratio=16:9 ,TVXXI
+udp://@239.1.4.1:1234
+#EXTINF:-1 tvg-name=2241 ,Комедия ТВ
+udp://@239.1.4.3:1234
+#EXTINF:-1 tvg-name=2003 ,TV1000
+udp://@239.1.4.12:1234
+#EXTINF:-1 tvg-name=2004 ,TV1000 Action
+udp://@239.1.4.13:1234
+#EXTINF:-1 tvg-name=740 ,ТВ 1000 Русское кино
+udp://@239.1.4.14:1234
+#EXTINF:-1 tvg-name=800 ,Русский иллюзион
+udp://@239.1.4.11:1234
+#EXTINF:-1 tvg-name=803 ,Дом кино
+udp://@239.1.4.8:1234
+#EXTINF:-1 tvg-name=708 ,Universal Channel
+udp://@239.1.4.9:1234
+#EXTINF:-1 tvg-name=817 ,Кинолюкс
+udp://@239.1.4.10:1234
+#EXTINF:-1 tvg-name=2707 ,Русский бестселлер
+udp://@239.1.4.2:1234
+#EXTINF:-1 tvg-name=80023 aspect-ratio=16:9 crop=1920x1080+0+0 ,Russia Today Doc HD
+udp://@239.1.9.5:1234
+
+#EXTINF:-1 tvg-name=508 group-title="Новости" ,Россия 24
+udp://@239.1.15.3:1234
+#EXTINF:-1 tvg-name=888 aspect-ratio=16:9 ,Дождь
+udp://@239.1.1.6:1234
+#EXTINF:-1 tvg-name=21 aspect-ratio=16:9 ,РБК
+udp://@239.1.1.2:1234
+#EXTINF:-1 tvg-name=511 ,Мир 24
+udp://@239.1.1.3:1234
+#EXTINF:-1 tvg-name=741 ,Страна
+udp://@239.1.1.9:1234
+#EXTINF:-1 tvg-name=220 aspect-ratio=16:9 ,CNN International
+udp://@239.1.1.4:1234
+#EXTINF:-1 tvg-name=2201 aspect-ratio=16:9 ,EuroNews
+udp://@239.1.1.5:1234
+#EXTINF:-1 tvg-name=412 aspect-ratio=16:9 ,Russia Today
+udp://@239.1.1.8:1234
+#EXTINF:-1 tvg-name=80016 aspect-ratio=16:9 ,Lifenews
+udp://@239.1.1.7:1234
+#EXTINF:-1 tvg-name=80024 aspect-ratio=16:9 crop=1920x1080+0+0 ,Russia Today HD
+udp://@239.1.9.4:1234
+
+#EXTINF:-1 tvg-name=25 group-title="Хобби и развлечения" ,Пятница
+udp://@239.1.15.17:1234
+#EXTINF:-1 tvg-name=51 ,ЮТВ
+udp://@239.1.15.18:1234
+#EXTINF:-1 tvg-name=2612 ,Investigation Discovery
+udp://@239.1.2.8:1234
+#EXTINF:-1 tvg-name=513 ,2x2
+udp://@239.1.2.1:1234
+#EXTINF:-1 tvg-name=2007 ,Звезда
+udp://@239.1.15.9:1234
+#EXTINF:-1 tvg-name=11003 ,Живи
+udp://@239.1.2.12:1234
+#EXTINF:-1 tvg-name=214 ,Драйв
+udp://@239.1.2.4:1234
+#EXTINF:-1 tvg-name=215 ,Охота и рыбалка
+udp://@239.1.2.5:1234
+#EXTINF:-1 tvg-name=217 ,Усадьба
+udp://@239.1.2.17:1234
+#EXTINF:-1 tvg-name=806 ,Ностальгия
+udp://@239.1.2.13:1234
+#EXTINF:-1 tvg-name=709 ,Авто плюс
+udp://@239.1.2.6:1234
+#EXTINF:-1 tvg-name=813 ,Оружие
+udp://@239.1.2.7:1234
+#EXTINF:-1 tvg-name=737 ,Сарафан
+udp://@239.1.2.11:1234
+#EXTINF:-1 tvg-name=815 ,Кухня ТВ
+udp://@239.1.2.15:1234
+#EXTINF:-1 tvg-name=6313 ,Телекафе
+udp://@239.1.2.18:1234
+#EXTINF:-1 tvg-name=606 ,Психология21
+udp://@239.1.2.9:1234
+#EXTINF:-1 tvg-name=2905 ,Успех
+udp://@239.1.2.3:1234
+#EXTINF:-1 tvg-name=43030 ,8 канал
+udp://@239.1.2.10:1234
+
+#EXTINF:-1 tvg-name=507 group-title="Музыка" ,A-One
+udp://@239.1.8.2:1234
+#EXTINF:-1 tvg-name=502 aspect-ratio=16:9 ,О2ТВ
+udp://@239.1.8.3:1234
+#EXTINF:-1 tvg-name=503 ,RU.TV
+udp://@239.1.8.4:1234
+#EXTINF:-1 tvg-name=504 ,Music Box RU
+udp://@239.1.8.5:1234
+#EXTINF:-1 tvg-name=505 ,Music Box TV
+udp://@239.1.8.6:1234
+#EXTINF:-1 tvg-name=219 ,VH1 Classic
+udp://@239.1.8.7:1234
+#EXTINF:-1 tvg-name=818 aspect-ratio=16:9 ,Europa Plus TV
+udp://@239.1.8.10:1234
+#EXTINF:-1 tvg-name=227 aspect-ratio=16:9 ,MCM Top
+udp://@239.1.8.9:1234
+#EXTINF:-1 tvg-name=2401 ,Bridge TV
+udp://@239.1.8.8:1234
+#EXTINF:-1 tvg-name=731 ,Шансон ТВ
+udp://@239.1.8.12:1234
+#EXTINF:-1 tvg-name=810 ,Ля-минор
+udp://@239.1.8.13:1234
+#EXTINF:-1 tvg-name=801 ,Mezzo
+udp://@239.1.8.11:1234
+#EXTINF:-1 tvg-name=43042 ,Муз ТВ
+udp://@239.1.15.13:1234
+#EXTINF:-1 tvg-name=80022 aspect-ratio=16:9 ,Rusong TV
+udp://@239.1.8.14:1234
+
+#EXTINF:-1 tvg-name=41 group-title="Спорт" ,Россия 2
+udp://@239.1.15.16:1234
+#EXTINF:-1 tvg-name=201 aspect-ratio=16:9 ,Eurosport
+udp://@239.1.12.3:1234
+#EXTINF:-1 tvg-name=202 aspect-ratio=16:9 ,Eurosport 2
+udp://@239.1.12.4:1234
+#EXTINF:-1 tvg-name=241 aspect-ratio=16:9 ,Спорт 1
+udp://@239.1.12.7:1234
+#EXTINF:-1 tvg-name=739 ,Спорт
+udp://@239.1.12.10:1234
+#EXTINF:-1 tvg-name=2232 ,Футбол
+udp://@239.1.12.5:1234
+#EXTINF:-1 tvg-name=1313 ,КХЛ
+udp://@239.1.12.6:1234
+#EXTINF:-1 tvg-name=2002 aspect-ratio=16:9 ,Viasat Sport
+udp://@239.1.12.8:1234
+#EXTINF:-1 tvg-name=738 ,Бойцовский клуб
+udp://@239.1.12.9:1234
+#EXTINF:-1 tvg-name=812 ,Extreme Sports
+udp://@239.1.12.11:1234
+
+#EXTINF:-1 tvg-name=601 aspect-ratio=16:9 crop=1920x1080+0+0 group-title="Спорт HD" ,Eurosport HD
+udp://@239.1.11.6:1234
+
+#EXTINF:-1 tvg-name=3107 aspect-ratio=16:9 crop=1920x1080+0+0 group-title="Клуб HD" ,Fox Life HD
+udp://@239.1.9.3:1234
+#EXTINF:-1 tvg-name=618 aspect-ratio=16:9 crop=1920x1080+0+0 ,HD Life
+udp://@239.1.9.2:1234
+#EXTINF:-1 tvg-name=823 aspect-ratio=16:9 crop=1920x1080+0+0 ,Myzen HD
+udp://@239.1.10.21:1234
+#EXTINF:-1 tvg-name=24094 aspect-ratio=16:9 crop=1920x1080+0+0 ,Mezzo Live HD
+udp://@239.1.10.1:1234
+#EXTINF:-1 tvg-name=2712 aspect-ratio=16:9 crop=1920x1080+0+0 ,Первый музыкальный HD
+udp://@239.1.9.6:1234
+#EXTINF:-1 tvg-name=1412 aspect-ratio=16:9 crop=1920x1080+0+0 ,Россия HD
+udp://@239.1.10.22:1234
+#EXTINF:-1 tvg-name=2812 aspect-ratio=16:9 crop=1920x1080+0+0 ,Первый HD
+udp://@239.1.9.1:1234

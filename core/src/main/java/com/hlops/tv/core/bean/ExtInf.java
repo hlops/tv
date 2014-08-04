@@ -1,6 +1,6 @@
 package com.hlops.tv.core.bean;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,19 +37,23 @@ public class ExtInf {
         }
     }
 
-    private String timeShift;
+    private String duration;
     private String name;
     private String url;
 
-    private final Map<String, String> attrs = new HashMap<String, String>();
+    private final Map<String, String> attrs = new LinkedHashMap<String, String>();
 
     public ExtInf(String line) {
         Matcher matcher = timeShiftPattern.matcher(line);
         if (matcher.find()) {
-            timeShift = matcher.group(1);
+            duration = matcher.group(1);
             name = matcher.group(3);
             attrs.putAll(M3U.parseLine(matcher.group(2)));
         }
+    }
+
+    Map<String, String> getAttrs() {
+        return attrs;
     }
 
     public static Pattern getAttributePattern() {
@@ -60,12 +64,12 @@ public class ExtInf {
         return timeShiftPattern;
     }
 
-    public String getTimeShift() {
-        return timeShift;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setTimeShift(String timeShift) {
-        this.timeShift = timeShift;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public String getName() {
