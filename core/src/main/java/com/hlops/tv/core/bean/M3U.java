@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * Date: 7/31/14
  * Time: 2:18 PM
  */
-public class M3U {
+public class M3U implements Serializable {
 
     private final static Pattern attributePattern = Pattern.compile("(([A-z][A-z0-9\\-_\\:]*)=(\".*?\"|'.*?'|\\S*)\\s*)");
 
@@ -50,7 +50,14 @@ public class M3U {
     private final List<ExtInf> items = new ArrayList<ExtInf>();
 
     public M3U(InputStream is, Charset cs) throws IOException {
-        BufferedReader sr = new BufferedReader(new InputStreamReader(is, cs));
+        this(new InputStreamReader(is, cs));
+    }
+
+    public M3U(InputStreamReader reader) throws IOException {
+        this(new BufferedReader(reader));
+    }
+
+    public M3U(BufferedReader sr) throws IOException {
         try {
             String line, lineUC;
             ExtInf extInf = null;
