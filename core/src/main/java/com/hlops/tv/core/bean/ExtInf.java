@@ -53,7 +53,7 @@ public class ExtInf implements Serializable {
         }
     }
 
-    Map<String, String> getAttrs() {
+    public Map<String, String> getAttributes() {
         return attrs;
     }
 

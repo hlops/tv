@@ -27,8 +27,15 @@ public class MapDBServiceImpl implements MapDBService {
         db = DBMaker.newFileDB(new File(storage)).closeOnJvmShutdown().make();
     }
 
-    public BTreeMap<Object, DbChannel> getChannels() {
-        BTreeMap<Object, DbChannel> map = db.getTreeMap(DbChannel.NAME);
+    @Override
+    public void commit() {
+        db.commit();
+    }
+
+    @Override
+    public BTreeMap<String, DbChannel> getChannels() {
+        BTreeMap<String, DbChannel> map = db.getTreeMap(DbChannel.NAME);
         return map;
     }
+
 }

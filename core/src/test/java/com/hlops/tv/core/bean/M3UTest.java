@@ -3,13 +3,14 @@ package com.hlops.tv.core.bean;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class M3UTest extends Assert {
-
     @Test
     public void loadPlaylist() throws IOException {
         URL url = getClass().getClassLoader().getResource("playlist.m3u");
@@ -65,15 +66,4 @@ public class M3UTest extends Assert {
         assertEquals(expected, M3U.parseLine("aaaa=111   b='2 2'\tc=\"3 3 \" \r\nd='\"=4' e=''"));
     }
 
-    @Test
-    public void savePlaylist() throws IOException {
-        URL url = getClass().getClassLoader().getResource("playlist.m3u");
-        //noinspection ConstantConditions
-        File inFile = new File(url.getFile());
-        M3U m3U = new M3U(new FileInputStream(inFile), StandardCharsets.UTF_8);
-        File outFile = new File(inFile.getParent(), "result.m3u");
-        PrintStream out = new PrintStream(new FileOutputStream(outFile));
-        m3U.save(out);
-        out.close();
-    }
 }

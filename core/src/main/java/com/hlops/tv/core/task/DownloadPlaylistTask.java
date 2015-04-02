@@ -1,4 +1,4 @@
-package com.hlops.tv.core.service.impl;
+package com.hlops.tv.core.task;
 
 import com.hlops.tasker.task.CacheableTask;
 import com.hlops.tasker.task.impl.TaskImpl;

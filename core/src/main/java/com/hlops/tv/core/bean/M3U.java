@@ -113,6 +113,10 @@ public class M3U implements Serializable {
         return attrs.put(attr.getAttributeName(), value);
     }
 
+    public Map<String, String> getAttributes() {
+        return attrs;
+    }
+
     public ExtInf[] getItems() {
         return items.toArray(new ExtInf[items.size()]);
     }
@@ -145,33 +149,6 @@ public class M3U implements Serializable {
             }
         }
         return result.toArray(new ExtInf[result.size()]);
-    }
-
-    public void save(PrintStream out) {
-        out.print("#EXTM3U");
-        for (Map.Entry<String, String> entry : attrs.entrySet()) {
-            out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
-        }
-        out.println();
-        out.println();
-
-        String group = "";
-        for (ExtInf item : items) {
-            out.print("#EXTINF:" + item.getDuration());
-            for (Map.Entry<String, String> entry : item.getAttrs().entrySet()) {
-                if (entry.getKey().equals(ExtInf.Attribute.group_title.getAttributeName())) {
-                    if (group.equals(entry.getValue())) {
-                        continue;
-                    }
-                    group = entry.getValue();
-                }
-                out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
-            }
-            out.print(", " + item.getName());
-            out.println();
-
-            out.println("http://192.168.1.1:81/udp/" + item.getUrl().substring(7));
-        }
     }
 
 }

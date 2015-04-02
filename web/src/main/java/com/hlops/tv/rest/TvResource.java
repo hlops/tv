@@ -1,7 +1,7 @@
 package com.hlops.tv.rest;
 
 import com.hlops.tv.core.bean.M3U;
-import com.hlops.tv.core.service.MapDBService;
+import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.TVProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,17 +24,23 @@ public class TvResource {
     @Autowired
     TVProgramService tvProgramService;
 
-    @Autowired
-    MapDBService dbService;
-
     @GET
     @Path("playlist")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public String parsePlaylist() {
         M3U m3U = tvProgramService.loadTV();
+        tvProgramService.parseChannels(m3U);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        m3U.save(new PrintStream(out));
+        tvProgramService.save(m3U, new PrintStream(out));
         return out.toString();
+    }
+
+    @GET
+    @Path("channels")
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public String getChannels() {
+        DbChannel[] channels = tvProgramService.getChannels();
+        return "" + channels.length;
     }
 
     @GET
