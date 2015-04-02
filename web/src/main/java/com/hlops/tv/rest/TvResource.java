@@ -1,6 +1,10 @@
 package com.hlops.tv.rest;
 
 import com.hlops.tv.core.bean.M3U;
+import com.hlops.tv.core.service.TVProgramService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,14 +22,18 @@ import java.nio.charset.Charset;
  * Created by tom on 3/27/15.
  */
 @Path("/")
+@Component
 public class TvResource {
+
+    @Autowired
+    TVProgramService tvProgramService;
 
     @GET
     @Path("hi")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public String hi() {
         try {
-            URL url = new URL("http://www.cn.ru/data/tv/playlist.m3u");
+            URL url = new URL(tvProgramService.getPlaylistUrl());
             URLConnection urlConnection = url.openConnection();
             M3U m3U = new M3U(urlConnection.getInputStream(), Charset.forName("UTF-8"));
             ByteArrayOutputStream out = new ByteArrayOutputStream();

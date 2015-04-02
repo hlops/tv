@@ -10,5 +10,7 @@ import com.hlops.tv.core.bean.M3U;
  */
 public interface TVProgramService {
 
-    public M3U loadTV();
+    String getPlaylistUrl();
+
+    M3U loadTV();
 }

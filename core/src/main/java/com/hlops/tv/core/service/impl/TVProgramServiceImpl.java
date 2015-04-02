@@ -31,6 +31,11 @@ public class TVProgramServiceImpl implements TVProgramService {
     private String encoding = "UTF-8";
 
     @Override
+    public String getPlaylistUrl() {
+        return playlist;
+    }
+
+    @Override
     public M3U loadTV() {
         Future<M3U> future = queueService.executeTask(new DownloadPlaylistTask(playlist, Charset.forName(encoding)));
 
