@@ -42,7 +42,6 @@ public class TVProgramServiceImpl implements TVProgramService {
         M3U playlist = null;
         try {
             playlist = future.get();
-            System.out.println(playlist);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

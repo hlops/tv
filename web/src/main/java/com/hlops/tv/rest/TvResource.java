@@ -1,22 +1,18 @@
 package com.hlops.tv.rest;
 
 import com.hlops.tv.core.bean.M3U;
+import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.Charset;
 
 /**
  * Created by tom on 3/27/15.
@@ -28,23 +24,25 @@ public class TvResource {
     @Autowired
     TVProgramService tvProgramService;
 
+    @Autowired
+    MapDBService dbService;
+
     @GET
-    @Path("hi")
+    @Path("playlist")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public String hi() {
-        try {
-            URL url = new URL(tvProgramService.getPlaylistUrl());
-            URLConnection urlConnection = url.openConnection();
-            M3U m3U = new M3U(urlConnection.getInputStream(), Charset.forName("UTF-8"));
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            m3U.save(new PrintStream(out));
-            return out.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "ups...";
+    public String parsePlaylist() {
+        M3U m3U = tvProgramService.loadTV();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        m3U.save(new PrintStream(out));
+        return out.toString();
+    }
+
+    @GET
+    @Path("playlist.m3u")
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public InputStream readPlaylist() {
+        return getClass().getResourceAsStream("/playlist.m3u8");
+//        return getClass().getResourceAsStream("/playlist (1).m3u8");
     }
 
 }

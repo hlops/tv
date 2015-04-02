@@ -25,6 +25,11 @@ public class QueueServiceImpl implements QueueService {
     public QueueServiceImpl() {
     }
 
+    @Override
+    public void destroy() throws Exception {
+        threadExecutor.shutdown();
+    }
+
     @PostConstruct
     private void init() {
 
@@ -51,8 +56,18 @@ public class QueueServiceImpl implements QueueService {
                 Task<T> task = (Task<T>) callable;
                 Object id = getId(task);
                 if (id != null) {
+                    //noinspection unchecked
+                    RunnableFuture<T> cached = (RunnableFuture<T>) cache.get(id);
+                    if (cached != null) {
+                        if (cached instanceof PriorityFutureTask && ((PriorityFutureTask) cached).expired()) {
+                            cache.remove(id, cached);
+                        } else {
+                            return cached;
+                        }
+                    }
                     result = new PriorityFutureTask<T>((Task<T>) callable);
-                    Future cached = cache.putIfAbsent(id, result);
+                    //noinspection unchecked
+                    cached = (RunnableFuture<T>) cache.putIfAbsent(id, result);
                     if (cached != null) {
                         throw new TaskAlreadyInCacheException(cached);
                     }
@@ -68,21 +83,13 @@ public class QueueServiceImpl implements QueueService {
     }
 
     public <T> Future<T> executeTask(Task<T> task) {
-        Object id = getId(task);
-        if (id != null) {
+        //noinspection unchecked
+        try {
+            return threadExecutor.submit(task);
+        } catch (TaskAlreadyInCacheException e) {
             //noinspection unchecked
-            Future<T> taskFuture = cache.get(id);
-            if (taskFuture != null) {
-                return taskFuture;
-            }
-            try {
-                return threadExecutor.submit(task);
-            } catch (TaskAlreadyInCacheException e) {
-                //noinspection unchecked
-                return e.getCachedTask();
-            }
+            return e.getCachedTask();
         }
-        return threadExecutor.submit(task);
     }
 
     private void checkPoolSize(boolean isIncrement) {
@@ -110,4 +117,5 @@ public class QueueServiceImpl implements QueueService {
         }
         return null;
     }
+
 }

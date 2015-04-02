@@ -6,6 +6,7 @@ import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.io.File;
 /**
  * Created by tom on 3/31/15.
  */
+@Service
 public class MapDBServiceImpl implements MapDBService {
 
     @Value("${tv-playlist-storage}")

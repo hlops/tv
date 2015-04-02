@@ -15,6 +15,9 @@ import java.nio.charset.Charset;
  */
 public class DownloadPlaylistTask extends TaskImpl<M3U> implements CacheableTask<M3U> {
 
+    // 1 minute
+    private static final long TIMEOUT = 6000;
+
     private final String url;
     private final Charset encoding;
 
@@ -35,8 +38,7 @@ public class DownloadPlaylistTask extends TaskImpl<M3U> implements CacheableTask
 
     @Override
     public long getAliveTime() {
-        // 1 minute
-        return 60000;
+        return TIMEOUT;
     }
 
     @Override
