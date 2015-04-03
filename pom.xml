@@ -20,7 +20,6 @@
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
         <spring.version>4.0.3.RELEASE</spring.version>
-        <jackson.version>2.3.0</jackson.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -105,23 +104,6 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- Jackson JSON Mapper -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-joda</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -132,6 +114,7 @@
                 <artifactId>commons-io</artifactId>
                 <version>2.2</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

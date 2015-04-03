@@ -36,14 +36,6 @@ public class TvResource {
     }
 
     @GET
-    @Path("channels")
-    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public String getChannels() {
-        DbChannel[] channels = tvProgramService.getChannels();
-        return "" + channels.length;
-    }
-
-    @GET
     @Path("playlist.m3u")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public InputStream readPlaylist() {

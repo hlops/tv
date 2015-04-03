@@ -104,10 +104,4 @@ public class TVProgramServiceImpl implements TVProgramService {
         }
     }
 
-    @Override
-    public DbChannel[] getChannels() {
-        Collection<DbChannel> values = dbService.getChannels().values();
-        return values.toArray(new DbChannel[values.size()]);
-    }
-
 }

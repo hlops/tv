@@ -21,5 +21,4 @@ public interface TVProgramService {
 
     void save(M3U m3u, PrintStream out);
 
-    DbChannel[] getChannels();
 }
