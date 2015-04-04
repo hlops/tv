@@ -1,0 +1,12 @@
+.full table {
+    width: auto;
+}
+
+.full table tbody,
+.full table thead {
+    display: block;
+}
+.full table tbody {
+    height: 300px;
+    overflow-y: auto;
+}
