@@ -26,7 +26,7 @@ function UITable(id, $renderer, header) {
             var arr = [];
             var $th = $("#channelsTable").find("thead>tr:first>th");
             for (var i = 0; i < data.length; i++) {
-                arr.push("<tr>");
+                arr.push("<tr rowId='", data[i]["id"], "'>");
                 $th.each(function () {
                     arr.push("<td>");
                     var $this = $(this);
@@ -34,7 +34,11 @@ function UITable(id, $renderer, header) {
                     var type = $this.data("type");
                     var value = data[i][name];
                     if (type == "checkbox") {
-                        arr.push("<input type='checkbox' checked='", value, "'>");
+                        arr.push("<input type='checkbox'");
+                        if (value) {
+                            arr.push("checked='checked'");
+                        }
+                        arr.push("'>");
                     } else {
                         arr.push(value);
                     }
@@ -44,6 +48,10 @@ function UITable(id, $renderer, header) {
             }
             $renderer.find("tbody").html(arr.join(""));
         }
+    }
+
+    this.getRenderer = function () {
+        return $renderer;
     }
 }
 

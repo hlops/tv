@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ChannelVO {
 
+    private String id;
     private boolean enabled;
     private String name;
-    private String tvgName;
     private String group;
     private String aspect;
     private String crop;
@@ -24,7 +24,7 @@ public class ChannelVO {
     public ChannelVO(ExtInf extInf, DbChannel dbChannel) {
         setEnabled(dbChannel.isEnabled());
         setName(extInf.getName());
-        setTvgName(extInf.get(ExtInf.Attribute.tvg_name));
+        setId(extInf.get(ExtInf.Attribute.tvg_name));
         setAspect(extInf.get(ExtInf.Attribute.aspect_ratio));
         setCrop(extInf.get(ExtInf.Attribute.crop));
         setGroup(extInf.get(ExtInf.Attribute.group_title));
@@ -46,12 +46,12 @@ public class ChannelVO {
         this.name = name;
     }
 
-    public String getTvgName() {
-        return tvgName;
+    public String getId() {
+        return id;
     }
 
-    public void setTvgName(String tvgName) {
-        this.tvgName = tvgName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGroup() {

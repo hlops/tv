@@ -17,6 +17,20 @@
                         ["Группа", "group"]
                     ]
             );
+            table.getRenderer().on("change", ":checkbox", function (event) {
+                var $el = $(event.target);
+                if ($el.is(":checkbox")) {
+                    $.ajax({
+                        url: "/tv/rest/channel",
+                        method: "PUT",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({
+                            id: $el.parents("tr").attr("rowId"),
+                            enabled: $el.is(":checked")
+                        })
+                    })
+                }
+            });
             $.get("/tv/rest/channels", function (data) {
                 table.fill(data);
             });
