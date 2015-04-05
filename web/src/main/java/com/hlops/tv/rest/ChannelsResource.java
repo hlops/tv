@@ -5,8 +5,13 @@ import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
+import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.model.ChannelVO;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mapdb.BTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +20,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tom on 4/4/15.
@@ -24,8 +31,13 @@ import java.util.List;
 @Component
 public class ChannelsResource {
 
+    private static Logger log = LogManager.getLogger(ChannelsResource.class);
+
     @Autowired
     TVProgramService tvProgramService;
+
+    @Autowired
+    XmltvService xmltvService;
 
     @Autowired
     private MapDBService dbService;
@@ -42,14 +54,22 @@ public class ChannelsResource {
     @GET
     @Path("channels")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ChannelVO> getChannels() {
+    public List<ChannelVO> getChannels() throws InterruptedException {
         List<ChannelVO> result = new ArrayList<ChannelVO>();
         M3U m3U = tvProgramService.loadTV();
-        tvProgramService.parseChannels(m3U);
         BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
+        Map<String, String> xmltvMap = new LinkedHashMap<String, String>();
+        for (Map.Entry<String, String> entry : xmltvService.getChannels().entrySet()) {
+            xmltvMap.put(entry.getKey().replaceAll("[\\s-]", "").toLowerCase(), entry.getValue());
+        }
+
         for (ExtInf extInf : m3U.getItems()) {
             DbChannel dbChannel = channelsMap.get(extInf.get(ExtInf.Attribute.tvg_name));
-            result.add(new ChannelVO(extInf, dbChannel));
+            if (StringUtils.isEmpty(dbChannel.getXmltv())) {
+                dbChannel.setXmltv(xmltvMap.get(extInf.getName().replaceAll("[\\s-]", "").toLowerCase()));
+            }
+            ChannelVO channelVO = new ChannelVO(extInf, dbChannel);
+            result.add(channelVO);
         }
         return result;
     }
@@ -67,11 +87,18 @@ public class ChannelsResource {
                 channels.replace(bean.getId(), dbChannel);
                 dbService.commit();
             } catch (IllegalAccessException e) {
-                // todo:
-                e.printStackTrace();
+                log.log(Level.ERROR, e.getMessage(), e);
             } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                log.log(Level.ERROR, e.getMessage(), e);
             }
         }
     }
+
+    @GET
+    @Path("xmltv-channels")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Map<String, String> getXmltvChannels() throws InterruptedException {
+        return xmltvService.getChannels();
+    }
+
 }

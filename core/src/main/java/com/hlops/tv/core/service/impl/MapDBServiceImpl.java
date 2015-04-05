@@ -2,6 +2,8 @@ package com.hlops.tv.core.service.impl;
 
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.MapDBService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -16,6 +18,8 @@ import java.io.File;
  */
 @Service
 public class MapDBServiceImpl implements MapDBService {
+
+    private static Logger log = LogManager.getLogger(MapDBServiceImpl.class);
 
     @Value("${tv-playlist-storage}")
     private String storage;

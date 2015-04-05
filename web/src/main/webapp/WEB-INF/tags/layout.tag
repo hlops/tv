@@ -9,6 +9,7 @@
     <title>${title}</title>
     <script src="/js/jquery-2.1.3.min.js"></script>
     <script src="/js/ui.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 
     <jsp:invoke fragment="head"/>

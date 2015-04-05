@@ -3,6 +3,7 @@ package com.hlops.tv.core.task;
 import com.hlops.tasker.task.CacheableTask;
 import com.hlops.tasker.task.impl.TaskImpl;
 import com.hlops.tv.core.bean.M3U;
+import com.sun.istack.internal.NotNull;
 
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -21,7 +22,7 @@ public class DownloadPlaylistTask extends TaskImpl<M3U> implements CacheableTask
     private final String url;
     private final Charset encoding;
 
-    public DownloadPlaylistTask(String url, Charset encoding) {
+    public DownloadPlaylistTask(@NotNull String url, @NotNull Charset encoding) {
         this.url = url;
         this.encoding = encoding;
     }

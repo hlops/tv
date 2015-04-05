@@ -12,6 +12,7 @@ public class DbChannel implements Serializable {
     public static final String NAME = "dbChannel";
 
     private boolean enabled = true;
+    private String xmltv;
 
     public boolean isEnabled() {
         return enabled;
@@ -21,6 +22,16 @@ public class DbChannel implements Serializable {
         this.enabled = enabled;
     }
 
-    public void parse(ExtInf item) {
+    public String getXmltv() {
+        return xmltv;
     }
+
+    public void setXmltv(String xmltv) {
+        this.xmltv = xmltv;
+    }
+
+    public void parse(ExtInf item) {
+
+    }
+
 }

@@ -11,6 +11,7 @@
                     $("#channelsDiv"),
                     [
                         ["Канал", "name"],
+                        ["xmltv Id", "xmltv"],
                         ["Активен", "enabled", "checkbox"],
                         ["Аспект", "aspect"],
                         ["Размер", "crop"],
@@ -36,10 +37,50 @@
             });
         });
     </script>
+    <style>
+        #channelsDiv {
+            border-collapse: collapse;
+            padding: 10px;
+        }
+
+        #channelsDiv .ui-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #channelsDiv .ui-table thead {
+            padding-right: 15px;
+        }
+
+        #channelsDiv .ui-table thead, #channelsDiv .ui-table tbody {
+            display: block;
+            border-collapse: separate;
+        }
+
+        #channelsDiv .ui-table tbody {
+            overflow-y: scroll;
+            height: calc(100vh - 80px);
+        }
+
+        #channelsDiv .ui-table tbody td {
+            text-align: center;
+        }
+
+        #channelsDiv .ui-table tbody td.td-name {
+            text-align: left;
+        }
+
+        #channelsDiv .ui-table thead tr.filter .th-enabled input,
+        #channelsDiv .ui-table thead tr.filter .th-aspect input,
+        #channelsDiv .ui-table thead tr.filter .th-crop input
+        {
+            display: none;
+        }
+    </style>
 </jsp:attribute>
 
 <jsp:attribute name="body">
-    <div id="channelsDiv" class="full"></div>
+    <div id="channelsDiv"></div>
 </jsp:attribute>
 
 </t:layout>

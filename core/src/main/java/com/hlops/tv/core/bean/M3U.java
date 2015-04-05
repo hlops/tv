@@ -58,7 +58,6 @@ public class M3U implements Serializable {
     }
 
     public M3U(BufferedReader sr) throws IOException {
-        System.out.println("loading m3u");
         try {
             String line, lineUC;
             ExtInf extInf = null;

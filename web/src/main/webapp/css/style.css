@@ -1,12 +1,10 @@
-.full table {
-    width: auto;
+.ui-table {
 }
 
-.full table tbody,
-.full table thead {
-    display: block;
+.ui-table tr.filter th {
+    padding-right: 5px;
 }
-.full table tbody {
-    height: 300px;
-    overflow-y: auto;
+
+.ui-table tr.filter input {
+    width: 100%;
 }

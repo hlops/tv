@@ -7,6 +7,9 @@ import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.task.DownloadPlaylistTask;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mapdb.BTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.nio.charset.Charset;
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -28,6 +30,8 @@ import java.util.concurrent.Future;
 
 @Service
 public class TVProgramServiceImpl implements TVProgramService {
+
+    private static Logger log = LogManager.getLogger(TVProgramServiceImpl.class);
 
     @Autowired
     private QueueService queueService;
@@ -44,29 +48,27 @@ public class TVProgramServiceImpl implements TVProgramService {
     @Autowired
     private MapDBService dbService;
 
-    @Override
-    public String getPlaylistUrl() {
-        return playlist;
-    }
-
-    @Override
-    public M3U loadTV() {
+    private M3U getM3U() throws InterruptedException {
         Future<M3U> future = queueService.executeTask(new DownloadPlaylistTask(playlist, Charset.forName(encoding)));
 
         M3U playlist = null;
         try {
             playlist = future.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            log.log(Level.ERROR, e.getMessage(), e);
         }
 
         return playlist;
     }
 
     @Override
-    public void parseChannels(M3U m3U) {
+    public M3U loadTV() throws InterruptedException {
+        M3U m3U = getM3U();
+        parseChannels(m3U);
+        return m3U;
+    }
+
+    private void parseChannels(M3U m3U) {
         BTreeMap<String, DbChannel> channels = dbService.getChannels();
         for (ExtInf item : m3U.getItems()) {
             DbChannel dbChannel = new DbChannel();
@@ -77,7 +79,7 @@ public class TVProgramServiceImpl implements TVProgramService {
         dbService.commit();
     }
 
-    public void save(M3U m3u, PrintStream out) {
+    public void print(M3U m3u, PrintStream out) {
         out.print("#EXTM3U");
         for (Map.Entry<String, String> entry : m3u.getAttributes().entrySet()) {
             out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");

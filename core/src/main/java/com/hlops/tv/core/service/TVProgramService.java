@@ -13,12 +13,8 @@ import java.io.PrintStream;
  */
 public interface TVProgramService {
 
-    String getPlaylistUrl();
+    M3U loadTV() throws InterruptedException;
 
-    M3U loadTV();
-
-    void parseChannels(M3U m3U);
-
-    void save(M3U m3u, PrintStream out);
+    void print(M3U m3u, PrintStream out);
 
 }

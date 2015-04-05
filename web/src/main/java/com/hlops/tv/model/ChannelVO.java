@@ -17,6 +17,7 @@ public class ChannelVO {
     private String group;
     private String aspect;
     private String crop;
+    private String xmltv;
 
     public ChannelVO() {
     }
@@ -28,6 +29,7 @@ public class ChannelVO {
         setAspect(extInf.get(ExtInf.Attribute.aspect_ratio));
         setCrop(extInf.get(ExtInf.Attribute.crop));
         setGroup(extInf.get(ExtInf.Attribute.group_title));
+        setXmltv(dbChannel.getXmltv());
     }
 
     public boolean isEnabled() {
@@ -76,5 +78,13 @@ public class ChannelVO {
 
     public void setCrop(String crop) {
         this.crop = crop;
+    }
+
+    public String getXmltv() {
+        return xmltv;
+    }
+
+    public void setXmltv(String xmltv) {
+        this.xmltv = xmltv;
     }
 }
