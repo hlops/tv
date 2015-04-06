@@ -28,7 +28,9 @@ public class MapDBServiceImpl implements MapDBService {
 
     @PostConstruct
     public void init() {
-        db = DBMaker.newFileDB(new File(storage)).closeOnJvmShutdown().make();
+        File file = new File(storage);
+        file.getParentFile().mkdirs();
+        db = DBMaker.newFileDB(file).closeOnJvmShutdown().make();
     }
 
     @Override
