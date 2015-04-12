@@ -1,5 +1,6 @@
 package com.hlops.tv.core.service;
 
+import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -7,5 +8,7 @@ import java.util.Map;
  */
 public interface XmltvService {
 
-    Map<String, String> getChannels() throws InterruptedException;
+    Map<String, String> getAllChannels() throws InterruptedException;
+
+    void getXmltv(OutputStream outputStream, Filter filter) throws InterruptedException;
 }

@@ -96,7 +96,7 @@ public class ChannelsResource {
     @Path("xmltv-channels")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Map<String, String> getXmltvChannels() throws InterruptedException {
-        return xmltvService.getChannels();
+        return xmltvService.getAllChannels();
     }
 
     @GET
@@ -104,7 +104,7 @@ public class ChannelsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public void bindChannels() throws InterruptedException {
         Map<String, String> channels = new HashMap<String, String>();
-        for (Map.Entry<String, String> entry : xmltvService.getChannels().entrySet()) {
+        for (Map.Entry<String, String> entry : xmltvService.getAllChannels().entrySet()) {
             channels.put(filterKey(entry.getValue()), entry.getKey());
         }
         boolean isModified = false;
