@@ -64,7 +64,7 @@ public class XmltvServiceImpl implements XmltvService {
                             channelId = reader.getAttributeValue(0);
                         } else if ("display-name".equals(reader.getName().getLocalPart())) {
                             if (channelId != null) {
-                                channels.put(reader.getElementText(), channelId);
+                                channels.put(channelId, reader.getElementText());
                             }
                         }
                         break;
@@ -78,7 +78,6 @@ public class XmltvServiceImpl implements XmltvService {
                 }
             }
             reader.close();
-            System.out.println("done");
         } catch (IOException e) {
             log.log(Level.ERROR, e.getMessage(), e);
         } catch (XMLStreamException e) {

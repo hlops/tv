@@ -4,6 +4,7 @@ import com.hlops.tasker.QueueService;
 import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.task.DownloadPlaylistTask;
@@ -33,9 +34,6 @@ public class TVProgramServiceImpl implements TVProgramService {
 
     private static Logger log = LogManager.getLogger(TVProgramServiceImpl.class);
 
-    @Autowired
-    private QueueService queueService;
-
     @Value("${tv-playlist-url}")
     private String playlist;
 
@@ -44,6 +42,12 @@ public class TVProgramServiceImpl implements TVProgramService {
 
     @Value("${tv-playlist-udp-prefix}")
     private String udpPrefix;
+
+    @Autowired
+    private QueueService queueService;
+
+    @Autowired
+    HtmlFilterFactory filterFactory;
 
     @Autowired
     private MapDBService dbService;
@@ -79,7 +83,7 @@ public class TVProgramServiceImpl implements TVProgramService {
         dbService.commit();
     }
 
-    public void print(M3U m3u, PrintStream out) {
+    public void print(M3U m3u, PrintStream out, Filter filter) {
         out.print("#EXTM3U");
         for (Map.Entry<String, String> entry : m3u.getAttributes().entrySet()) {
             out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
@@ -88,21 +92,24 @@ public class TVProgramServiceImpl implements TVProgramService {
         out.println();
 
         String group = "";
+        BTreeMap<String, DbChannel> channels = dbService.getChannels();
         for (ExtInf item : m3u.getItems()) {
-            out.print("#EXTINF:" + item.getDuration());
-            for (Map.Entry<String, String> entry : item.getAttributes().entrySet()) {
-                if (entry.getKey().equals(ExtInf.Attribute.group_title.getAttributeName())) {
-                    if (group.equals(entry.getValue())) {
-                        continue;
+            if (filter.check(filterFactory.prepare(item, channels.get(item.get(ExtInf.Attribute.tvg_name))))) {
+                out.print("#EXTINF:" + item.getDuration());
+                for (Map.Entry<String, String> entry : item.getAttributes().entrySet()) {
+                    if (entry.getKey().equals(ExtInf.Attribute.group_title.getAttributeName())) {
+                        if (group.equals(entry.getValue())) {
+                            continue;
+                        }
+                        group = entry.getValue();
                     }
-                    group = entry.getValue();
+                    out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
                 }
-                out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
-            }
-            out.print(", " + item.getName());
-            out.println();
+                out.print(", " + item.getName());
+                out.println();
 
-            out.println(udpPrefix + item.getUrl().substring(7));
+                out.println(udpPrefix + item.getUrl().substring(7));
+            }
         }
     }
 

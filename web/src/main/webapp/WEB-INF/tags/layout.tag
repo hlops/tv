@@ -12,6 +12,9 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 
+    <script src="/js/chosen.jquery.min.js"></script>
+    <link href="/css/chosen.min.css" rel="stylesheet">
+
     <jsp:invoke fragment="head"/>
 </head>
 <body>

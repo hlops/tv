@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ChannelVO {
 
     private String id;
-    private boolean enabled;
+    private Boolean enabled;
     private String name;
     private String group;
     private String aspect;
@@ -32,11 +32,11 @@ public class ChannelVO {
         setXmltv(dbChannel.getXmltv());
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

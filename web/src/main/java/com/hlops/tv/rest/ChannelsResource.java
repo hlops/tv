@@ -20,7 +20,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +51,10 @@ public class ChannelsResource {
         }
     };
 
+    private String filterKey(String key) {
+        return key.replaceAll("[\\s-]", "").toLowerCase();
+    }
+
     @GET
     @Path("channels")
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,18 +62,9 @@ public class ChannelsResource {
         List<ChannelVO> result = new ArrayList<ChannelVO>();
         M3U m3U = tvProgramService.loadTV();
         BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
-        Map<String, String> xmltvMap = new LinkedHashMap<String, String>();
-        for (Map.Entry<String, String> entry : xmltvService.getChannels().entrySet()) {
-            xmltvMap.put(entry.getKey().replaceAll("[\\s-]", "").toLowerCase(), entry.getValue());
-        }
-
         for (ExtInf extInf : m3U.getItems()) {
             DbChannel dbChannel = channelsMap.get(extInf.get(ExtInf.Attribute.tvg_name));
-            if (StringUtils.isEmpty(dbChannel.getXmltv())) {
-                dbChannel.setXmltv(xmltvMap.get(extInf.getName().replaceAll("[\\s-]", "").toLowerCase()));
-            }
-            ChannelVO channelVO = new ChannelVO(extInf, dbChannel);
-            result.add(channelVO);
+            result.add(new ChannelVO(extInf, dbChannel));
         }
         return result;
     }
@@ -84,6 +79,9 @@ public class ChannelsResource {
         if (dbChannel != null) {
             try {
                 NOT_NULL_BEAN_UTILS.copyProperties(dbChannel, bean);
+                if (bean.isEnabled() != null) {
+                    dbChannel.setEnabled(bean.isEnabled());
+                }
                 channels.replace(bean.getId(), dbChannel);
                 dbService.commit();
             } catch (IllegalAccessException e) {
@@ -99,6 +97,35 @@ public class ChannelsResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Map<String, String> getXmltvChannels() throws InterruptedException {
         return xmltvService.getChannels();
+    }
+
+    @GET
+    @Path("xmltv-bind-channels")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public void bindChannels() throws InterruptedException {
+        Map<String, String> channels = new HashMap<String, String>();
+        for (Map.Entry<String, String> entry : xmltvService.getChannels().entrySet()) {
+            channels.put(filterKey(entry.getValue()), entry.getKey());
+        }
+        boolean isModified = false;
+        M3U m3U = tvProgramService.loadTV();
+        BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
+        for (ExtInf extInf : m3U.getItems()) {
+            String channelId = extInf.get(ExtInf.Attribute.tvg_name);
+            DbChannel dbChannel = channelsMap.get(channelId);
+            if (StringUtils.isEmpty(dbChannel.getXmltv())) {
+                String xmltvChannelId = channels.get(filterKey(extInf.getName()));
+                if (xmltvChannelId == null) {
+                    xmltvChannelId = channels.get(filterKey(extInf.getName() + " канал"));
+                }
+                dbChannel.setXmltv(xmltvChannelId);
+                isModified = true;
+                channelsMap.replace(channelId, dbChannel, dbChannel);
+            }
+        }
+        if (isModified) {
+            dbService.commit();
+        }
     }
 
 }

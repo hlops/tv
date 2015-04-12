@@ -21,7 +21,7 @@ function UITable(id, $renderer, header) {
             var arr = [];
             var $th = $renderer.find("thead>tr:first>th");
             for (var i = 0; i < data.length; i++) {
-                arr.push("<tr rowId='", data[i]["id"], "'>");
+                arr.push("<tr class='row' rowId='", data[i]["id"], "'>");
                 $th.each(function (n) {
                     var name = header[n][1];
                     var type = header[n][2];
@@ -29,7 +29,7 @@ function UITable(id, $renderer, header) {
                     arr.push("<td class='td-", name, "'>");
                     var value = data[i][name];
                     if (type == "checkbox") {
-                        arr.push("<input type='checkbox'");
+                        arr.push("<input type='checkbox'  class='form-control'");
                         if (value) {
                             arr.push("checked='checked'");
                         }

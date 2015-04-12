@@ -1,7 +1,6 @@
 package com.hlops.tv.core.service;
 
 import com.hlops.tv.core.bean.M3U;
-import com.hlops.tv.core.bean.db.DbChannel;
 
 import java.io.PrintStream;
 
@@ -15,6 +14,6 @@ public interface TVProgramService {
 
     M3U loadTV() throws InterruptedException;
 
-    void print(M3U m3u, PrintStream out);
+    void print(M3U m3u, PrintStream out, Filter filter);
 
 }

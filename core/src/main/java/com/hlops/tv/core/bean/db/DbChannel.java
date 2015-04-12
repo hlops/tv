@@ -31,7 +31,6 @@ public class DbChannel implements Serializable {
     }
 
     public void parse(ExtInf item) {
-
     }
 
 }
