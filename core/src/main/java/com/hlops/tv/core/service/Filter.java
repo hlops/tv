@@ -1,5 +1,8 @@
 package com.hlops.tv.core.service;
 
+import com.hlops.tv.core.bean.ExtInf;
+import com.hlops.tv.core.bean.db.DbChannel;
+
 import java.util.Map;
 
 /**
@@ -7,5 +10,5 @@ import java.util.Map;
  */
 public interface Filter {
 
-    boolean check(Map<String, String> values);
+    boolean accept(Map<String, String> values);
 }

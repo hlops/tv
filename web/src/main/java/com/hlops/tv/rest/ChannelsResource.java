@@ -120,7 +120,7 @@ public class ChannelsResource {
                 }
                 dbChannel.setXmltv(xmltvChannelId);
                 isModified = true;
-                channelsMap.replace(channelId, dbChannel, dbChannel);
+                channelsMap.replace(channelId, dbChannel);
             }
         }
         if (isModified) {

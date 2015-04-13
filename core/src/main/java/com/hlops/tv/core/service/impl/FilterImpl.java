@@ -20,7 +20,7 @@ public class FilterImpl implements Filter {
     }
 
     @Override
-    public boolean check(Map<String, String> values) {
+    public boolean accept(Map<String, String> values) {
         for (FilterOperation op : operations) {
             if (!op.check(values)) {
                 return false;

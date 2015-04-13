@@ -1,12 +1,18 @@
 package com.hlops.tv.core.service.impl;
 
 import com.hlops.tasker.QueueService;
+import com.hlops.tv.core.bean.ExtInf;
+import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.Filter;
+import com.hlops.tv.core.service.MapDBService;
+import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.task.DownloadXmltvTask;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mapdb.BTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,12 +20,12 @@ import org.springframework.stereotype.Service;
 import javax.xml.stream.*;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by tom on 4/4/15.
@@ -37,6 +43,12 @@ public class XmltvServiceImpl implements XmltvService {
 
     @Autowired
     private QueueService queueService;
+
+    @Autowired
+    private MapDBService dbService;
+
+    @Autowired
+    private TVProgramService tvProgramService;
 
     private File getXmltvFile() throws InterruptedException {
         File file = new File(xmltvFile);
@@ -88,7 +100,7 @@ public class XmltvServiceImpl implements XmltvService {
     }
 
     @Override
-    public void getXmltv(OutputStream out, Filter filter) throws InterruptedException {
+    public void printXmltv(OutputStream out, final Filter filter) throws InterruptedException {
         try {
             InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
 
@@ -96,6 +108,20 @@ public class XmltvServiceImpl implements XmltvService {
             XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 
             XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
+
+            final Map<String, Map<String, String>> filterData = new HashMap<String, Map<String, String>>();
+            BTreeMap<String, DbChannel> dbChannels = dbService.getChannels();
+            for (ExtInf extInf : tvProgramService.loadTV().getItems()) {
+                String channelId = extInf.get(ExtInf.Attribute.tvg_name);
+                DbChannel dbChannel = dbChannels.get(channelId);
+                if (dbChannel != null && StringUtils.isNotEmpty(dbChannel.getXmltv())) {
+                    Map<String, String> data = new HashMap<String, String>();
+                    filterData.put(dbChannel.getXmltv(), data);
+                    data.put("enabled", Boolean.toString(dbChannel.isEnabled()));
+                    data.put("group", extInf.get(ExtInf.Attribute.group_title));
+                }
+            }
+
             StreamFilter staxFilter = new StreamFilter() {
                 boolean isVisible = true;
 
@@ -106,9 +132,11 @@ public class XmltvServiceImpl implements XmltvService {
                         switch (reader.getEventType()) {
                             case XMLStreamConstants.START_ELEMENT:
                                 if ("channel".equals(localPart)) {
-                                    isVisible = "1".equals(reader.getAttributeValue(0)) || "3".equals(reader.getAttributeValue(0));
+                                    String xmltvId = reader.getAttributeValue(0);
+                                    isVisible = filterData.containsKey(xmltvId) && filter.accept(filterData.get(xmltvId));
                                 } else if ("programme".equals(localPart)) {
-                                    isVisible = "1".equals(reader.getAttributeValue(2));
+                                    String xmltvId = reader.getAttributeValue(2);
+                                    isVisible = filterData.containsKey(xmltvId) && filter.accept(filterData.get(xmltvId));
                                 }
                                 break;
                             case XMLStreamConstants.END_ELEMENT: {
@@ -126,7 +154,7 @@ public class XmltvServiceImpl implements XmltvService {
             };
             reader = inputFactory.createFilteredReader(reader, staxFilter);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
-            XMLEventWriter writer = outputFactory.createXMLEventWriter(new GZIPOutputStream(out, true));
+            XMLEventWriter writer = outputFactory.createXMLEventWriter(out);
             while (reader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
                 if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
@@ -136,7 +164,6 @@ public class XmltvServiceImpl implements XmltvService {
                 }
                 writer.add(event);
             }
-            writer.close();
             eventReader.close();
         } catch (IOException e) {
             log.log(Level.ERROR, e.getMessage(), e);
