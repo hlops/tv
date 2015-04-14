@@ -94,16 +94,21 @@ public class TVProgramServiceImpl implements TVProgramService {
         String group = "";
         BTreeMap<String, DbChannel> channels = dbService.getChannels();
         for (ExtInf item : m3u.getItems()) {
-            if (filter.accept(filterFactory.prepare(item, channels.get(item.get(ExtInf.Attribute.tvg_name))))) {
+            DbChannel dbChannel = channels.get(item.get(ExtInf.Attribute.tvg_name));
+            if (filter.accept(filterFactory.prepare(item, dbChannel))) {
                 out.print("#EXTINF:" + item.getDuration());
                 for (Map.Entry<String, String> entry : item.getAttributes().entrySet()) {
+                    String value = entry.getValue();
                     if (entry.getKey().equals(ExtInf.Attribute.group_title.getAttributeName())) {
-                        if (group.equals(entry.getValue())) {
+                        if (group.equals(value)) {
                             continue;
                         }
-                        group = entry.getValue();
+                        group = value;
                     }
-                    out.print(" " + entry.getKey() + "=\"" + entry.getValue() + "\"");
+                    if (entry.getKey().equals(ExtInf.Attribute.tvg_name.getAttributeName())) {
+                        value = dbChannel.getXmltv();
+                    }
+                    out.print(" " + entry.getKey() + "=\"" + value + "\"");
                 }
                 out.print(", " + item.getName());
                 out.println();

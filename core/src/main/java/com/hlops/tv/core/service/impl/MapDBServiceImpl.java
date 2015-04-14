@@ -21,6 +21,8 @@ public class MapDBServiceImpl implements MapDBService {
 
     private static Logger log = LogManager.getLogger(MapDBServiceImpl.class);
 
+    public static final String DB_CHANNELS = "dbChannel";
+
     @Value("${tv-playlist-storage}")
     private String storage;
 
@@ -40,8 +42,7 @@ public class MapDBServiceImpl implements MapDBService {
 
     @Override
     public BTreeMap<String, DbChannel> getChannels() {
-        BTreeMap<String, DbChannel> map = db.getTreeMap(DbChannel.NAME);
-        return map;
+        return db.getTreeMap(DB_CHANNELS);
     }
 
 }

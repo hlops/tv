@@ -13,7 +13,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -35,11 +38,30 @@ public class TvResource {
     @GET
     @Path("playlist")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public String parsePlaylist(@Context HttpServletRequest request) throws InterruptedException {
-        M3U m3U = tvProgramService.loadTV();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        tvProgramService.print(m3U, new PrintStream(out), filterFactory.createFilter(request.getParameterMap()));
-        return out.toString();
+    public Response parsePlaylist(@Context final HttpServletRequest request) throws InterruptedException {
+        final M3U m3U = tvProgramService.loadTV();
+        StreamingOutput streamingOutput = new StreamingOutput() {
+            @Override
+            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
+                tvProgramService.print(m3U, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+            }
+        };
+        return Response.ok(streamingOutput).build();
+    }
+
+    @GET
+    @Path("playlist.m3u")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response parsePlaylistFile(@Context final HttpServletRequest request) throws InterruptedException {
+        final M3U m3U = tvProgramService.loadTV();
+        StreamingOutput streamingOutput = new StreamingOutput() {
+            @Override
+            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
+                tvProgramService.print(m3U, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+            }
+        };
+        return Response.ok(streamingOutput).
+                header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = playlist.m3u").build();
     }
 
     @GET
@@ -69,6 +91,23 @@ public class TvResource {
     }
 
     @GET
+    @Path("xmltv-test")
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public Response parseXmltvTest(@Context final HttpServletRequest request) throws InterruptedException {
+        StreamingOutput streamingOutput = new StreamingOutput() {
+            @Override
+            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
+                try {
+                    xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
+                } catch (InterruptedException e) {
+                    // nothing to do
+                }
+            }
+        };
+        return Response.ok(streamingOutput).build();
+    }
+
+    @GET
     @Path("xmltv.gz")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response parseXmltvGz(@Context final HttpServletRequest request) throws InterruptedException {
@@ -77,7 +116,7 @@ public class TvResource {
             public void write(OutputStream outputStream) throws IOException, WebApplicationException {
                 GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream, true);
                 try {
-                    xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
+                    xmltvService.printXmltv(gzipOutputStream, filterFactory.createFilter(request.getParameterMap()));
                 } catch (InterruptedException e) {
                     // nothing to do
                 } finally {

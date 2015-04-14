@@ -8,6 +8,7 @@ import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.task.DownloadXmltvTask;
+import com.sun.xml.internal.stream.events.StartElementEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.*;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
@@ -111,6 +113,7 @@ public class XmltvServiceImpl implements XmltvService {
 
             final Map<String, Map<String, String>> filterData = new HashMap<String, Map<String, String>>();
             BTreeMap<String, DbChannel> dbChannels = dbService.getChannels();
+            final Map<String, String> channelNames = new HashMap<String, String>();
             for (ExtInf extInf : tvProgramService.loadTV().getItems()) {
                 String channelId = extInf.get(ExtInf.Attribute.tvg_name);
                 DbChannel dbChannel = dbChannels.get(channelId);
@@ -119,6 +122,8 @@ public class XmltvServiceImpl implements XmltvService {
                     filterData.put(dbChannel.getXmltv(), data);
                     data.put("enabled", Boolean.toString(dbChannel.isEnabled()));
                     data.put("group", extInf.get(ExtInf.Attribute.group_title));
+
+                    channelNames.put(dbChannel.getXmltv(), extInf.getName());
                 }
             }
 
@@ -155,13 +160,30 @@ public class XmltvServiceImpl implements XmltvService {
             reader = inputFactory.createFilteredReader(reader, staxFilter);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
             XMLEventWriter writer = outputFactory.createXMLEventWriter(out);
+            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+            String tagName = null, channelId = null;
             while (reader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
                 if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
+                    if ("display-name".equals(tagName)) {
+                        String name = channelNames.get(channelId);
+                        if (name != null) {
+                            event = eventFactory.createCharacters(name);
+                        }
+                    }
                     if (event.asCharacters().isWhiteSpace()) {
                         continue;
                     }
+                } else if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
+                    StartElementEvent el = ((StartElementEvent) event);
+                    tagName = el.nameAsString();
+                    if ("channel".equals(tagName)) {
+                        channelId = el.getAttributeByName(new QName("id")).getValue();
+                    }
+                } else {
+                    tagName = null;
                 }
+
                 writer.add(event);
             }
             eventReader.close();

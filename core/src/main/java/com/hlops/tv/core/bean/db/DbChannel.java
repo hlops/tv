@@ -9,8 +9,6 @@ import java.io.Serializable;
  */
 public class DbChannel implements Serializable {
 
-    public static final String NAME = "dbChannel";
-
     private boolean enabled = true;
     private String xmltv;
 
