@@ -141,7 +141,13 @@ public class XmltvServiceImpl implements XmltvService {
                                     isVisible = filterData.containsKey(xmltvId) && filter.accept(filterData.get(xmltvId));
                                 } else if ("programme".equals(localPart)) {
                                     String xmltvId = reader.getAttributeValue(2);
-                                    isVisible = filterData.containsKey(xmltvId) && filter.accept(filterData.get(xmltvId));
+                                    Map<String, String> map = new HashMap<String, String>();
+                                    if (filterData.containsKey(xmltvId)) {
+                                        map.putAll(filterData.get(xmltvId));
+                                        map.put("time-from")
+                                    } else {
+                                        isVisible = false;
+                                    }
                                 }
                                 break;
                             case XMLStreamConstants.END_ELEMENT: {

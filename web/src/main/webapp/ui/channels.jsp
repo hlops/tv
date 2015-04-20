@@ -15,8 +15,7 @@
                         ["Активен", "enabled", "checkbox"],
                         ["Аспект", "aspect"],
                         ["Размер", "crop"],
-                        ["Группа", "group"],
-                        ["Рейтинг", "rating"]
+                        ["Группа", "group"]
                     ]
             );
             table.getRenderer().on("change", ":checkbox", function (event) {

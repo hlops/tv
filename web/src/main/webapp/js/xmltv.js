@@ -4,8 +4,8 @@ XMLTV = function (url, $container) {
     var currentChannel, currentItem;
 
     var counter = 0;
-    var currentTime1 = 20150413130000;
-    var currentTime2 = 20150413173000;
+    var currentTime1 = 20150420023000;
+    var currentTime2 = 20150421103000;
 
     console.log("loading " + url + " ...")
     $.ajax({
@@ -44,7 +44,9 @@ XMLTV = function (url, $container) {
         } else if (node.nodeName == 'programme') {
             if (parseInt(node.getAttribute("start")) >= (currentTime1) && parseInt(node.getAttribute("start")) <= (currentTime2) ||
                 parseInt(node.getAttribute("stop")) >= (currentTime1) && parseInt(node.getAttribute("stop")) <= (currentTime2)) {
-                channels[node.getAttribute("channel")].items.push(currentItem = {});
+                channels[node.getAttribute("channel")].items.push(currentItem = {
+                    start: node.getAttribute("start")
+                });
             } else {
                 currentItem = null;
             }
@@ -76,11 +78,15 @@ XMLTV = function (url, $container) {
             arr.push("</div>");
             arr.push("<div class='items'>");
             for (var i = 0; i < channel.items.length; i++) {
-                arr.push("<span class='item' title='", channel.items[i].desc, "'>", channel.items[i].title, "</span>");
+                arr.push("<span class='item' title='", channel.items[i].desc, "'> ", getTime(channel.items[i].start), " ", channel.items[i].title, "</span>");
             }
             arr.push("</div></div>");
         }
         return arr.join("");
+    }
+
+    function getTime(t) {
+        return t.substring(8, 10) + ":" + t.substring(10, 12);
     }
 
 };
