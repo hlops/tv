@@ -1,4 +1,4 @@
-package com.hlops.tv.core.service.impl;
+package com.hlops.tv.core.service.impl.filter;
 
 import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.FilterOperation;

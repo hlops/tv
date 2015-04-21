@@ -7,6 +7,7 @@ import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
+import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
 import com.hlops.tv.core.task.DownloadPlaylistTask;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -95,7 +97,7 @@ public class TVProgramServiceImpl implements TVProgramService {
         BTreeMap<String, DbChannel> channels = dbService.getChannels();
         for (ExtInf item : m3u.getItems()) {
             DbChannel dbChannel = channels.get(item.get(ExtInf.Attribute.tvg_name));
-            if (filter.accept(filterFactory.prepare(item, dbChannel))) {
+            if (filter.accept(prepare(item, dbChannel))) {
                 out.print("#EXTINF:" + item.getDuration());
                 for (Map.Entry<String, String> entry : item.getAttributes().entrySet()) {
                     String value = entry.getValue();
@@ -118,4 +120,12 @@ public class TVProgramServiceImpl implements TVProgramService {
         }
     }
 
+    public static Map<String, String> prepare(ExtInf item, DbChannel dbChannel) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("enabled", Boolean.toString(dbChannel.isEnabled()));
+        map.put("xmltv", dbChannel.getXmltv());
+        map.put("channel", item.getName());
+        map.put("group", item.get(ExtInf.Attribute.group_title));
+        return map;
+    }
 }

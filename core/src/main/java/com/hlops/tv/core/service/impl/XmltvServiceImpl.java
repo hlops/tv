@@ -144,7 +144,8 @@ public class XmltvServiceImpl implements XmltvService {
                                     Map<String, String> map = new HashMap<String, String>();
                                     if (filterData.containsKey(xmltvId)) {
                                         map.putAll(filterData.get(xmltvId));
-                                        map.put("time-from")
+                                        map.put("start", reader.getAttributeValue(0));
+                                        map.put("stop", reader.getAttributeValue(1));
                                     } else {
                                         isVisible = false;
                                     }

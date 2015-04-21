@@ -3,7 +3,7 @@ package com.hlops.tv.rest;
 import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
-import com.hlops.tv.core.service.impl.HtmlFilterFactory;
+import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
