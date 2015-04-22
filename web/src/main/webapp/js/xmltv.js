@@ -4,8 +4,8 @@ XMLTV = function (url, $container) {
     var currentChannel, currentItem;
 
     var counter = 0;
-    var currentTime1 = 20150420023000;
-    var currentTime2 = 20150421103000;
+    var currentTime1 = 20140420023000;
+    var currentTime2 = 20160421103000;
 
     console.log("loading " + url + " ...")
     $.ajax({

@@ -146,6 +146,7 @@ public class XmltvServiceImpl implements XmltvService {
                                         map.putAll(filterData.get(xmltvId));
                                         map.put("start", reader.getAttributeValue(0));
                                         map.put("stop", reader.getAttributeValue(1));
+                                        isVisible = filter.accept(map);
                                     } else {
                                         isVisible = false;
                                     }

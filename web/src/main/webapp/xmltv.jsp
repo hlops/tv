@@ -8,7 +8,7 @@
     <script>
         var xmltv;
         $(function () {
-            xmltv = new XMLTV("tv/xmltv?group=спорт&start.ge.time=-1m&stop.le=+1h", $("#xmltvcontainer"));
+            xmltv = new XMLTV("tv/xmltv?group=спорт&stop.ge.time=-0m&start.le.time=%2B1h", $("#xmltvcontainer"));
         })
     </script>
     <style>

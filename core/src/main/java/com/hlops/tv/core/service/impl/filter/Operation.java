@@ -43,8 +43,6 @@ enum Operation implements IOperation {
     };
 
     private static int compare(@Nullable String s1, @Nullable String s2) throws NullPointerException {
-        // todo
-        //System.out.println(s1+" "+ s2);
         if (s1 == null && s2 == null) return 0;
         return s1.compareTo(s2);
     }
