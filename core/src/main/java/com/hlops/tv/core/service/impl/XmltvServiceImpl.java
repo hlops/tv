@@ -7,6 +7,7 @@ import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
+import com.hlops.tv.core.service.impl.filter.TimeFormatter;
 import com.hlops.tv.core.task.DownloadXmltvTask;
 import com.sun.xml.internal.stream.events.StartElementEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -20,11 +21,11 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.*;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.zip.GZIPInputStream;
@@ -187,6 +188,17 @@ public class XmltvServiceImpl implements XmltvService {
                     tagName = el.nameAsString();
                     if ("channel".equals(tagName)) {
                         channelId = el.getAttributeByName(new QName("id")).getValue();
+                    } else if ("programme".equals(tagName)) {
+                        StartElement startElement = (StartElement) event;
+                        List<Attribute> attributeList = new ArrayList<Attribute>();
+                        for (Iterator<Attribute> it = startElement.getAttributes(); it.hasNext(); ) {
+                            Attribute attr = it.next();
+                            if ("start".equals(attr.getName().getLocalPart()) || "stop".equals(attr.getName().getLocalPart())) {
+                                attr = eventFactory.createAttribute(attr.getName(), TimeFormatter.formatDateWithShift(attr.getValue()));
+                            }
+                            attributeList.add(attr);
+                        }
+                        event = eventFactory.createStartElement(startElement.getName(), attributeList.iterator(), startElement.getNamespaces());
                     }
                 } else {
                     tagName = null;
