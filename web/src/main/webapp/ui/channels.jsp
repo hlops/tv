@@ -46,7 +46,8 @@
                         id: $xmltvSelect.parents("tr:first").attr("rowId"),
                         xmltv: $xmltvSelect.val()
                     });
-                })
+                });
+                $("#hiddenDiv").hide();
             });
             $.when(f1, f2).then(function (d1, d2) {
                 table.getRenderer().find("td.td-xmltv").each(function () {
@@ -157,9 +158,6 @@
             display: none;
         }
 
-        #hiddenDiv {
-            #display: none;
-        }
     </style>
 </jsp:attribute>
 

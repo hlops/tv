@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,30 +103,35 @@ public class ChannelsResource {
     @GET
     @Path("xmltv-bind-channels")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public void bindChannels() throws InterruptedException {
-        Map<String, String> channels = new HashMap<String, String>();
-        for (Map.Entry<String, String> entry : xmltvService.getAllChannels().entrySet()) {
-            channels.put(filterKey(entry.getValue()), entry.getKey());
-        }
-        boolean isModified = false;
-        M3U m3U = tvProgramService.loadTV();
-        BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
-        for (ExtInf extInf : m3U.getItems()) {
-            String channelId = extInf.get(ExtInf.Attribute.tvg_name);
-            DbChannel dbChannel = channelsMap.get(channelId);
-            if (StringUtils.isEmpty(dbChannel.getXmltv())) {
-                String xmltvChannelId = channels.get(filterKey(extInf.getName()));
-                if (xmltvChannelId == null) {
-                    xmltvChannelId = channels.get(filterKey(extInf.getName() + " канал"));
-                }
-                dbChannel.setXmltv(xmltvChannelId);
-                isModified = true;
-                channelsMap.replace(channelId, dbChannel);
+    public Response bindChannels() {
+        try {
+            Map<String, String> channels = new HashMap<String, String>();
+            for (Map.Entry<String, String> entry : xmltvService.getAllChannels().entrySet()) {
+                channels.put(filterKey(entry.getValue()), entry.getKey());
             }
+            boolean isModified = false;
+            M3U m3U = tvProgramService.loadTV();
+            BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
+            for (ExtInf extInf : m3U.getItems()) {
+                String channelId = extInf.get(ExtInf.Attribute.tvg_name);
+                DbChannel dbChannel = channelsMap.get(channelId);
+                if (StringUtils.isEmpty(dbChannel.getXmltv())) {
+                    String xmltvChannelId = channels.get(filterKey(extInf.getName()));
+                    if (xmltvChannelId == null) {
+                        xmltvChannelId = channels.get(filterKey(extInf.getName() + " канал"));
+                    }
+                    dbChannel.setXmltv(xmltvChannelId);
+                    isModified = true;
+                    channelsMap.replace(channelId, dbChannel);
+                }
+            }
+            if (isModified) {
+                dbService.commit();
+            }
+        } catch (InterruptedException e) {
+            return Response.noContent().build();
         }
-        if (isModified) {
-            dbService.commit();
-        }
+        return Response.ok().build();
     }
 
 }
