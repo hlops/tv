@@ -18,6 +18,7 @@ public class ChannelVO {
     private String aspect;
     private String crop;
     private String xmltv;
+    private short timeShift;
 
     public ChannelVO() {
     }
@@ -30,6 +31,7 @@ public class ChannelVO {
         setCrop(extInf.get(ExtInf.Attribute.crop));
         setGroup(extInf.get(ExtInf.Attribute.group_title));
         setXmltv(dbChannel.getXmltv());
+        setTimeShift(dbChannel.getTimeShift());
     }
 
     public Boolean isEnabled() {
@@ -86,5 +88,13 @@ public class ChannelVO {
 
     public void setXmltv(String xmltv) {
         this.xmltv = xmltv;
+    }
+
+    public short getTimeShift() {
+        return timeShift;
+    }
+
+    public void setTimeShift(short timeShift) {
+        this.timeShift = timeShift;
     }
 }

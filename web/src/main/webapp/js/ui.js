@@ -29,7 +29,7 @@ function UITable(id, $renderer, header) {
                     arr.push("<td class='td-", name, "'>");
                     var value = data[i][name];
                     if (type == "checkbox") {
-                        arr.push("<input type='checkbox'  class='form-control'");
+                        arr.push("<input type='checkbox' class='form-control'");
                         if (value) {
                             arr.push("checked='checked'");
                         }

@@ -16,7 +16,7 @@
                         ["Аспект", "aspect"],
                         ["Размер", "crop"],
                         ["Группа", "group"],
-                        ["Сдвиг", "shift"]
+                        ["Сдвиг", "timeShift"]
                     ]
             );
             table.getRenderer().on("change", ":checkbox", function (event) {
@@ -41,15 +41,27 @@
                     placeholder_text_single: "Выбор канала",
                     allow_single_deselect: true
                 });
-                $xmltvSelect.on("change", function () {
-                    saveChannel({
-                        id: $xmltvSelect.parents("tr:first").attr("rowId"),
-                        xmltv: $xmltvSelect.val()
-                    });
-                });
-                $("#hiddenDiv").hide();
             });
             $.when(f1, f2).then(function (d1, d2) {
+                table.getRenderer().find("td.td-timeShift").each(function () {
+                    var $this = $(this);
+                    $this.attr("timeShift", $this.text());
+                });
+
+                $timeShiftSelect.chosen({
+                    disable_search_threshold: 20,
+                    width: "70px"
+                });
+
+                $(".editor").on("change", function (event) {
+                    var $editor = $(event.target);
+                    var ob = {id: $editor.parents("tr:first").attr("rowId")};
+                    ob[$editor.data("attr")] = $editor.val();
+                    saveChannel(ob);
+                });
+
+                $hiddenDiv.hide();
+
                 table.getRenderer().find("td.td-xmltv").each(function () {
                     $(this).attr("xmltv", $(this).text());
                     $(this).text(d2[0][$(this).attr("xmltv")]);
@@ -58,37 +70,41 @@
                 table.getRenderer().on("click", "td", function (event) {
                     $el = $(event.target);
                     if ($el.is("td.td-xmltv")) {
-                        showHmltvSelect($el)
+                        showSelectEditor($el, $xmltvSelect);
+                    } else if ($el.is("td.td-timeShift")) {
+                        showSelectEditor($el, $timeShiftSelect);
                     } else {
-                        var $parent = $el.parents("td.td-xmltv");
-                        if ($parent.length) {
-                            showHmltvSelect($parent)
-                        } else {
-                            hideHmltvSelect();
-                        }
+                        hideSelectEditors($el.parents("td:first"));
                     }
                 });
             });
 
             var $hiddenDiv = $("#hiddenDiv");
-            var $xmltvSelect = $("#xmltvSelect");
-            var $xmltvSelectDiv = $('#xmltvSelectDiv');
+            var $xmltvSelect = $("#xmltvSelect").data("attr", "xmltv");
+            var $timeShiftSelect = $("#timeShiftSelect").data("attr", "timeShift");
 
-            function hideHmltvSelect() {
-                var $td = $xmltvSelectDiv.parent();
-                if ($td.is("td")) {
-                    $hiddenDiv.append($xmltvSelectDiv);
-                    var $op = $xmltvSelect.find("option:selected");
-                    $td.text($op.text());
-                    $td.attr("xmltv", $op.val());
-                }
+            //$timeShiftSelect.chosen({});
+
+            function hideSelectEditors($activeTd) {
+                $(".editor").each(function () {
+                    $editor = $(this);
+                    $div = $editor.parent();
+                    var $td = $div.parent();
+                    if ($td.is("td") && !$td.is($activeTd)) {
+                        $hiddenDiv.append($div);
+                        var $op = $div.find("option:selected");
+                        $td.text($op.text());
+                        $td.attr($editor.data("attr"), $op.val());
+                    }
+                });
             }
 
-            function showHmltvSelect($td) {
-                if (!$td.is($xmltvSelectDiv.parent())) {
-                    hideHmltvSelect();
-                    $td.text("").append($xmltvSelectDiv);
-                    $xmltvSelect.val($el.attr("xmltv")).trigger("chosen:updated");
+            function showSelectEditor($td, $editor) {
+                var $div = $editor.parent();
+                if (!$td.is($div.parent())) {
+                    hideSelectEditors($td);
+                    $td.text("").append($div);
+                    $editor.val($td.attr($editor.data("attr"))).trigger("chosen:updated");
                 }
             }
 
@@ -164,8 +180,25 @@
 <jsp:attribute name="body">
     <div id="channelsDiv" class="container"></div>
     <div id="hiddenDiv">
-        <div id="xmltvSelectDiv">
-            <select id="xmltvSelect" class="chosen-select"></select>
+        <div>
+            <select id="xmltvSelect" class="editor chosen-select"></select>
+        </div>
+        <div>
+            <select id="timeShiftSelect" class="editor chosen-select">
+                <option value="-6">-6</option>
+                <option value="-5">-5</option>
+                <option value="-4">-4</option>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">+1</option>
+                <option value="2">+2</option>
+                <option value="3">+3</option>
+                <option value="4">+4</option>
+                <option value="5">+5</option>
+                <option value="6">+6</option>
+            </select>
         </div>
     </div>
 </jsp:attribute>
