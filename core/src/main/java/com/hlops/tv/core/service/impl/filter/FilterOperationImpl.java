@@ -37,7 +37,7 @@ public class FilterOperationImpl implements FilterOperation {
         for (String value : values) {
             if (map.containsKey(key)) {
                 try {
-                    if (operation.success(fmt.format(map.get(key)), fmt.format(value))) {
+                    if (operation.success(map.get(key), fmt.format(value))) {
                         return true;
                     }
                 } catch (NullPointerException e) {

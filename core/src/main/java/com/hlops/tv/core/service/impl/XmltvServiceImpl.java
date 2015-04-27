@@ -102,6 +102,15 @@ public class XmltvServiceImpl implements XmltvService {
         return channels;
     }
 
+    private String formatDate(TimeFormatter fmt, String date, DbChannel dbChannel) {
+        String result = fmt.format(date);
+        if (dbChannel != null) {
+            if (dbChannel != null && dbChannel.getTimeShift() != 0)
+                result = TimeFormatter.formatDateWithShift(result + " " + TimeFormatter.formatTimeShift(dbChannel.getTimeShift()));
+        }
+        return result;
+    }
+
     @Override
     public void printXmltv(OutputStream out, final Filter filter) throws InterruptedException {
         try {
@@ -113,8 +122,10 @@ public class XmltvServiceImpl implements XmltvService {
             XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
 
             final Map<String, Map<String, String>> filterData = new HashMap<String, Map<String, String>>();
-            BTreeMap<String, DbChannel> dbChannels = dbService.getChannels();
-            final Map<String, String> channelNames = new HashMap<String, String>();
+            final BTreeMap<String, DbChannel> dbChannels = dbService.getChannels();
+            Map<String, String> channelNames = new HashMap<String, String>();
+            final Map<String, DbChannel> xmltvChannels = new HashMap<String, DbChannel>();
+
             for (ExtInf extInf : tvProgramService.loadTV().getItems()) {
                 String channelId = extInf.get(ExtInf.Attribute.tvg_name);
                 DbChannel dbChannel = dbChannels.get(channelId);
@@ -124,9 +135,13 @@ public class XmltvServiceImpl implements XmltvService {
                     data.put("enabled", Boolean.toString(dbChannel.isEnabled()));
                     data.put("group", extInf.get(ExtInf.Attribute.group_title));
 
+                    xmltvChannels.put(dbChannel.getXmltv(), dbChannel);
+
                     channelNames.put(dbChannel.getXmltv(), extInf.getName());
                 }
             }
+
+            final TimeFormatter fmt = new TimeFormatter();
 
             StreamFilter staxFilter = new StreamFilter() {
                 boolean isVisible = true;
@@ -145,8 +160,8 @@ public class XmltvServiceImpl implements XmltvService {
                                     Map<String, String> map = new HashMap<String, String>();
                                     if (filterData.containsKey(xmltvId)) {
                                         map.putAll(filterData.get(xmltvId));
-                                        map.put("start", reader.getAttributeValue(0));
-                                        map.put("stop", reader.getAttributeValue(1));
+                                        map.put("start", formatDate(fmt, reader.getAttributeValue(0), xmltvChannels.get(xmltvId)));
+                                        map.put("stop", formatDate(fmt, reader.getAttributeValue(1), xmltvChannels.get(xmltvId)));
                                         isVisible = filter.accept(map);
                                     } else {
                                         isVisible = false;
@@ -190,11 +205,13 @@ public class XmltvServiceImpl implements XmltvService {
                         channelId = el.getAttributeByName(new QName("id")).getValue();
                     } else if ("programme".equals(tagName)) {
                         StartElement startElement = (StartElement) event;
+                        String xmltvId = ((StartElement) event).getAttributeByName(new QName("channel")).getValue();
                         List<Attribute> attributeList = new ArrayList<Attribute>();
                         for (Iterator<Attribute> it = startElement.getAttributes(); it.hasNext(); ) {
                             Attribute attr = it.next();
                             if ("start".equals(attr.getName().getLocalPart()) || "stop".equals(attr.getName().getLocalPart())) {
-                                attr = eventFactory.createAttribute(attr.getName(), TimeFormatter.formatDateWithShift(attr.getValue()));
+                                String date = formatDate(fmt, attr.getValue(), xmltvChannels.get(xmltvId));
+                                attr = eventFactory.createAttribute(attr.getName(), date);
                             }
                             attributeList.add(attr);
                         }

@@ -5,5 +5,5 @@ package com.hlops.tv.core.service.impl.filter;
  */
 abstract class Formatter {
 
-    abstract String format(String s);
+    public abstract String format(String s);
 }

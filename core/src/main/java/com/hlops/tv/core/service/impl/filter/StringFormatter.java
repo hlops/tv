@@ -6,7 +6,7 @@ package com.hlops.tv.core.service.impl.filter;
 class StringFormatter extends Formatter {
 
     @Override
-    String format(String s) {
+    public String format(String s) {
         return s;
     }
 }

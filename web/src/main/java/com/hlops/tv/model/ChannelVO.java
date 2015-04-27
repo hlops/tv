@@ -18,7 +18,7 @@ public class ChannelVO {
     private String aspect;
     private String crop;
     private String xmltv;
-    private short timeShift;
+    private int timeShift;
 
     public ChannelVO() {
     }
@@ -90,11 +90,11 @@ public class ChannelVO {
         this.xmltv = xmltv;
     }
 
-    public short getTimeShift() {
+    public int getTimeShift() {
         return timeShift;
     }
 
-    public void setTimeShift(short timeShift) {
+    public void setTimeShift(int timeShift) {
         this.timeShift = timeShift;
     }
 }

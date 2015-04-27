@@ -41,7 +41,7 @@ public class TimeFormatter extends Formatter {
     }
 
     @Override
-    String format(String s) {
+    public String format(String s) {
         if (StringUtils.isNotEmpty(s)) {
             Matcher m = TIME_PATTERN.matcher(s);
             if (m.matches()) {
@@ -82,4 +82,11 @@ public class TimeFormatter extends Formatter {
     public void setCurrentTime(long currentTime) {
         this.currentTime = currentTime;
     }
+
+    public static String formatTimeShift(int timeShift) {
+        StringBuilder sb = new StringBuilder("0");
+        sb.append(Math.abs(timeShift)).append("00");
+        return (timeShift < 0 ? "-" : "+") + sb.substring(sb.length() - 4);
+    }
+
 }

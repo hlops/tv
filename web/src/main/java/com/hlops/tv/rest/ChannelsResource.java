@@ -63,6 +63,18 @@ public class ChannelsResource {
         List<ChannelVO> result = new ArrayList<ChannelVO>();
         M3U m3U = tvProgramService.loadTV();
         BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
+
+        boolean isNoXmltvChannel = true;
+        for (DbChannel dbChannel : channelsMap.values()) {
+            if (dbChannel.getXmltv() != null) {
+                isNoXmltvChannel = false;
+                break;
+            }
+        }
+        if (isNoXmltvChannel) {
+            bindChannels();
+        }
+
         for (ExtInf extInf : m3U.getItems()) {
             DbChannel dbChannel = channelsMap.get(extInf.get(ExtInf.Attribute.tvg_name));
             result.add(new ChannelVO(extInf, dbChannel));

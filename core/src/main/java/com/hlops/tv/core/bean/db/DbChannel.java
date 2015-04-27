@@ -9,10 +9,11 @@ import java.io.Serializable;
  */
 public class DbChannel implements Serializable {
 
+
     private boolean enabled = true;
     private String xmltv;
     private String group;
-    private short timeShift;
+    private int timeShift;
 
     public boolean isEnabled() {
         return enabled;
@@ -38,11 +39,11 @@ public class DbChannel implements Serializable {
         this.group = group;
     }
 
-    public short getTimeShift() {
+    public int getTimeShift() {
         return timeShift;
     }
 
-    public void setTimeShift(short timeShift) {
+    public void setTimeShift(int timeShift) {
         this.timeShift = timeShift;
     }
 
