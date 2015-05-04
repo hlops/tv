@@ -178,7 +178,12 @@
 </jsp:attribute>
 
 <jsp:attribute name="body">
-    <div id="channelsDiv" class="container"></div>
+    <div class="container">
+        <div id="channelsDiv"></div>
+        <div>
+            <button>Save</button>
+        </div>
+    </div>
     <div id="hiddenDiv">
         <div>
             <select id="xmltvSelect" class="editor chosen-select"></select>

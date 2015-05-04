@@ -10,15 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
-    <script src="/js/jquery-2.1.3.min.js"></script>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="/js/chosen.jquery.min.js"></script>
     <link href="/css/chosen.min.css" rel="stylesheet">
 
     <link href="/css/style.css" rel="stylesheet">
-    <script src="/js/ui.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,7 +26,12 @@
 
     <jsp:invoke fragment="head"/>
 </head>
-<body>
+<body ng-app="tvApp">
 <jsp:invoke fragment="body"/>
+<script src="/js/jquery-2.1.3.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/chosen.jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="/js/ui.js"></script>
 </body>
 </html>
