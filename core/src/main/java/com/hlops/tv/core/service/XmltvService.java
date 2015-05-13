@@ -11,4 +11,6 @@ public interface XmltvService {
     Map<String, String> getAllChannels() throws InterruptedException;
 
     void printXmltv(OutputStream outputStream, Filter filter) throws InterruptedException;
+
+    void printJson(OutputStream outputStream, Filter filter, boolean beautify) throws InterruptedException;
 }

@@ -128,4 +128,40 @@ public class TvResource {
                 header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = xmltv.xml.gz").build();
     }
 
+
+    @GET
+    @Path("json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response parseJson(@Context final HttpServletRequest request) throws InterruptedException {
+        StreamingOutput streamingOutput = new StreamingOutput() {
+            @Override
+            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
+                try {
+                    xmltvService.printJson(new GZIPOutputStream(outputStream, true), filterFactory.createFilter(request.getParameterMap()), false);
+                } catch (InterruptedException e) {
+                    // nothing to do
+                }
+            }
+        };
+        return Response.ok(streamingOutput).
+                header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = xmltv.js").build();
+    }
+
+    @GET
+    @Path("json-test")
+    @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
+    public Response parseJsonTest(@Context final HttpServletRequest request) throws InterruptedException {
+        StreamingOutput streamingOutput = new StreamingOutput() {
+            @Override
+            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
+                try {
+                    xmltvService.printJson(outputStream, filterFactory.createFilter(request.getParameterMap()), true);
+                } catch (InterruptedException e) {
+                    // nothing to do
+                }
+            }
+        };
+        return Response.ok(streamingOutput).build();
+    }
+
 }
