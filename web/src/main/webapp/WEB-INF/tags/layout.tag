@@ -24,14 +24,13 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
     <script src="/js/jquery-2.1.3.min.js"></script>
     <jsp:invoke fragment="head"/>
 </head>
-<body ng-app="tvApp">
+<body ng-app="tvGuideApp">
 <jsp:invoke fragment="body"/>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/chosen.jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script src="/js/ui.js"></script>
 </body>
 </html>

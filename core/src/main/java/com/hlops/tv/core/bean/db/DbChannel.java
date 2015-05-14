@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by tom on 4/1/15.
  */
 public class DbChannel implements Serializable {
-
+    private static final long serialVersionUID = 3934814021150382405L;
 
     private boolean enabled = true;
     private String xmltv;

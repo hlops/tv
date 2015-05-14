@@ -21,7 +21,7 @@ public class MapDBServiceImpl implements MapDBService {
 
     private static Logger log = LogManager.getLogger(MapDBServiceImpl.class);
 
-    public static final String DB_CHANNELS = "dbChannel";
+    public static final String DB_CHANNELS = "dbChannel2";
 
     @Value("${tv-playlist-storage}")
     private String storage;

@@ -268,11 +268,29 @@ public class XmltvServiceImpl implements XmltvService {
 
     private Map<String, Integer> categories = new LinkedHashMap<String, Integer>();
 
+    {
+        loadCategories(
+                "Спорт",
+                "Художественный фильм",
+                "Сериал",
+                "Познавательные",
+                "Развлекательные",
+                "Информационные",
+                "Детям",
+                "Для взрослых");
+    }
+
     private int getCategory(String category) {
         if (!categories.containsKey(category)) {
             categories.put(category, categories.size());
         }
         return categories.get(category);
+    }
+
+    private void loadCategories(String... categories) {
+        for (String category : categories) {
+            getCategory(category);
+        }
     }
 
     private class MyStreamFilter implements StreamFilter {
