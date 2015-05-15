@@ -13,7 +13,7 @@
 </jsp:attribute>
 
 <jsp:attribute name="body">
-    <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="tvGuideCtrl">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -48,22 +48,21 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" ng-controller="tvGuideCtrl as gc">
 
         <div class="row row-offcanvas row-offcanvas-right">
             <div class="col-xs-12 col-sm-12">
                 <p class="pull-right visible-xs">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
                 </p>
-                <div class="jumbotron">
+                <div class="jumbotron" ng-controller="tvGuideJumbotronCtrl as jc">
                     <ul class="nav nav-pills">
-                        <li role="presentation"><a href="#">Понедельник</a></li>
-                        <li role="presentation"><a href="#">Вторник</a></li>
-                        <li role="presentation"><a href="#">Среда</a></li>
-                        <li role="presentation"><a href="#">Четверг</a></li>
-                        <li role="presentation"><a href="#">Пятница</a></li>
-                        <li role="presentation" class="active"><a href="#">Суббота</a></li>
-                        <li role="presentation"><a href="#">Воскресение</a></li>
+                        <li role="presentation"
+                            ng-repeat="day in jc.days"
+                            ng-class="{active: $index == jc.currentDay}"
+                            ng-click="jc.setDay($index)">
+                            <a href="#">{{day}}</a>
+                        </li>
                     </ul>
 
                     <ul class="nav nav-pills">
@@ -74,11 +73,10 @@
                     </ul>
 
                     <ul class="nav nav-pills">
-                        <li role="presentation" class="active"><a href="#">Все</a></li>
-                        <li role="presentation"><a href="#">Эфир</a></li>
-                        <li role="presentation"><a href="#">Спорт</a></li>
-                        <li role="presentation"><a href="#">Хобби</a></li>
-                        <li role="presentation"><a href="#">Новости</a></li>
+                        <li role="presentation"
+                            ng-repeat="cat in gc.tv.categories">
+                            <a href="#">{{cat}}</a>
+                        </li>
                     </ul>
 
                     <div class="input-group">
@@ -92,16 +90,14 @@
                 </div>
                 <div id="container">
                     <div class="row">
-                        <div class="col-xs-6 col-lg-2">
-                            <h2>Heading</h2>
+                        <div class="col-xs-6 col-lg-2"
+                             ng-repeat="channel in gc.tv.channels">
+                            <h2>{{channel.name}}</h2>
 
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-                                commodo,
-                                tortor mauris
-                                condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                                magna
-                                mollis
-                                euismod. Donec sed odio dui. </p>
+                            <p ng-repeat="item in channel.tv">
+                                <strong>11:23</strong>
+                                {{item.t}}<br>
+                            </p>
 
                             <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                         </div>

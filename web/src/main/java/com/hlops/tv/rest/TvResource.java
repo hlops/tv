@@ -125,6 +125,7 @@ public class TvResource {
             }
         };
         return Response.ok(streamingOutput).
+                header("Content-Encoding", "gzip").
                 header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = xmltv.xml.gz").build();
     }
 
@@ -144,7 +145,8 @@ public class TvResource {
             }
         };
         return Response.ok(streamingOutput).
-                header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = xmltv.js").build();
+                header("Content-Encoding", "gzip").
+                header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = xmltv.json").build();
     }
 
     @GET

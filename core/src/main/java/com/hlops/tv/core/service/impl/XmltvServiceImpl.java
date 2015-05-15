@@ -166,6 +166,11 @@ public class XmltvServiceImpl implements XmltvService {
         }
     }
 
+    class JsonChannel {
+        String name;
+        String logo;
+    }
+
     @Override
     public void printJson(OutputStream out, final Filter filter, boolean beautify) throws InterruptedException {
         try {
@@ -177,7 +182,6 @@ public class XmltvServiceImpl implements XmltvService {
             XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
             reader = inputFactory.createFilteredReader(reader, staxFilter);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
-            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 
             JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(new OutputStreamWriter(out, "UTF-8")));
             if (beautify) {
@@ -186,8 +190,9 @@ public class XmltvServiceImpl implements XmltvService {
             jsonWriter.beginObject();
             jsonWriter.name("channels").beginArray();
 
-            boolean isProgramme = false;
+            Map<String, JsonChannel> channels = new HashMap<String, JsonChannel>();
             String tagName = null, channelId = null, start = null, stop = null, title = null, desc = null, category = null;
+            String currentChannelId = null;
             while (reader.hasNext()) {
                 final XMLEvent event = eventReader.nextEvent();
                 if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
@@ -203,13 +208,8 @@ public class XmltvServiceImpl implements XmltvService {
                     tagName = el.nameAsString();
                     if ("channel".equals(tagName)) {
                         channelId = el.getAttributeByName(new QName("id")).getValue();
+                        channels.put(channelId, new JsonChannel());
                     } else if ("programme".equals(tagName)) {
-                        if (!isProgramme) {
-                            jsonWriter.endArray();
-                            jsonWriter.name("tv").beginArray();
-                            isProgramme = true;
-                        }
-
                         StartElement startElement = (StartElement) event;
                         for (//noinspection unchecked
                                 Iterator<Attribute> it = startElement.getAttributes(); it.hasNext(); ) {
@@ -228,10 +228,21 @@ public class XmltvServiceImpl implements XmltvService {
                     EndElementEvent el = ((EndElementEvent) event);
                     String localPart = el.getName().getLocalPart();
                     if ("programme".equals(localPart)) {
+                        if (currentChannelId == null || !currentChannelId.equals(channelId)) {
+                            if (currentChannelId != null) {
+                                jsonWriter.endArray();
+                                jsonWriter.endObject();
+                            }
+                            JsonChannel jsonChannel = channels.get(channelId);
+                            jsonWriter.beginObject();
+                            jsonWriter.name("name").value(jsonChannel.name);
+                            jsonWriter.name("c").value(channelId);
+                            jsonWriter.name("tv").beginArray();
+                            currentChannelId = channelId;
+                        }
                         jsonWriter.beginObject();
                         jsonWriter.name("t1").value(staxFilter.formatDate(start, channelId));
                         jsonWriter.name("t2").value(staxFilter.formatDate(stop, channelId));
-                        jsonWriter.name("c").value(channelId);
                         jsonWriter.name("t").value(title);
                         if (desc != null) jsonWriter.name("d").value(desc);
                         if (category != null) jsonWriter.name("ctg").value(getCategory(category));
@@ -240,10 +251,7 @@ public class XmltvServiceImpl implements XmltvService {
                     } else if ("display-name".equals(localPart)) {
                         String name = staxFilter.getChannelNames().get(channelId);
                         if (name != null) {
-                            jsonWriter.beginObject();
-                            jsonWriter.name("name").value(name);
-                            jsonWriter.name("c").value(channelId);
-                            jsonWriter.endObject();
+                            channels.get(channelId).name = name;
                         }
                     }
                     tagName = null;
@@ -258,6 +266,7 @@ public class XmltvServiceImpl implements XmltvService {
             for (String cat : categories.keySet()) {
                 jsonWriter.value(cat);
             }
+            jsonWriter.endArray().endObject();
             jsonWriter.endArray().endObject().close();
         } catch (IOException e) {
             log.log(Level.ERROR, e.getMessage(), e);
