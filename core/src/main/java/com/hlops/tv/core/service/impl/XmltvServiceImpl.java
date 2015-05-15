@@ -262,11 +262,11 @@ public class XmltvServiceImpl implements XmltvService {
             }
             eventReader.close();
 
+            jsonWriter.endArray().endObject();
             jsonWriter.endArray().name("categories").beginArray();
             for (String cat : categories.keySet()) {
                 jsonWriter.value(cat);
             }
-            jsonWriter.endArray().endObject();
             jsonWriter.endArray().endObject().close();
         } catch (IOException e) {
             log.log(Level.ERROR, e.getMessage(), e);

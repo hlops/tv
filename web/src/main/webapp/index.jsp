@@ -70,6 +70,7 @@
                         <li role="presentation"><a href="#">Утро</a></li>
                         <li role="presentation"><a href="#">День</a></li>
                         <li role="presentation"><a href="#">Вечер</a></li>
+                        <li role="presentation"><a href="#">Ночь</a></li>
                     </ul>
 
                     <ul class="nav nav-pills">
@@ -95,11 +96,9 @@
                             <h2>{{channel.name}}</h2>
 
                             <p ng-repeat="item in channel.tv">
-                                <strong>11:23</strong>
+                                <strong>{{item.t1 | tvGuideTime}}</strong>
                                 {{item.t}}<br>
                             </p>
-
-                            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                         </div>
                     </div>
                 </div>
