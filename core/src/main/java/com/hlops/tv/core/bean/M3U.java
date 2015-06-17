@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
  */
 public class M3U implements Serializable {
 
+    private static final long serialVersionUID = -692564003554169230L;
+
     private final static Pattern attributePattern = Pattern.compile("(([A-z][A-z0-9\\-_\\:]*)=(\".*?\"|'.*?'|\\S*)\\s*)");
 
     public enum Attribute {

@@ -4,7 +4,6 @@ import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.MapDBService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by tom on 3/31/15.
@@ -21,7 +21,7 @@ public class MapDBServiceImpl implements MapDBService {
 
     private static Logger log = LogManager.getLogger(MapDBServiceImpl.class);
 
-    public static final String DB_CHANNELS = "dbChannel2";
+    public static final String DB_CHANNELS = "dbChannels";
 
     @Value("${tv-playlist-storage}")
     private String storage;
@@ -31,8 +31,9 @@ public class MapDBServiceImpl implements MapDBService {
     @PostConstruct
     public void init() {
         File file = new File(storage);
+        //noinspection ResultOfMethodCallIgnored
         file.getParentFile().mkdirs();
-        db = DBMaker.newFileDB(file).closeOnJvmShutdown().make();
+        db = DBMaker.newFileDB(file).lockSingleEnable().closeOnJvmShutdown().make();
     }
 
     @Override
@@ -41,8 +42,8 @@ public class MapDBServiceImpl implements MapDBService {
     }
 
     @Override
-    public BTreeMap<String, DbChannel> getChannels() {
-        return db.getTreeMap(DB_CHANNELS);
+    public ConcurrentMap<String, DbChannel> getChannels() {
+        return db.getHashMap(DB_CHANNELS);
     }
 
 }

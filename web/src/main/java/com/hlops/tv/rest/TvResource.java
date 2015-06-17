@@ -39,11 +39,11 @@ public class TvResource {
     @Path("playlist")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public Response parsePlaylist(@Context final HttpServletRequest request) throws InterruptedException {
-        final M3U m3U = tvProgramService.loadTV();
+        //final M3U m3u = tvProgramService.loadChannels();
         StreamingOutput streamingOutput = new StreamingOutput() {
             @Override
             public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                tvProgramService.print(m3U, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+                //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
             }
         };
         return Response.ok(streamingOutput).build();
@@ -53,11 +53,11 @@ public class TvResource {
     @Path("playlist.m3u")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response parsePlaylistFile(@Context final HttpServletRequest request) throws InterruptedException {
-        final M3U m3U = tvProgramService.loadTV();
+        //final M3U m3u = tvProgramService.loadChannels();
         StreamingOutput streamingOutput = new StreamingOutput() {
             @Override
             public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                tvProgramService.print(m3U, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+                //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
             }
         };
         return Response.ok(streamingOutput).

@@ -1,13 +1,11 @@
 package com.hlops.tv.core.bean.db;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by tom on 4/1/15.
  */
-public class DbChannel implements Serializable {
+public class DbChannel implements Serializable, Cloneable {
     private static final long serialVersionUID = 3934814021150382405L;
 
     enum Attribute {
@@ -16,13 +14,13 @@ public class DbChannel implements Serializable {
 
     private String name;
     private String url;
-    private boolean enabled;
+    private Boolean enabled;
     private String group;
     private String tvgId;
     private String tvgName;
     private int timeShift;
     private Attribute[] attributes;
-    private Map<String, DbTvItem> item = new HashMap<String, DbTvItem>();
+    private DbTvItem[] items;
 
     public DbChannel() {
     }
@@ -35,11 +33,11 @@ public class DbChannel implements Serializable {
         this.attributes = attributes;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -93,5 +91,25 @@ public class DbChannel implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public DbTvItem[] getItems() {
+        return items;
+    }
+
+    public void setItems(DbTvItem[] items) {
+        this.items = items;
+    }
+
+    @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
+    @Override
+    public DbChannel clone() {
+        DbChannel clone = null;
+        try {
+            clone = (DbChannel) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
     }
 }

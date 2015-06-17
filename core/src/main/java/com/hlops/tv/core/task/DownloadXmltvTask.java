@@ -2,7 +2,9 @@ package com.hlops.tv.core.task;
 
 import com.hlops.tasker.task.CacheableTask;
 import com.hlops.tasker.task.impl.TaskImpl;
-import com.sun.istack.internal.NotNull;
+import com.hlops.tv.core.service.XmltvService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -22,6 +24,8 @@ import java.util.TimeZone;
  */
 public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<Void> {
 
+    private static Logger log = LogManager.getLogger(DownloadXmltvTask.class);
+
     // 1 hour
     private static final long TIMEOUT = 60 * 60 * 1000;
 
@@ -33,14 +37,18 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
 
     private File file;
     private final String url;
+    private XmltvService xmltvService;
 
-    public DownloadXmltvTask(@NotNull File file, @NotNull String url) {
-        this.file = file;
-        this.url = url;
+    public DownloadXmltvTask(XmltvService xmltvService) {
+        this.xmltvService = xmltvService;
+        this.file = xmltvService.getXmltvFile();
+        this.url = xmltvService.getXmltvUrl();
     }
 
     @Override
     public Void call() throws Exception {
+        log.info("file " + file.getAbsolutePath());
+
         if (file.exists() && !(file.canRead()) && file.canWrite()) {
             throw new IllegalArgumentException("File " + file.getAbsolutePath() + " is protected");
         }
@@ -52,12 +60,15 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
         int responseCode = connection.getResponseCode();
 
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
-            // do nothing
+            log.info("not modified");
         } else if (responseCode == HttpURLConnection.HTTP_OK) {
+            log.info("200 ok");
             FileCopyUtils.copy(connection.getInputStream(), new FileOutputStream(file));
             //noinspection ResultOfMethodCallIgnored
             file.setLastModified(connection.getLastModified());
+            xmltvService.setProgramBindingDirty(true);
         } else {
+            log.error("Unexpected responseCode=" + responseCode);
             throw new RuntimeException("Resource not found: " + url);
         }
 

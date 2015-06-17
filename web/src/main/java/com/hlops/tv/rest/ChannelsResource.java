@@ -1,18 +1,14 @@
 package com.hlops.tv.rest;
 
-import com.hlops.tv.core.bean.ExtInf;
-import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.model.ChannelVO;
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mapdb.BTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by tom on 4/4/15.
@@ -61,24 +58,28 @@ public class ChannelsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<ChannelVO> getChannels() throws InterruptedException {
         List<ChannelVO> result = new ArrayList<ChannelVO>();
-        M3U m3U = tvProgramService.loadTV();
-        BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
+        //M3U m3u = tvProgramService.loadChannels();
+        ConcurrentMap<String, DbChannel> channelsMap = dbService.getChannels();
 
         boolean isNoXmltvChannel = true;
         for (DbChannel dbChannel : channelsMap.values()) {
+/*
             if (dbChannel.getXmltv() != null) {
                 isNoXmltvChannel = false;
                 break;
             }
+*/
         }
         if (isNoXmltvChannel) {
             bindChannels();
         }
 
-        for (ExtInf extInf : m3U.getItems()) {
+/*
+        for (ExtInf extInf : m3u.getItems()) {
             DbChannel dbChannel = channelsMap.get(extInf.get(ExtInf.Attribute.tvg_name));
-            result.add(new ChannelVO(extInf, dbChannel));
+            //result.add(new ChannelVO(extInf, dbChannel));
         }
+*/
         return result;
     }
 
@@ -87,14 +88,16 @@ public class ChannelsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void save(ChannelVO bean) {
-        BTreeMap<String, DbChannel> channels = dbService.getChannels();
+        ConcurrentMap<String, DbChannel> channels = dbService.getChannels();
         DbChannel dbChannel = channels.get(bean.getId());
         if (dbChannel != null) {
             try {
                 NOT_NULL_BEAN_UTILS.copyProperties(dbChannel, bean);
+/*
                 if (bean.isEnabled() != null) {
                     dbChannel.setEnabled(bean.isEnabled());
                 }
+*/
                 channels.replace(bean.getId(), dbChannel);
                 dbService.commit();
             } catch (IllegalAccessException e) {
@@ -122,12 +125,13 @@ public class ChannelsResource {
                 channels.put(filterKey(entry.getValue()), entry.getKey());
             }
             boolean isModified = false;
-            M3U m3U = tvProgramService.loadTV();
+/*
+            M3U m3u = tvProgramService.loadChannels();
             BTreeMap<String, DbChannel> channelsMap = dbService.getChannels();
-            for (ExtInf extInf : m3U.getItems()) {
+            for (ExtInf extInf : m3u.getItems()) {
                 String channelId = extInf.get(ExtInf.Attribute.tvg_name);
                 DbChannel dbChannel = channelsMap.get(channelId);
-                if (StringUtils.isEmpty(dbChannel.getXmltv())) {
+                //if (StringUtils.isEmpty(dbChannel.getXmltv())) {
                     String xmltvChannelId = channels.get(filterKey(extInf.getName()));
                     if (xmltvChannelId == null) {
                         xmltvChannelId = channels.get(filterKey(extInf.getName() + " канал"));
@@ -140,6 +144,7 @@ public class ChannelsResource {
             if (isModified) {
                 dbService.commit();
             }
+*/
         } catch (InterruptedException e) {
             return Response.noContent().build();
         }

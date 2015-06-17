@@ -1,35 +1,23 @@
 package com.hlops.tv.core.service.impl;
 
-import com.google.gson.stream.JsonWriter;
-import com.hlops.tasker.QueueService;
-import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.MapDBService;
-import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.service.impl.filter.TimeFormatter;
-import com.hlops.tv.core.task.DownloadXmltvTask;
-import com.sun.xml.internal.stream.events.EndElementEvent;
-import com.sun.xml.internal.stream.events.StartElementEvent;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mapdb.BTreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.xml.namespace.QName;
+import javax.annotation.PostConstruct;
 import javax.xml.stream.*;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import java.io.*;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -44,30 +32,91 @@ public class XmltvServiceImpl implements XmltvService {
     private String xmltvUrl;
 
     @Value("${tv-xmltv-file}")
-    private String xmltvFile;
-
-    @Autowired
-    private QueueService queueService;
+    private String xmltvFileName;
 
     @Autowired
     private MapDBService dbService;
 
-    @Autowired
-    private TVProgramService tvProgramService;
+    private File xmltvFile;
+    private boolean programBindingDirty;
 
-    private File getXmltvFile() throws InterruptedException {
-        File file = new File(xmltvFile);
-        Future<Void> booleanFuture = queueService.executeTask(new DownloadXmltvTask(file, xmltvUrl));
-        try {
-            booleanFuture.get();
-        } catch (ExecutionException e) {
-            log.log(Level.ERROR, e.getMessage(), e);
-        }
-        return file;
+    @PostConstruct
+    private void init() {
+        xmltvFile = new File(xmltvFileName);
+    }
+
+    public File getXmltvFile() {
+        return xmltvFile;
+    }
+
+    public String getXmltvUrl() {
+        return xmltvUrl;
     }
 
     @Override
+    public boolean isProgramBindingDirty() {
+        return programBindingDirty;
+    }
+
+    @Override
+    public void setProgramBindingDirty(boolean value) {
+        programBindingDirty = value;
+    }
+
+    @Override
+    public void rebindProgram() {
+
+    }
+
+    public void parse(File file) {
+        Map<String, String> channels = new LinkedHashMap<>();
+        try {
+            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader reader = factory.createXMLStreamReader(in);
+            String channelId = null;
+            while (reader.hasNext()) {
+                switch (reader.next()) {
+                    case XMLStreamConstants.START_ELEMENT: {
+                        if ("channel".equals(reader.getName().getLocalPart())) {
+                            channelId = reader.getAttributeValue(0);
+                        } else if ("display-name".equals(reader.getName().getLocalPart())) {
+                            if (channelId != null) {
+                                channels.put(channelId, reader.getElementText());
+                            }
+                        }
+                        break;
+                    }
+                    case XMLStreamConstants.END_ELEMENT: {
+                        if ("channel".equals(reader.getName().getLocalPart())) {
+                            channelId = null;
+                        }
+                        break;
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException | XMLStreamException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    /*
+            private File getXmltvFile() throws InterruptedException {
+                File file = new File(xmltvFile);
+                Future<Void> future = queueService.executeTask(new DownloadXmltvTask(file, xmltvUrl));
+                try {
+                    future.get();
+                } catch (ExecutionException e) {
+                    log.log(Level.ERROR, e.getMessage(), e);
+                }
+                return file;
+            }
+
+        */
+    @Override
     public Map<String, String> getAllChannels() throws InterruptedException {
+/*
         Map<String, String> channels = new LinkedHashMap<String, String>();
         try {
             InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
@@ -95,17 +144,16 @@ public class XmltvServiceImpl implements XmltvService {
                 }
             }
             reader.close();
-        } catch (IOException e) {
-            log.log(Level.ERROR, e.getMessage(), e);
-        } catch (XMLStreamException e) {
+        } catch (IOException | XMLStreamException e) {
             log.log(Level.ERROR, e.getMessage(), e);
         }
-
-        return channels;
+*/
+        return null;
     }
 
     @Override
     public void printXmltv(OutputStream out, final Filter filter) throws InterruptedException {
+/*
         try {
             MyStreamFilter staxFilter = new MyStreamFilter(filter);
             InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
@@ -159,11 +207,10 @@ public class XmltvServiceImpl implements XmltvService {
             }
             writer.close();
             eventReader.close();
-        } catch (IOException e) {
-            log.log(Level.ERROR, e.getMessage(), e);
-        } catch (XMLStreamException e) {
+        } catch (IOException | XMLStreamException e) {
             log.log(Level.ERROR, e.getMessage(), e);
         }
+*/
     }
 
     class JsonChannel {
@@ -173,6 +220,7 @@ public class XmltvServiceImpl implements XmltvService {
 
     @Override
     public void printJson(OutputStream out, final Filter filter, boolean beautify) throws InterruptedException {
+/*
         try {
             MyStreamFilter staxFilter = new MyStreamFilter(filter);
             InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
@@ -273,6 +321,7 @@ public class XmltvServiceImpl implements XmltvService {
         } catch (XMLStreamException e) {
             log.log(Level.ERROR, e.getMessage(), e);
         }
+*/
     }
 
     private Map<String, Integer> categories = new LinkedHashMap<String, Integer>();
@@ -314,11 +363,12 @@ public class XmltvServiceImpl implements XmltvService {
             this.filter = filter;
 
             filterData = new HashMap<String, Map<String, String>>();
-            final BTreeMap<String, DbChannel> dbChannels = dbService.getChannels();
+            final ConcurrentMap<String, DbChannel> dbChannels = dbService.getChannels();
             channelNames = new HashMap<String, String>();
             xmltvChannels = new HashMap<String, DbChannel>();
 
-            for (ExtInf extInf : tvProgramService.loadTV().getItems()) {
+/*
+            for (ExtInf extInf : tvProgramService.loadChannels().getItems()) {
                 String channelId = extInf.get(ExtInf.Attribute.tvg_name);
                 DbChannel dbChannel = dbChannels.get(channelId);
                 if (dbChannel != null && StringUtils.isNotEmpty(dbChannel.getXmltv())) {
@@ -333,6 +383,7 @@ public class XmltvServiceImpl implements XmltvService {
                 }
             }
 
+*/
             fmt = new TimeFormatter();
         }
 

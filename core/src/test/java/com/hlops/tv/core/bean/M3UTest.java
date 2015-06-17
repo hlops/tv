@@ -15,18 +15,18 @@ public class M3UTest extends Assert {
     public void loadPlaylist() throws IOException {
         URL url = getClass().getClassLoader().getResource("playlist.m3u");
         //noinspection ConstantConditions
-        M3U m3U = new M3U(new FileInputStream(new File(url.getFile())), StandardCharsets.UTF_8);
-        assertEquals("http://www.cn.ru/data/tv/schedule.zip", m3U.get(M3U.Attribute.url_tvg));
-        assertEquals("1", m3U.get(M3U.Attribute.m3uautoload));
-        assertEquals("500", m3U.get(M3U.Attribute.cache));
-        assertEquals("1", m3U.get(M3U.Attribute.deinterlace));
-        assertEquals("4:3", m3U.get(M3U.Attribute.aspect_ratio));
-        assertEquals("690x550+10+10", m3U.get(M3U.Attribute.crop));
-        assertEquals("http://iptv.cn.ru/iptv-stat/post.php", m3U.get(M3U.Attribute.reportstat));
-        assertEquals("http://clr.novotelecom.ru/iptv/log.php", m3U.get(M3U.Attribute.reportlog));
+        M3U m3u = new M3U(new FileInputStream(new File(url.getFile())), StandardCharsets.UTF_8);
+        assertEquals("http://www.cn.ru/data/tv/schedule.zip", m3u.get(M3U.Attribute.url_tvg));
+        assertEquals("1", m3u.get(M3U.Attribute.m3uautoload));
+        assertEquals("500", m3u.get(M3U.Attribute.cache));
+        assertEquals("1", m3u.get(M3U.Attribute.deinterlace));
+        assertEquals("4:3", m3u.get(M3U.Attribute.aspect_ratio));
+        assertEquals("690x550+10+10", m3u.get(M3U.Attribute.crop));
+        assertEquals("http://iptv.cn.ru/iptv-stat/post.php", m3u.get(M3U.Attribute.reportstat));
+        assertEquals("http://clr.novotelecom.ru/iptv/log.php", m3u.get(M3U.Attribute.reportlog));
 
         {
-            ExtInf[] items = m3U.findByTvgName("2");
+            ExtInf[] items = m3u.findByTvgName("2");
             assertEquals(1, items.length);
             assertEquals("-1", items[0].getDuration());
             assertEquals("Первый", items[0].getName());
@@ -37,7 +37,7 @@ public class M3UTest extends Assert {
         }
 
         {
-            ExtInf[] items = m3U.findByTvgName("81003");
+            ExtInf[] items = m3u.findByTvgName("81003");
             assertEquals(1, items.length);
             assertEquals("-1", items[0].getDuration());
             assertEquals("Amedia Premium HD", items[0].getName());
@@ -49,7 +49,7 @@ public class M3UTest extends Assert {
         }
 
         {
-            ExtInf[] items = m3U.findByGroup("Познавательный");
+            ExtInf[] items = m3u.findByGroup("Познавательный");
             assertEquals(21, items.length);
         }
 

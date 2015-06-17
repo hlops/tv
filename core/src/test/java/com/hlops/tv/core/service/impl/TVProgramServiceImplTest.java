@@ -1,6 +1,8 @@
 package com.hlops.tv.core.service.impl;
 
-import com.hlops.tv.core.bean.M3U;
+import com.hlops.tv.core.service.MapDBService;
+import com.hlops.tv.core.service.XmltvService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring-config.xml"})
-public class TVProgramServiceImplTest {
+public class TVProgramServiceImplTest extends Assert {
 
     @Autowired
     private TVProgramServiceImpl tvProgramService;
 
+    @Autowired
+    private XmltvService xmltvService;
+
     @Test
-    public void loadTV() throws Exception {
-        M3U m3U = tvProgramService.loadTV();
+    public void loadChannels() throws Exception {
+        xmltvService.setProgramBindingDirty(true);
+        tvProgramService.loadChannels();
     }
+
 }
