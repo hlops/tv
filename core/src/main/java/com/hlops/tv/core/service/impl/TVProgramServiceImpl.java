@@ -5,11 +5,7 @@ import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.exception.BusinessException;
-import com.hlops.tv.core.service.Filter;
-import com.hlops.tv.core.service.M3uService;
-import com.hlops.tv.core.service.TVProgramService;
-import com.hlops.tv.core.service.XmltvService;
-import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
+import com.hlops.tv.core.service.*;
 import com.hlops.tv.core.task.DownloadM3uTask;
 import com.hlops.tv.core.task.DownloadXmltvTask;
 import com.hlops.tv.core.task.RebindProgramTask;
@@ -46,10 +42,7 @@ public class TVProgramServiceImpl implements TVProgramService {
     private QueueService queueService;
 
     @Autowired
-    HtmlFilterFactory filterFactory;
-
-    //@Autowired
-    //private MapDBService dbService;
+    private MapDBService dbService;
 
     @Autowired
     private M3uService m3uService;
@@ -63,7 +56,7 @@ public class TVProgramServiceImpl implements TVProgramService {
             queueService.executeTask(new DownloadM3uTask(m3uService)).get();
             queueService.executeTask(new DownloadXmltvTask(xmltvService)).get();
             if (xmltvService.isProgramBindingDirty()) {
-                queueService.executeTask(new RebindProgramTask(xmltvService)).get();
+                queueService.executeTask(new RebindProgramTask(dbService, xmltvService)).get();
             }
         } catch (ExecutionException e) {
             log.error(e.getMessage(), e);

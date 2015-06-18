@@ -16,10 +16,10 @@ public class DbChannel implements Serializable, Cloneable {
     private String url;
     private Boolean enabled;
     private String group;
-    private String tvgId;
     private String tvgName;
     private int timeShift;
     private Attribute[] attributes;
+    private String guideId;
     private DbTvItem[] items;
 
     public DbChannel() {
@@ -69,14 +69,6 @@ public class DbChannel implements Serializable, Cloneable {
         this.timeShift = timeShift;
     }
 
-    public String getTvgId() {
-        return tvgId;
-    }
-
-    public void setTvgId(String tvgId) {
-        this.tvgId = tvgId;
-    }
-
     public String getTvgName() {
         return tvgName;
     }
@@ -99,6 +91,14 @@ public class DbChannel implements Serializable, Cloneable {
 
     public void setItems(DbTvItem[] items) {
         this.items = items;
+    }
+
+    public String getGuideId() {
+        return guideId;
+    }
+
+    public void setGuideId(String guideId) {
+        this.guideId = guideId;
     }
 
     @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")

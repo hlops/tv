@@ -79,10 +79,10 @@ public class M3uServiceImpl implements M3uService {
     }
 
     private DbChannel updateChannel(DbChannel channel, ExtInf item) {
-        if (!item.getName().equals(channel.getName())
+        if (!item.getName().equals(channel.getTvgName())
                 || !item.getUrl().equals(channel.getUrl())) {
             DbChannel clone = channel.clone();
-            clone.setName(item.getName());
+            clone.setTvgName(item.getName());
             clone.setUrl(item.getUrl());
             return clone;
         }
@@ -91,7 +91,7 @@ public class M3uServiceImpl implements M3uService {
 
     private DbChannel createDbChannel(ExtInf item) {
         DbChannel channel = new DbChannel();
-        channel.setName(item.getName());
+        channel.setTvgName(item.getName());
         channel.setUrl(item.getUrl());
         channel.setGroup(item.get(ExtInf.Attribute.group_title));
         return channel;

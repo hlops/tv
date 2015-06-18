@@ -41,8 +41,8 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
 
     public DownloadXmltvTask(XmltvService xmltvService) {
         this.xmltvService = xmltvService;
-        this.file = xmltvService.getXmltvFile();
-        this.url = xmltvService.getXmltvUrl();
+        this.file = xmltvService.getFile();
+        this.url = xmltvService.getUrl();
     }
 
     @Override

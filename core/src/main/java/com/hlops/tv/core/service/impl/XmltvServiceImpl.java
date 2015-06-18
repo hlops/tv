@@ -38,18 +38,18 @@ public class XmltvServiceImpl implements XmltvService {
     private MapDBService dbService;
 
     private File xmltvFile;
-    private boolean programBindingDirty;
+    private boolean programBindingDirty = true;
 
     @PostConstruct
     private void init() {
         xmltvFile = new File(xmltvFileName);
     }
 
-    public File getXmltvFile() {
+    public File getFile() {
         return xmltvFile;
     }
 
-    public String getXmltvUrl() {
+    public String getUrl() {
         return xmltvUrl;
     }
 
@@ -71,7 +71,7 @@ public class XmltvServiceImpl implements XmltvService {
     public void parse(File file) {
         Map<String, String> channels = new LinkedHashMap<>();
         try {
-            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
+            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getFile())));
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLStreamReader reader = factory.createXMLStreamReader(in);
             String channelId = null;
@@ -102,7 +102,7 @@ public class XmltvServiceImpl implements XmltvService {
     }
 
     /*
-            private File getXmltvFile() throws InterruptedException {
+            private File getFile() throws InterruptedException {
                 File file = new File(xmltvFile);
                 Future<Void> future = queueService.executeTask(new DownloadXmltvTask(file, xmltvUrl));
                 try {
@@ -119,7 +119,7 @@ public class XmltvServiceImpl implements XmltvService {
 /*
         Map<String, String> channels = new LinkedHashMap<String, String>();
         try {
-            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
+            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getFile())));
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLStreamReader reader = factory.createXMLStreamReader(in);
             String channelId = null;
@@ -156,7 +156,7 @@ public class XmltvServiceImpl implements XmltvService {
 /*
         try {
             MyStreamFilter staxFilter = new MyStreamFilter(filter);
-            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
+            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getFile())));
 
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
@@ -223,7 +223,7 @@ public class XmltvServiceImpl implements XmltvService {
 /*
         try {
             MyStreamFilter staxFilter = new MyStreamFilter(filter);
-            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getXmltvFile())));
+            InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(getFile())));
 
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 

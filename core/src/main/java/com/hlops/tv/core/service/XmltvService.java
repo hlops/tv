@@ -9,9 +9,9 @@ import java.util.Map;
  */
 public interface XmltvService {
 
-    File getXmltvFile();
+    File getFile();
 
-    String getXmltvUrl();
+    String getUrl();
 
     boolean isProgramBindingDirty();
 
