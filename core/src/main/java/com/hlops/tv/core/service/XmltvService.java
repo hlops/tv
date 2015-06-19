@@ -17,8 +17,6 @@ public interface XmltvService {
 
     void setProgramBindingDirty(boolean value);
 
-    void rebindProgram();
-
     Map<String, String> getAllChannels() throws InterruptedException;
 
     void printXmltv(OutputStream outputStream, Filter filter) throws InterruptedException;

@@ -14,6 +14,7 @@ public class DbGuide implements Serializable, Cloneable {
     private String id;
     private String name;
     private String logo;
+    private DbTvItem[] items = new DbTvItem[0];
 
     public String getId() {
         return id;
@@ -37,6 +38,14 @@ public class DbGuide implements Serializable, Cloneable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public DbTvItem[] getItems() {
+        return items;
+    }
+
+    public void setItems(DbTvItem[] items) {
+        this.items = items;
     }
 
     @Override

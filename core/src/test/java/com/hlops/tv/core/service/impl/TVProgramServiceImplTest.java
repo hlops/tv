@@ -1,6 +1,7 @@
 package com.hlops.tv.core.service.impl;
 
 import com.hlops.tv.core.service.MapDBService;
+import com.hlops.tv.core.service.XmltvService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +17,15 @@ public class TVProgramServiceImplTest extends Assert {
     private TVProgramServiceImpl tvProgramService;
 
     @Autowired
+    private XmltvService xmltvService;
+
+    @Autowired
     private MapDBService dbService;
 
     @Test
     public void loadChannels() throws Exception {
         //dbService.drop();
+        //xmltvService.setProgramBindingDirty(true);
         tvProgramService.loadChannels();
     }
 

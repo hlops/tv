@@ -20,7 +20,6 @@ public class DbChannel implements Serializable, Cloneable {
     private int timeShift;
     private Attribute[] attributes;
     private String guideId;
-    private DbTvItem[] items;
 
     public DbChannel() {
     }
@@ -83,14 +82,6 @@ public class DbChannel implements Serializable, Cloneable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public DbTvItem[] getItems() {
-        return items;
-    }
-
-    public void setItems(DbTvItem[] items) {
-        this.items = items;
     }
 
     public String getGuideId() {

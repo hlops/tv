@@ -38,7 +38,7 @@ public class XmltvServiceImpl implements XmltvService {
     private MapDBService dbService;
 
     private File xmltvFile;
-    private boolean programBindingDirty = true;
+    private boolean programBindingDirty;
 
     @PostConstruct
     private void init() {
@@ -61,11 +61,6 @@ public class XmltvServiceImpl implements XmltvService {
     @Override
     public void setProgramBindingDirty(boolean value) {
         programBindingDirty = value;
-    }
-
-    @Override
-    public void rebindProgram() {
-
     }
 
     public void parse(File file) {

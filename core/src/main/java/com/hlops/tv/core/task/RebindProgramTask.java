@@ -2,12 +2,11 @@ package com.hlops.tv.core.task;
 
 import com.hlops.tasker.task.CacheableTask;
 import com.hlops.tasker.task.impl.TaskImpl;
-import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.bean.db.DbTvItem;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.XmltvService;
-import com.sun.xml.internal.stream.events.EndElementEvent;
+import com.hlops.tv.core.service.impl.filter.TimeFormatter;
 import com.sun.xml.internal.stream.events.StartElementEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +23,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -55,12 +55,10 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
     }
 
     class ChannelWrapper {
-        final boolean isActive;
         final List<DbTvItem> items = new ArrayList<>();
         final DbGuide guide = new DbGuide();
 
-        public ChannelWrapper(String channelId, boolean isActive) {
-            this.isActive = isActive;
+        public ChannelWrapper(String channelId) {
             guide.setId(channelId);
         }
     }
@@ -70,88 +68,106 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
 
         Map<String, ChannelWrapper> channels = new HashMap<>();
 
-        for (DbChannel channel : dbService.getChannels().values()) {
-            if (channel.getGuideId() != null) {
-                channels.put(channel.getGuideId(), new ChannelWrapper(channel.getGuideId(), true));
-            }
-        }
-
-        InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(xmltvService.getFile())));
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-        XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
-        reader = inputFactory.createFilteredReader(reader, filter -> true);
-        XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
-        String tagName = null;
-        DbTvItem tvItem = null;
-        DbGuide guide = null;
+        try (
+                InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(xmltvService.getFile())));
+        ) {
+            XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
+            try {
+                XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
+                String tagName = null;
+                DbTvItem tvItem = null;
+                DbGuide guide = null;
 
-        while (reader.hasNext()) {
-            final XMLEvent event = eventReader.nextEvent();
-            if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
-                if (tvItem != null) {
-                    if ("title".equals(tagName)) {
-                        tvItem.setTitle(event.asCharacters().getData());
-                    } else if ("desc".equals(tagName)) {
-                        tvItem.setDescription(event.asCharacters().getData());
-                    } else if ("category".equals(tagName)) {
-                        tvItem.setCategory(event.asCharacters().getData());
-                    }
-                }
-                if (guide != null) {
-                    if ("display-name".equals(tagName)) {
-                        guide.setName(event.asCharacters().getData());
-                    }
-                }
-                continue;
-            } else if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
-                StartElementEvent el = ((StartElementEvent) event);
-                tagName = el.nameAsString();
-                if ("channel".equals(tagName)) {
-                    String channelId = el.getAttributeByName(new QName("id")).getValue();
-                    channels.computeIfAbsent(channelId, s -> new ChannelWrapper(channelId, false));
-                    guide = channels.get(channelId).guide;
-                } else if ("programme".equals(tagName)) {
-                    tvItem = new DbTvItem();
-                    //noinspection unchecked
-                    Iterator<Attribute> attributes = ((StartElement) event).getAttributes();
-                    while (attributes.hasNext()) {
-                        Attribute attr = attributes.next();
-                        String localPart = attr.getName().getLocalPart();
-                        String value = attr.getValue();
-                        if ("start".equals(localPart)) {
-                            tvItem.setStart(value);
-                        } else if ("stop".equals(localPart)) {
-                            tvItem.setStop(value);
-                        } else if ("channel".equals(localPart)) {
-                            if (!channels.containsKey(value)) {
-                                log.warn("Don defined channel id: " + value);
-                            }
-                            if (channels.get(value).isActive) {
-                                channels.get(value).items.add(tvItem);
-                            } else {
-                                tvItem = null;
-                                break;
+                while (reader.hasNext()) {
+                    final XMLEvent event = eventReader.nextEvent();
+                    if (event.getEventType() == XMLStreamConstants.CHARACTERS) {
+                        if (tvItem != null) {
+                            if ("title".equals(tagName)) {
+                                tvItem.setTitle(event.asCharacters().getData());
+                            } else if ("desc".equals(tagName)) {
+                                tvItem.setDescription(event.asCharacters().getData());
+                            } else if ("category".equals(tagName)) {
+                                tvItem.setCategory(event.asCharacters().getData());
                             }
                         }
+                        if (guide != null) {
+                            if ("display-name".equals(tagName)) {
+                                guide.setName(event.asCharacters().getData());
+                            }
+                        }
+                        continue;
+                    } else if (event.getEventType() == XMLStreamConstants.START_ELEMENT) {
+                        StartElementEvent el = ((StartElementEvent) event);
+                        tagName = el.nameAsString();
+                        if ("channel".equals(tagName)) {
+                            String channelId = el.getAttributeByName(new QName("id")).getValue();
+                            channels.computeIfAbsent(channelId, s -> new ChannelWrapper(channelId));
+                            guide = channels.get(channelId).guide;
+                        } else if ("programme".equals(tagName)) {
+                            tvItem = new DbTvItem();
+                            //noinspection unchecked
+                            Iterator<Attribute> attributes = ((StartElement) event).getAttributes();
+                            while (attributes.hasNext()) {
+                                Attribute attr = attributes.next();
+                                String localPart = attr.getName().getLocalPart();
+                                String value = attr.getValue();
+                                if ("start".equals(localPart)) {
+                                    tvItem.setStart(value);
+                                } else if ("stop".equals(localPart)) {
+                                    tvItem.setStop(value);
+                                } else if ("channel".equals(localPart)) {
+                                    if (!channels.containsKey(value)) {
+                                        log.warn("Don defined channel id: " + value);
+                                    }
+                                    channels.get(value).items.add(tvItem);
+                                }
+                            }
+                        } else if ("icon".equals(tagName)) {
+                            assert guide != null;
+                            guide.setLogo(el.getAttributeByName(new QName("src")).getValue());
+                        }
+                        continue;
                     }
-                } else if ("icon".equals(tagName)) {
-                    assert guide != null;
-                    guide.setLogo(el.getAttributeByName(new QName("src")).getValue());
+                    tagName = null;
                 }
-                continue;
-            } else if (event.getEventType() == XMLStreamConstants.END_ELEMENT) {
-                EndElementEvent el = ((EndElementEvent) event);
-                tagName = el.nameAsString();
-                if ("channel".equals(tagName) || "programme".equals(tagName)) {
+            } finally {
+                reader.close();
+            }
+        }
 
+        String startDate = TimeFormatter.formatDateWithShift(getActualStartDate());
+        String endDate = TimeFormatter.formatDateWithShift(getActualEndDate());
+
+        ConcurrentMap<String, DbGuide> guideChannels = dbService.getGuideChannels();
+        for (ChannelWrapper wrapper : channels.values()) {
+            Set<DbTvItem> items = new HashSet<>(Arrays.asList(wrapper.guide.getItems()));
+            items.addAll(wrapper.items);
+            for (Iterator<DbTvItem> it = items.iterator(); it.hasNext(); ) {
+                DbTvItem item = it.next();
+                if (startDate.compareTo(item.getStart()) > 0 || endDate.compareTo(item.getStart()) < 0) {
+                    it.remove();
                 }
             }
-            tagName = null;
+            wrapper.guide.setItems(items.toArray(new DbTvItem[items.size()]));
+            guideChannels.put(wrapper.guide.getId(), wrapper.guide);
         }
-        eventReader.close();
 
+        dbService.commit();
         xmltvService.setProgramBindingDirty(false);
         return null;
+    }
+
+    private String getActualStartDate() {
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.DAY_OF_YEAR, -3);
+        return TimeFormatter.DATE_FORMAT.format(instance.getTime());
+    }
+
+    private String getActualEndDate() {
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.DAY_OF_YEAR, 14);
+        return TimeFormatter.DATE_FORMAT.format(instance.getTime());
     }
 
 }
