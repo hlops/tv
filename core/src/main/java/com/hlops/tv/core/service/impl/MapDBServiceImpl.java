@@ -33,6 +33,7 @@ public class MapDBServiceImpl implements MapDBService {
     @PostConstruct
     public void init() {
         File file = new File(storage);
+        log.debug("init db: " + file.getAbsolutePath());
         //noinspection ResultOfMethodCallIgnored
         file.getParentFile().mkdirs();
         db = DBMaker.newFileDB(file).closeOnJvmShutdown().make();

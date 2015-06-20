@@ -1,7 +1,7 @@
 package com.hlops.tv.model;
 
-import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.bean.db.DbGuide;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,7 +20,13 @@ public class ChannelVO {
     private String xmltvId;
     private int timeShift;
 
-    public ChannelVO() {
+    public ChannelVO(DbChannel channel) {
+        this.setId(channel.getUrl());
+        this.setEnabled(channel.isEnabled());
+        this.setName(channel.getTvgName());
+        this.setGroup(channel.getGroup());
+        //this.setAspect();
+        this.setTimeShift(channel.getTimeShift());
     }
 
     public String getAspect() {

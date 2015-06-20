@@ -1,12 +1,14 @@
 {
     angular
-        .module('tvGuideApp', ['ngResource'])
+        .module('tvGuideApp', ['ngResource', 'ngRoute'])
         .controller('tvGuideCtrl', tvGuideCtrl)
         .controller('tvGuideJumbotronCtrl', tvGuideJumbotronCtrl)
         .factory('tvGuideService', tvGuideService)
         .filter('tvGuideTime', tvGuideTime)
+        .config(routeProvider)
     ;
 
+    // ====== <tvGuide> ======
 
     function tvGuideJumbotronCtrl() {
         var jc = this;
@@ -34,5 +36,22 @@
         return function (t) {
             return t.slice(8, 10) + ":" + t.slice(10, 12);
         }
+    }
+
+    // ====== </tvGuide> ======
+
+    function routeProvider($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'pages/guide.html',
+                controller: 'tvGuideCtrl',
+                controllerAs: "gc"
+            })
+            .when('/channels', {
+                templateUrl: 'pages/channels.html',
+                controller: 'tvGuideCtrl',
+                controllerAs: "gc"
+            })
+
     }
 }

@@ -1,6 +1,7 @@
 package com.hlops.tv.rest;
 
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.exception.BusinessException;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
@@ -16,10 +17,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -56,30 +54,14 @@ public class ChannelsResource {
     @GET
     @Path("channels")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ChannelVO> getChannels() throws InterruptedException {
-        List<ChannelVO> result = new ArrayList<ChannelVO>();
-        //M3U m3u = tvProgramService.loadChannels();
-        ConcurrentMap<String, DbChannel> channelsMap = dbService.getChannels();
+    public List<ChannelVO> getChannels() throws InterruptedException, BusinessException {
+        List<ChannelVO> result = new ArrayList<>();
+        tvProgramService.loadChannels();
 
-        boolean isNoXmltvChannel = true;
-        for (DbChannel dbChannel : channelsMap.values()) {
-/*
-            if (dbChannel.getXmltv() != null) {
-                isNoXmltvChannel = false;
-                break;
-            }
-*/
+        for (DbChannel channel : dbService.getChannels().values()) {
+            result.add(new ChannelVO(channel));
         }
-        if (isNoXmltvChannel) {
-            bindChannels();
-        }
-
-/*
-        for (ExtInf extInf : m3u.getItems()) {
-            DbChannel dbChannel = channelsMap.get(extInf.get(ExtInf.Attribute.tvg_name));
-            //result.add(new ChannelVO(extInf, dbChannel));
-        }
-*/
+        Collections.sort(result, (o1, o2) -> o1.getGroup().compareTo(o2.getGroup()));
         return result;
     }
 

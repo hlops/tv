@@ -73,6 +73,7 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
                 InputStream in = new BufferedInputStream(new GZIPInputStream(new FileInputStream(xmltvService.getFile())));
         ) {
             XMLStreamReader reader = inputFactory.createXMLStreamReader(in);
+            TimeFormatter formatter = new TimeFormatter();
             try {
                 XMLEventReader eventReader = inputFactory.createXMLEventReader(reader);
                 String tagName = null;
@@ -113,9 +114,9 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
                                 String localPart = attr.getName().getLocalPart();
                                 String value = attr.getValue();
                                 if ("start".equals(localPart)) {
-                                    tvItem.setStart(value);
+                                    tvItem.setStart(formatter.format(value));
                                 } else if ("stop".equals(localPart)) {
-                                    tvItem.setStop(value);
+                                    tvItem.setStop(formatter.format(value));
                                 } else if ("channel".equals(localPart)) {
                                     if (!channels.containsKey(value)) {
                                         log.warn("Don defined channel id: " + value);

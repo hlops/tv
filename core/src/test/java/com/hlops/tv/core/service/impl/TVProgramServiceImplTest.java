@@ -25,7 +25,7 @@ public class TVProgramServiceImplTest extends Assert {
     @Test
     public void loadChannels() throws Exception {
         //dbService.drop();
-        //xmltvService.setProgramBindingDirty(true);
+        xmltvService.setProgramBindingDirty(true);
         tvProgramService.loadChannels();
     }
 

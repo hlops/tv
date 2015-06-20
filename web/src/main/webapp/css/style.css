@@ -1,4 +1,9 @@
+body {
+    padding-top: 70px;
+}
+
 .ui-table {
+
 }
 
 .ui-table tr.filter th {

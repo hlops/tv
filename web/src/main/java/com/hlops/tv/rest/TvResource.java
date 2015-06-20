@@ -1,9 +1,16 @@
 package com.hlops.tv.rest;
 
-import com.hlops.tv.core.bean.M3U;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
+import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
+import com.hlops.tv.model.ChannelVO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -25,6 +28,8 @@ import java.util.zip.GZIPOutputStream;
 @Path("/")
 @Component
 public class TvResource {
+
+    private static Logger log = LogManager.getLogger(TvResource.class);
 
     @Autowired
     TVProgramService tvProgramService;
@@ -40,11 +45,8 @@ public class TvResource {
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public Response parsePlaylist(@Context final HttpServletRequest request) throws InterruptedException {
         //final M3U m3u = tvProgramService.loadChannels();
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
-            }
+        StreamingOutput streamingOutput = outputStream -> {
+            //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
         };
         return Response.ok(streamingOutput).build();
     }
@@ -54,11 +56,8 @@ public class TvResource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response parsePlaylistFile(@Context final HttpServletRequest request) throws InterruptedException {
         //final M3U m3u = tvProgramService.loadChannels();
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
-            }
+        StreamingOutput streamingOutput = outputStream -> {
+            //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
         };
         return Response.ok(streamingOutput).
                 header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = playlist.m3u").build();
@@ -76,14 +75,11 @@ public class TvResource {
     @Path("xmltv")
     @Produces(MediaType.APPLICATION_XML)
     public Response parseXmltv(@Context final HttpServletRequest request) throws InterruptedException {
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                try {
-                    xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
-                } catch (InterruptedException e) {
-                    // nothing to do
-                }
+        StreamingOutput streamingOutput = outputStream -> {
+            try {
+                xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
+            } catch (InterruptedException e) {
+                // nothing to do
             }
         };
         return Response.ok(streamingOutput).
@@ -94,14 +90,11 @@ public class TvResource {
     @Path("xmltv-test")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public Response parseXmltvTest(@Context final HttpServletRequest request) throws InterruptedException {
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                try {
-                    xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
-                } catch (InterruptedException e) {
-                    // nothing to do
-                }
+        StreamingOutput streamingOutput = outputStream -> {
+            try {
+                xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
+            } catch (InterruptedException e) {
+                // nothing to do
             }
         };
         return Response.ok(streamingOutput).build();
@@ -111,17 +104,11 @@ public class TvResource {
     @Path("xmltv.gz")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response parseXmltvGz(@Context final HttpServletRequest request) throws InterruptedException {
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream, true);
-                try {
-                    xmltvService.printXmltv(gzipOutputStream, filterFactory.createFilter(request.getParameterMap()));
-                } catch (InterruptedException e) {
-                    // nothing to do
-                } finally {
-                    gzipOutputStream.close();
-                }
+        StreamingOutput streamingOutput = outputStream -> {
+            try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream, true)) {
+                xmltvService.printXmltv(gzipOutputStream, filterFactory.createFilter(request.getParameterMap()));
+            } catch (InterruptedException e) {
+                // nothing to do
             }
         };
         return Response.ok(streamingOutput).
@@ -130,18 +117,40 @@ public class TvResource {
     }
 
 
+    private void printJson(OutputStream out, final Filter filter, boolean beautify) throws InterruptedException, IOException {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        try (JsonWriter jsonWriter = new JsonWriter(new BufferedWriter(new OutputStreamWriter(out, "UTF-8")))) {
+
+            if (beautify) {
+                jsonWriter.setIndent("\t");
+            }
+            jsonWriter.beginObject();
+
+            jsonWriter.name("channels").beginArray();
+            for (DbChannel dbChannel : tvProgramService.getChannels(filter)) {
+                ChannelVO channelVO = new ChannelVO(dbChannel);
+                gson.toJson(channelVO, channelVO.getClass(), jsonWriter);
+            }
+            jsonWriter.endArray();
+
+            jsonWriter.endObject();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw e;
+        }
+    }
+
     @GET
     @Path("json")
     @Produces(MediaType.APPLICATION_JSON)
     public Response parseJson(@Context final HttpServletRequest request) throws InterruptedException {
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                try {
-                    xmltvService.printJson(new GZIPOutputStream(outputStream, true), filterFactory.createFilter(request.getParameterMap()), false);
-                } catch (InterruptedException e) {
-                    // nothing to do
-                }
+        StreamingOutput streamingOutput = outputStream -> {
+            try {
+                printJson(new GZIPOutputStream(outputStream, true), filterFactory.createFilter(request.getParameterMap()), false);
+            } catch (InterruptedException e) {
+                // nothing to do
             }
         };
         return Response.ok(streamingOutput).
@@ -153,14 +162,11 @@ public class TvResource {
     @Path("json-test")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
     public Response parseJsonTest(@Context final HttpServletRequest request) throws InterruptedException {
-        StreamingOutput streamingOutput = new StreamingOutput() {
-            @Override
-            public void write(OutputStream outputStream) throws IOException, WebApplicationException {
-                try {
-                    xmltvService.printJson(outputStream, filterFactory.createFilter(request.getParameterMap()), true);
-                } catch (InterruptedException e) {
-                    // nothing to do
-                }
+        StreamingOutput streamingOutput = outputStream -> {
+            try {
+                printJson(outputStream, filterFactory.createFilter(request.getParameterMap()), true);
+            } catch (InterruptedException e) {
+                // nothing to do
             }
         };
         return Response.ok(streamingOutput).build();

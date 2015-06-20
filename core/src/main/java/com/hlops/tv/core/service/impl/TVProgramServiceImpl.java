@@ -4,6 +4,7 @@ import com.hlops.tasker.QueueService;
 import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.exception.BusinessException;
 import com.hlops.tv.core.service.*;
 import com.hlops.tv.core.task.DownloadM3uTask;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -99,6 +101,18 @@ public class TVProgramServiceImpl implements TVProgramService {
             }
         }
 */
+    }
+
+    @Override
+    public DbChannel[] getChannels(Filter filter) {
+        Collection<DbChannel> channels = dbService.getChannels().values();
+        return channels.toArray(new DbChannel[channels.size()]);
+    }
+
+    @Override
+    public DbGuide[] getGuideChannels(Filter filter) {
+        Collection<DbGuide> channels = dbService.getGuideChannels().values();
+        return channels.toArray(new DbGuide[channels.size()]);
     }
 
     public static Map<String, String> prepare(ExtInf item, DbChannel dbChannel) {

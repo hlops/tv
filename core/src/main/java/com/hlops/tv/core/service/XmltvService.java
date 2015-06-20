@@ -21,6 +21,4 @@ public interface XmltvService {
 
     void printXmltv(OutputStream outputStream, Filter filter) throws InterruptedException;
 
-    void printJson(OutputStream outputStream, Filter filter, boolean beautify) throws InterruptedException;
-
 }

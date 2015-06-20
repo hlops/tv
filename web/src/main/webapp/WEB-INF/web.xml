@@ -14,11 +14,6 @@
         </listener-class>
     </listener>
 
-    <servlet-mapping>
-        <servlet-name>TV</servlet-name>
-        <url-pattern>/tv/*</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>TV</servlet-name>
         <servlet-class>
@@ -35,5 +30,10 @@
 
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TV</servlet-name>
+        <url-pattern>/tv/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

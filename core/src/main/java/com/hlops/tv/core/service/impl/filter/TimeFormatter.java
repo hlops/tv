@@ -17,7 +17,8 @@ public class TimeFormatter extends Formatter {
 
     private static Logger log = LogManager.getLogger(TimeFormatter.class);
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+    public static final String DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_PATTERN);
 
     private static final Pattern TIME_PATTERN = Pattern.compile("([+-]?)([0-9 \\-+]+)([smhd]?)");
 
