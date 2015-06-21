@@ -5,26 +5,24 @@
         </p>
         <div class="jumbotron" ng-controller="tvGuideJumbotronCtrl as jc">
             <ul class="nav nav-pills">
-                <li role="presentation"
-                    ng-repeat="day in jc.days"
+                <li ng-repeat="day in jc.days"
                     ng-class="{active: $index == jc.currentDay}"
                     ng-click="jc.setDay($index)">
-                    <a href="#">{{day}}</a>
+                    <a href="#/">{{day}}</a>
                 </li>
             </ul>
 
             <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="#">Сейчас</a></li>
-                <li role="presentation"><a href="#">Утро</a></li>
-                <li role="presentation"><a href="#">День</a></li>
-                <li role="presentation"><a href="#">Вечер</a></li>
-                <li role="presentation"><a href="#">Ночь</a></li>
+                <li role="presentation" class="active"><a href="#/">Сейчас</a></li>
+                <li role="presentation"><a href="#/">Утро</a></li>
+                <li role="presentation"><a href="#/">День</a></li>
+                <li role="presentation"><a href="#/">Вечер</a></li>
+                <li role="presentation"><a href="#/">Ночь</a></li>
             </ul>
 
             <ul class="nav nav-pills">
-                <li role="presentation"
-                    ng-repeat="cat in gc.tv.categories">
-                    <a href="#">{{cat}}</a>
+                <li ng-repeat="cat in gc.tv.categories">
+                    <a href="#/">{{cat}}</a>
                 </li>
             </ul>
 

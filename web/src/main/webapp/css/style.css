@@ -13,3 +13,7 @@ body {
 .ui-table tr.filter input {
     width: 100%;
 }
+
+.jumbotron input[type=text] {
+    width: 100%;
+}
