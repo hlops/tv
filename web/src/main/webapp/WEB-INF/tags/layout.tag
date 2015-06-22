@@ -11,9 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
 
-    <link href="/css/readable-bootstrap.min.css" rel="stylesheet">
-    <link href="/css/chosen.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/readable-bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/xeditable.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,12 +27,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate.js"></script>
-    <script src="/js/jquery-2.1.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-2.1.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/vendor/xeditable.js"></script>
     <jsp:invoke fragment="head"/>
 </head>
 <body ng-app="tvGuideApp">
 <jsp:invoke fragment="body"/>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/ui.js"></script>
+<script src="${pageContext.request.contextPath}/js/ui.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -20,6 +20,7 @@ public class DbChannel implements Serializable, Cloneable {
     private int timeShift;
     private Attribute[] attributes;
     private String guideId;
+    private Integer rating;
 
     public DbChannel() {
     }
@@ -90,6 +91,14 @@ public class DbChannel implements Serializable, Cloneable {
 
     public void setGuideId(String guideId) {
         this.guideId = guideId;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")

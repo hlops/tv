@@ -11,7 +11,8 @@
 <ol class="channels">
     <li ng-repeat="channel in gc.tv.channels | filter:search">
         <h2>{{channel.name}}</h2>
-        {{channel.group}}
+        {{channel.xmltvId}}
         {{channel.timeShift}}
+        <a href="#/channels" editable-text="channel.name">{{ channel.name || 'empty' }}</a>
     </li>
 </ol>

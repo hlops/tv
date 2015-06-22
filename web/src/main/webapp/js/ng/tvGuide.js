@@ -1,11 +1,12 @@
 {
     angular
-        .module('tvGuideApp', ['ngResource', 'ngRoute'])
+        .module('tvGuideApp', ['ngResource', 'ngRoute', 'xeditable'])
         .controller('tvGuideCtrl', tvGuideCtrl)
         .controller('tvGuideJumbotronCtrl', tvGuideJumbotronCtrl)
         .factory('tvGuideService', tvGuideService)
         .filter('tvGuideTime', tvGuideTime)
         .config(routeProvider)
+        .run(tune)
     ;
 
     // ====== <tvGuide> ======
@@ -53,5 +54,9 @@
                 controllerAs: "gc"
             })
 
+    }
+
+    function tune(editableOptions) {
+        editableOptions.theme = 'bs3'
     }
 }
