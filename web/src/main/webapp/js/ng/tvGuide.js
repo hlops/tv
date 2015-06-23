@@ -53,7 +53,11 @@
                 controller: 'tvGuideCtrl',
                 controllerAs: "gc"
             })
-
+            .when('/groups', {
+                templateUrl: 'pages/groups.html',
+                controller: 'tvGuideCtrl',
+                controllerAs: "gc"
+            })
     }
 
     function tune(editableOptions) {
