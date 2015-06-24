@@ -17,7 +17,7 @@ public class ChannelVO {
     private String group;
     private String aspect;
     private String crop;
-    private String xmltvId;
+    private String guideId;
     private int timeShift;
 
     public ChannelVO(DbChannel channel) {
@@ -27,6 +27,7 @@ public class ChannelVO {
         this.setGroup(channel.getGroup());
         //this.setAspect();
         this.setTimeShift(channel.getTimeShift());
+        this.setGuideId(channel.getGuideId());
     }
 
     public String getAspect() {
@@ -85,11 +86,11 @@ public class ChannelVO {
         this.timeShift = timeShift;
     }
 
-    public String getXmltvId() {
-        return xmltvId;
+    public String getGuideId() {
+        return guideId;
     }
 
-    public void setXmltvId(String xmltvId) {
-        this.xmltvId = xmltvId;
+    public void setGuideId(String guideId) {
+        this.guideId = guideId;
     }
 }

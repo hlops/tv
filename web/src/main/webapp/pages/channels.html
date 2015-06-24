@@ -1,18 +1,18 @@
 <div class="jumbotron">
     <div class="row">
-        <span class="col-lg-3"><input type="text" placeholder="Название" ng-model="search.name"></span>
-        <span class="col-lg-2"><input type="text" placeholder="Группа" ng-model="search.group"></span>
+        <span class="col-lg-3"><input type="text" placeholder="Название" ng-model="filterName"></span>
+        <span class="col-lg-2"><input type="text" placeholder="Группа" ng-model="filterGroup"></span>
         <span class="col-lg-4">
-            <input type="checkbox" name="options" value="2"/> Непривязаные к телепрограмме
+            <input type="checkbox" ng-model="filterBinded"/> Непривязанные к телепрограмме
         </span>
     </div>
 </div>
 
 <ol class="channels">
-    <li ng-repeat="channel in gc.tv.channels | filter:search">
+    Всего {{filtered.length}} каналов
+    <li ng-repeat="channel in filtered = (gc.tv.channels | channelsFilter:filterName:filterGroup:filterBinded)">
         <h2>{{channel.name}}</h2>
-        {{channel.xmltvId}}
-        {{channel.timeShift}}
+        {{channel.guideId}}
         <a href="#/channels" editable-text="channel.name">{{ channel.name || 'empty' }}</a>
     </li>
 </ol>

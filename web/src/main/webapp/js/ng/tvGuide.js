@@ -3,8 +3,10 @@
         .module('tvGuideApp', ['ngResource', 'ngRoute', 'xeditable'])
         .controller('tvGuideCtrl', tvGuideCtrl)
         .controller('tvGuideJumbotronCtrl', tvGuideJumbotronCtrl)
+        .controller('tvGuideChannelsCtrl', tvGuideChannelsCtrl)
         .factory('tvGuideService', tvGuideService)
         .filter('tvGuideTime', tvGuideTime)
+        .filter('channelsFilter', channelsFilter)
         .config(routeProvider)
         .run(tune)
     ;
@@ -41,22 +43,42 @@
 
     // ====== </tvGuide> ======
 
+    // ====== <tvGuideChannels> ======
+
+    function tvGuideChannelsCtrl() {
+    }
+
+    function channelsFilter() {
+        return function (arr, filterName, filterGroup, filterBinded) {
+            var result = [];
+            if (arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    if ((!filterName && !filterGroup && !filterBinded) ||
+                        (filterName && arr[i].name.toLowerCase().indexOf(filterName.toLowerCase()) >= 0) ||
+                        (filterGroup && arr[i].group.toLowerCase().indexOf(filterGroup.toLowerCase()) >= 0) ||
+                        (filterBinded && !arr[i].guideId)) {
+                        result.push(arr[i]);
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+    // ====== </tvGuideChannels> ======
+
     function routeProvider($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'pages/guide.html',
-                controller: 'tvGuideCtrl',
-                controllerAs: "gc"
+                templateUrl: 'pages/guide.html'
             })
             .when('/channels', {
                 templateUrl: 'pages/channels.html',
-                controller: 'tvGuideCtrl',
-                controllerAs: "gc"
+                controller: 'tvGuideChannelsCtrl',
+                controllerAs: "gcc"
             })
             .when('/groups', {
-                templateUrl: 'pages/groups.html',
-                controller: 'tvGuideCtrl',
-                controllerAs: "gc"
+                templateUrl: 'pages/groups.html'
             })
     }
 

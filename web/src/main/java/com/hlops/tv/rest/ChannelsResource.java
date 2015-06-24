@@ -56,6 +56,9 @@ public class ChannelsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<ChannelVO> getChannels() throws InterruptedException, BusinessException {
         List<ChannelVO> result = new ArrayList<>();
+
+        // todo:
+        xmltvService.setProgramBindingDirty(true);
         tvProgramService.loadChannels();
 
         for (DbChannel channel : dbService.getChannels().values()) {
@@ -82,9 +85,7 @@ public class ChannelsResource {
 */
                 channels.replace(bean.getId(), dbChannel);
                 dbService.commit();
-            } catch (IllegalAccessException e) {
-                log.log(Level.ERROR, e.getMessage(), e);
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 log.log(Level.ERROR, e.getMessage(), e);
             }
         }

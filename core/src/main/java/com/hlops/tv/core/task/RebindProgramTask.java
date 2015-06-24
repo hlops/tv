@@ -2,6 +2,7 @@ package com.hlops.tv.core.task;
 
 import com.hlops.tasker.task.CacheableTask;
 import com.hlops.tasker.task.impl.TaskImpl;
+import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.bean.db.DbTvItem;
 import com.hlops.tv.core.service.MapDBService;
@@ -119,7 +120,7 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
                                     tvItem.setStop(formatter.format(value));
                                 } else if ("channel".equals(localPart)) {
                                     if (!channels.containsKey(value)) {
-                                        log.warn("Don defined channel id: " + value);
+                                        log.warn("Unexpected programme channel : " + value);
                                     }
                                     channels.get(value).items.add(tvItem);
                                 }
@@ -141,6 +142,7 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
         String endDate = TimeFormatter.formatDateWithShift(getActualEndDate());
 
         ConcurrentMap<String, DbGuide> guideChannels = dbService.getGuideChannels();
+        Map<String, String> channelNames = new HashMap<>();
         for (ChannelWrapper wrapper : channels.values()) {
             Set<DbTvItem> items = new HashSet<>(Arrays.asList(wrapper.guide.getItems()));
             items.addAll(wrapper.items);
@@ -152,11 +154,35 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
             }
             wrapper.guide.setItems(items.toArray(new DbTvItem[items.size()]));
             guideChannels.put(wrapper.guide.getId(), wrapper.guide);
+
+            addAssociatedNames(channelNames, wrapper.guide.getName(), wrapper.guide.getId());
+        }
+
+        for (DbChannel channel : dbService.getChannels().values()) {
+            if (!Boolean.FALSE.equals(channel.isEnabled()) && channel.getGuideId() == null) {
+                associateChannelWithGuide(channelNames, channel);
+            }
         }
 
         dbService.commit();
-        xmltvService.setProgramBindingDirty(false);
         return null;
+    }
+
+    private void addAssociatedNames(Map<String, String> channelNames, String name, String id) {
+        for (String key : getAssociatedNames(name)) {
+            channelNames.put(key.replaceAll("\\s{2,}", " ").trim().toUpperCase(), id);
+        }
+    }
+
+    private String[] getAssociatedNames(String name) {
+        return new String[]{name};
+    }
+
+    private void associateChannelWithGuide(Map<String, String> names, DbChannel channel) {
+        String id = names.get(channel.getTvgName().toUpperCase());
+        if (id != null) {
+            channel.setGuideId(id);
+        }
     }
 
     private String getActualStartDate() {
