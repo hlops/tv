@@ -1,6 +1,10 @@
 package com.hlops.tv.core.bean.db;
 
+import com.hlops.tv.core.service.Filter;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tom on 4/1/15.
@@ -99,6 +103,18 @@ public class DbChannel implements Serializable, Cloneable {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public boolean applyFilter(Filter filter) {
+        Map<String, String> map = new HashMap<>();
+        if (name != null) map.put("id", name);
+        if (tvgName != null) map.put("name", tvgName);
+        if (enabled != null) map.put("enabled", Boolean.toString(enabled));
+        if (group != null) map.put("group", group);
+        map.put("timeShift", Integer.toString(timeShift));
+        if (rating != null) map.put("rating", Integer.toString(rating));
+
+        return filter.accept(map);
     }
 
     @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")

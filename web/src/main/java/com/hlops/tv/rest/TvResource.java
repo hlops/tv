@@ -4,11 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.bean.db.DbGuide;
+import com.hlops.tv.core.bean.db.DbTvItem;
 import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
 import com.hlops.tv.model.ChannelVO;
+import com.hlops.tv.model.TvItemVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -131,6 +136,14 @@ public class TvResource {
             jsonWriter.name("channels").beginArray();
             for (DbChannel dbChannel : tvProgramService.getChannels(filter)) {
                 ChannelVO channelVO = new ChannelVO(dbChannel);
+                List<TvItemVO> items = new ArrayList<>();
+                DbGuide dbGuide = tvProgramService.getDbGuide(dbChannel.getGuideId());
+                if (dbGuide != null && dbGuide.getItems() != null) {
+                    for (DbTvItem item : dbGuide.getItems(filter)) {
+                        items.add(new TvItemVO(item));
+                    }
+                    channelVO.setItems(items);
+                }
                 gson.toJson(channelVO, channelVO.getClass(), jsonWriter);
             }
             jsonWriter.endArray();

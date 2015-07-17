@@ -1,6 +1,11 @@
 package com.hlops.tv.core.bean.db;
 
+import com.hlops.tv.core.service.Filter;
+import org.apache.commons.beanutils.BeanUtilsBean;
+
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -76,5 +81,16 @@ public class DbTvItem implements Serializable {
     @Override
     public int hashCode() {
         return start != null ? start.hashCode() : 0;
+    }
+
+    public boolean applyFilter(Filter filter) {
+        try {
+            //noinspection unchecked
+            Map<String, String> map = BeanUtilsBean.getInstance().describe(this);
+            return filter.accept(map);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

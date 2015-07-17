@@ -21,5 +21,7 @@ public interface TVProgramService {
 
     DbChannel[] getChannels(Filter filter);
 
+    DbGuide getDbGuide(String id);
+
     DbGuide[] getGuideChannels(Filter filter);
 }

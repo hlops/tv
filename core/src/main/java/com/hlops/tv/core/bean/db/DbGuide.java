@@ -1,6 +1,13 @@
 package com.hlops.tv.core.bean.db;
 
+import com.hlops.tv.core.service.Filter;
+
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -69,4 +76,17 @@ public class DbGuide implements Serializable, Cloneable {
         result = 31 * result + (logo != null ? logo.hashCode() : 0);
         return result;
     }
+
+    public List<DbTvItem> getItems(Filter filter) {
+        return Arrays.stream(items).filter(p -> p.applyFilter(filter)).collect(Collectors.toList());
+    }
+
+    public boolean applyFilter(Filter filter) {
+        Map<String, String> map = new HashMap<>();
+        if (id != null) map.put("guideId", id);
+        if (name != null) map.put("guideName", name);
+
+        return filter.accept(map);
+    }
+
 }

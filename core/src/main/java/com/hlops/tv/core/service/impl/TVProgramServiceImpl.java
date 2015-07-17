@@ -1,7 +1,6 @@
 package com.hlops.tv.core.service.impl;
 
 import com.hlops.tasker.QueueService;
-import com.hlops.tv.core.bean.ExtInf;
 import com.hlops.tv.core.bean.M3U;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.bean.db.DbGuide;
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -106,21 +103,18 @@ public class TVProgramServiceImpl implements TVProgramService {
     @Override
     public DbChannel[] getChannels(Filter filter) {
         Collection<DbChannel> channels = dbService.getChannels().values();
-        return channels.toArray(new DbChannel[channels.size()]);
+        return channels.stream().filter(p -> p.applyFilter(filter)).toArray(DbChannel[]::new);
+    }
+
+    @Override
+    public DbGuide getDbGuide(String id) {
+        return dbService.getGuideChannels().get(id);
     }
 
     @Override
     public DbGuide[] getGuideChannels(Filter filter) {
-        Collection<DbGuide> channels = dbService.getGuideChannels().values();
-        return channels.toArray(new DbGuide[channels.size()]);
+        Collection<DbGuide> guides = dbService.getGuideChannels().values();
+        return guides.stream().filter(p -> p.applyFilter(filter)).toArray(DbGuide[]::new);
     }
 
-    public static Map<String, String> prepare(ExtInf item, DbChannel dbChannel) {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("enabled", Boolean.toString(dbChannel.isEnabled()));
-        //map.put("xmltv", dbChannel.getXmltv());
-        map.put("channel", item.getName());
-        map.put("group", item.get(ExtInf.Attribute.group_title));
-        return map;
-    }
 }

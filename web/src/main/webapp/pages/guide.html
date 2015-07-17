@@ -30,6 +30,9 @@
                 <input type="text" class="form-control" placeholder="Поиск...">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-wrench"></span>
+                            </button>
+                            <button class="btn btn-default" type="button">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </span>
@@ -37,9 +40,9 @@
         </div>
         <div id="container">
             <div class="row">
-                <div class="col-xs-6 col-lg-2"
+                <div class="col-md-2 col-lg-4" style="outline: 1px solid gray"
                      ng-repeat="channel in gc.tv.channels">
-                    <h2>{{channel.name}}</h2>
+                    <h4>{{channel.name}}</h4>
 
                     <p ng-repeat="item in channel.tv">
                         <strong>{{item.t1 | tvGuideTime}}</strong>

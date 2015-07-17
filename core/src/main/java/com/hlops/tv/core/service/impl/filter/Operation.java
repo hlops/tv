@@ -14,6 +14,13 @@ enum Operation implements IOperation {
         }
     },
 
+    like {
+        @Override
+        public boolean success(@Nullable String s1, @Nullable String s2) {
+            return StringUtils.containsIgnoreCase(s1, s2);
+        }
+    },
+
     lt {
         @Override
         public boolean success(@Nullable String s1, @Nullable String s2) {

@@ -1,9 +1,9 @@
 package com.hlops.tv.model;
 
 import com.hlops.tv.core.bean.db.DbChannel;
-import com.hlops.tv.core.bean.db.DbGuide;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by tom on 4/4/15.
@@ -19,6 +19,7 @@ public class ChannelVO {
     private String crop;
     private String guideId;
     private int timeShift;
+    private List<TvItemVO> items;
 
     public ChannelVO(DbChannel channel) {
         this.setId(channel.getUrl());
@@ -93,4 +94,13 @@ public class ChannelVO {
     public void setGuideId(String guideId) {
         this.guideId = guideId;
     }
+    
+    public List<TvItemVO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<TvItemVO> items) {
+        this.items = items;
+    }
+    
 }
