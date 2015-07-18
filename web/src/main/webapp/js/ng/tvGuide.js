@@ -4,6 +4,7 @@
         .controller('tvGuideCtrl', tvGuideCtrl)
         .controller('tvGuideJumbotronCtrl', tvGuideJumbotronCtrl)
         .controller('tvGuideChannelsCtrl', tvGuideChannelsCtrl)
+        .controller('tvChannelsGroupCtrl', tvChannelsGroupCtrl)
         .factory('tvGuideService', tvGuideService)
         .filter('tvGuideTime', tvGuideTime)
         .filter('channelsFilter', channelsFilter)
@@ -24,20 +25,36 @@
 
     function tvGuideCtrl(tvGuideService) {
         var tvGuideCtrl = this;
-        tvGuideService.get(
-            function (data) {
-                tvGuideCtrl.tv = data;
-            }
-        );
+        tvGuideCtrl.getModel = function () {
+            return tvGuideService.model;
+        };
     }
 
-    function tvGuideService($resource) {
-        return $resource("tv/json?group.eq=Эфир&stop.ge.time=-2m&start.le.time=%2B2h");
+    function tvGuideService($resource, $http) {
+        var tvGuideService = {};
+        tvGuideService.model = {};
+
+        tvGuideService.loadJson = function () {
+            return $http.get("tv/json?stop.ge.time=-2m&start.le.time=%2B2h")
+                .then(function (response) {
+                    tvGuideService.model = response.data;
+                });
+        };
+
+        tvGuideService.saveGroups = function () {
+            $http.put("tv/groups", tvGuideService.model.groups)
+                .error(function (err) {
+                    console.error(err);
+                });
+        };
+
+        tvGuideService.loadJson();
+        return tvGuideService;
     }
 
     function tvGuideTime() {
         return function (t) {
-            return t.slice(8, 10) + ":" + t.slice(10, 12);
+            return t ? t.slice(8, 10) + ":" + t.slice(10, 12) : "";
         }
     }
 
@@ -67,6 +84,31 @@
 
     // ====== </tvGuideChannels> ======
 
+    // ====== </tvChannelsGroupCtrl> ======
+    function tvChannelsGroupCtrl(tvGuideService) {
+        tvChannelsGroupCtrl = this;
+
+        tvChannelsGroupCtrl.getModel = function () {
+            return tvGuideService.model;
+        };
+
+        tvChannelsGroupCtrl.reorder = function (index) {
+            var s = tvGuideService.model.groups[index + 1];
+            tvGuideService.model.groups[index + 1] = tvGuideService.model.groups[index];
+            tvGuideService.model.groups[index] = s;
+        };
+
+        tvChannelsGroupCtrl.save = function () {
+            tvGuideService.saveGroups();
+        };
+
+        tvChannelsGroupCtrl.revert = function () {
+            tvGuideService.loadJson();
+        };
+    }
+
+    // ====== </tvChannelsGroupCtrl> ======
+
     function routeProvider($routeProvider) {
         $routeProvider
             .when('/', {
@@ -78,7 +120,9 @@
                 controllerAs: "gcc"
             })
             .when('/groups', {
-                templateUrl: 'pages/groups.html'
+                templateUrl: 'pages/groups.html',
+                controller: 'tvChannelsGroupCtrl',
+                controllerAs: "cg"
             })
     }
 

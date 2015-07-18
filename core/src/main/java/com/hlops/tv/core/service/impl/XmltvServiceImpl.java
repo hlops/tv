@@ -37,7 +37,7 @@ public class XmltvServiceImpl implements XmltvService {
     private MapDBService dbService;
 
     private File xmltvFile;
-    private boolean programBindingDirty;
+    private boolean programBindingDirty = true;
 
     @PostConstruct
     private void init() {

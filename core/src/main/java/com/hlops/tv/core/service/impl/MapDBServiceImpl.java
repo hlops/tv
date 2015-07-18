@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -24,6 +25,7 @@ public class MapDBServiceImpl implements MapDBService {
 
     private static final String DB_CHANNELS = "dbChannels";
     private static final String DB_GUIDE_CHANNELS = "dbGuideChannels";
+    private static final String DB_CHANNELS_GROUPS = "dbGroups";
 
     @Value("${tv-playlist-storage}")
     private String storage;
@@ -52,6 +54,17 @@ public class MapDBServiceImpl implements MapDBService {
     @Override
     public ConcurrentMap<String, DbGuide> getGuideChannels() {
         return db.getHashMap(DB_GUIDE_CHANNELS);
+    }
+
+    @Override
+    public Map<String, Integer> getChannelGroups() {
+        return db.getHashMap(DB_CHANNELS_GROUPS);
+    }
+
+    @Override
+    public void addChannelGroup(String group) {
+        Map<String, Integer> map = getChannelGroups();
+        map.putIfAbsent(group, map.size());
     }
 
     @Override

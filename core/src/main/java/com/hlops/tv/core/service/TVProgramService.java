@@ -6,6 +6,7 @@ import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.exception.BusinessException;
 
 import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,4 +25,8 @@ public interface TVProgramService {
     DbGuide getDbGuide(String id);
 
     DbGuide[] getGuideChannels(Filter filter);
+
+    List<String> getGroups();
+
+    void saveGroups(List<String> groups);
 }

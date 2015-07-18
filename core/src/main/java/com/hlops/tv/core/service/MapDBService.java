@@ -3,6 +3,7 @@ package com.hlops.tv.core.service;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.bean.db.DbGuide;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -16,5 +17,10 @@ public interface MapDBService {
 
     ConcurrentMap<String, DbGuide> getGuideChannels();
 
+    Map<String, Integer> getChannelGroups();
+
+    void addChannelGroup(String group);
+
     void drop();
+
 }

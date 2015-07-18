@@ -1,5 +1,6 @@
 package com.hlops.tv.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.hlops.tv.core.bean.db.DbTvItem;
 
 /**
@@ -10,10 +11,15 @@ import com.hlops.tv.core.bean.db.DbTvItem;
  */
 public class TvItemVO {
 
+    @SerializedName("t")
     private String title;
+    @SerializedName("d")
     private String description;
+    @SerializedName("c")
     private String category;
+    @SerializedName("t1")
     private String start;
+    @SerializedName("t2")
     private String stop;
 
     public TvItemVO(DbTvItem item) {

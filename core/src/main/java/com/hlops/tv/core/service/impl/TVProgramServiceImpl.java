@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
-import java.util.Collection;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -115,6 +116,27 @@ public class TVProgramServiceImpl implements TVProgramService {
     public DbGuide[] getGuideChannels(Filter filter) {
         Collection<DbGuide> guides = dbService.getGuideChannels().values();
         return guides.stream().filter(p -> p.applyFilter(filter)).toArray(DbGuide[]::new);
+    }
+
+    @Override
+    public List<String> getGroups() {
+        return dbService.getChannelGroups().entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveGroups(List<String> groups) {
+        //noinspection SynchronizeOnNonFinalField
+        synchronized (dbService) {
+            Map<String, Integer> map = new HashMap<>();
+            for (String group : groups) {
+                map.put(group, map.size());
+            }
+            dbService.getChannelGroups().putAll(map);
+        }
+        dbService.commit();
     }
 
 }

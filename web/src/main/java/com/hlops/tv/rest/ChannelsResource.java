@@ -57,8 +57,6 @@ public class ChannelsResource {
     public List<ChannelVO> getChannels() throws InterruptedException, BusinessException {
         List<ChannelVO> result = new ArrayList<>();
 
-        // todo:
-        xmltvService.setProgramBindingDirty(true);
         tvProgramService.loadChannels();
 
         for (DbChannel channel : dbService.getChannels().values()) {

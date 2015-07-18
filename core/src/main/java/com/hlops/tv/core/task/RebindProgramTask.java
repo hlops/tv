@@ -9,6 +9,7 @@ import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.service.impl.filter.TimeFormatter;
 import com.sun.xml.internal.stream.events.StartElementEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -162,9 +163,13 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
             if (!Boolean.FALSE.equals(channel.isEnabled()) && channel.getGuideId() == null) {
                 associateChannelWithGuide(channelNames, channel);
             }
+            if (StringUtils.isNotBlank(channel.getGroup())) {
+                dbService.addChannelGroup(channel.getGroup());
+            }
         }
 
         dbService.commit();
+        xmltvService.setProgramBindingDirty(false);
         return null;
     }
 

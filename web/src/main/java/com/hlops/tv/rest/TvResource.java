@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonWriter;
 import com.hlops.tv.core.bean.db.DbChannel;
 import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.bean.db.DbTvItem;
+import com.hlops.tv.core.exception.BusinessException;
 import com.hlops.tv.core.service.Filter;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
@@ -148,6 +150,12 @@ public class TvResource {
             }
             jsonWriter.endArray();
 
+            jsonWriter.name("groups").beginArray();
+            for (String group : tvProgramService.getGroups()) {
+                jsonWriter.value(group);
+            }
+            jsonWriter.endArray();
+
             jsonWriter.endObject();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -158,7 +166,8 @@ public class TvResource {
     @GET
     @Path("json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response parseJson(@Context final HttpServletRequest request) throws InterruptedException {
+    public Response parseJson(@Context final HttpServletRequest request) throws InterruptedException, BusinessException {
+        tvProgramService.loadChannels();
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 printJson(new GZIPOutputStream(outputStream, true), filterFactory.createFilter(request.getParameterMap()), false);
@@ -174,7 +183,8 @@ public class TvResource {
     @GET
     @Path("json-test")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public Response parseJsonTest(@Context final HttpServletRequest request) throws InterruptedException {
+    public Response parseJsonTest(@Context final HttpServletRequest request) throws InterruptedException, BusinessException {
+        tvProgramService.loadChannels();
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 printJson(outputStream, filterFactory.createFilter(request.getParameterMap()), true);
@@ -185,4 +195,10 @@ public class TvResource {
         return Response.ok(streamingOutput).build();
     }
 
+    @PUT
+    @Path("groups")
+    public Response saveGroups(List<String> groups) throws InterruptedException, BusinessException {
+        tvProgramService.saveGroups(groups);
+        return Response.ok().build();
+    }
 }

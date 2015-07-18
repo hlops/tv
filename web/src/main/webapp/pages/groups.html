@@ -1,14 +1,20 @@
 <ol class="groups">
-    <li ng-repeat="channel in gc.tv.channels">
+    <li ng-repeat="group in cg.getModel().groups">
         <h4>
-            <button type="button" class="btn btn-default" >
-                <span class="glyphicon glyphicon-menu-up"></span>
+            <button type="button" class="btn btn-default" style="top: 24px; position: relative;"
+                    ng-class="$last?'invisible':''"
+                    ng-click="cg.reorder($index)">
+                <span class="glyphicon glyphicon-sort"></span>
             </button>
-            <button type="button" class="btn btn-default" >
-                <span class="glyphicon glyphicon-menu-down"></span>
-            </button>
-            <span class="group">{{channel.name}}</span>
+            <span class="group">{{group}}</span>
         </h4>
     </li>
+    <button class="btn btn-primary" ng-click="cg.save()">
+        <span class="glyphicon glyphicon-ok"></span>
+        Save
+    </button>
+    <button class="btn btn-default" ng-click="cg.revert()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        Revert
+    </button>
 </ol>
-aaa
