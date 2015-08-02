@@ -175,7 +175,9 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
 
     private void addAssociatedNames(Map<String, String> channelNames, String name, String id) {
         for (String key : getAssociatedNames(name)) {
-            channelNames.put(key.replaceAll("\\s{2,}", " ").trim().toUpperCase(), id);
+            String key1 = key.replaceAll("\\s{2,}", " ").replaceAll("\\(\\*\\)" , "").trim().toUpperCase();
+            channelNames.put(key1, id);
+            channelNames.put(key1.replaceAll("КАНАЛ", "").trim(), id);
         }
     }
 

@@ -1,11 +1,13 @@
 package com.hlops.tv.rest;
 
 import com.hlops.tv.core.bean.db.DbChannel;
+import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.exception.BusinessException;
 import com.hlops.tv.core.service.MapDBService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.model.ChannelVO;
+import com.hlops.tv.model.GuideVO;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -53,23 +55,23 @@ public class ChannelsResource {
 
     @GET
     @Path("channels")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ChannelVO> getChannels() throws InterruptedException, BusinessException {
-        List<ChannelVO> result = new ArrayList<>();
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public List<GuideVO> getChannels() throws InterruptedException, BusinessException {
+        List<GuideVO> result = new ArrayList<>();
 
         tvProgramService.loadChannels();
 
-        for (DbChannel channel : dbService.getChannels().values()) {
-            result.add(new ChannelVO(channel));
+        for (DbGuide guide : dbService.getGuideChannels().values()) {
+            result.add(new GuideVO(guide));
         }
-        Collections.sort(result, (o1, o2) -> o1.getGroup().compareTo(o2.getGroup()));
+        Collections.sort(result, (o1, o2) -> o1.getName().compareTo(o2.getName()));
         return result;
     }
 
     @PUT
     @Path("channel")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public void save(ChannelVO bean) {
         ConcurrentMap<String, DbChannel> channels = dbService.getChannels();
         DbChannel dbChannel = channels.get(bean.getId());

@@ -32,6 +32,16 @@
                             </ul>
                         </li>
                     </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                TV<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/tv/playlist">M3U</a></li>
+                                <li><a href="/tv/xmltv-test">XmlTV</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
                             <input type="text" placeholder="Email" class="form-control">

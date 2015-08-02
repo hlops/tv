@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.concurrent.ConcurrentMap;
 
@@ -25,6 +26,8 @@ import java.util.concurrent.ConcurrentMap;
 public class M3uServiceImpl implements M3uService {
 
     private static Logger log = LogManager.getLogger(M3uServiceImpl.class);
+
+    public static final String M3U_UDP_PREFIX = "http://192.168.1.1:4000/udp/";
 
     @Value("${tv-playlist-url}")
     private String playlist;
@@ -97,4 +100,33 @@ public class M3uServiceImpl implements M3uService {
         return channel;
     }
 
+    public void print(DbChannel[] channels, PrintStream out) {
+        out.println("#EXTM3U m3uautoload=1 cache=500 deinterlace=1 aspect-ratio=4:3 crop=690x550+10+10");
+        out.println();
+
+        String group = "";
+        for (DbChannel dbChannel : channels) {
+            out.print("#EXTINF:-1");
+            if (dbChannel.getGuideId() != null) {
+                out.print(" tvg-name=\"" + dbChannel.getGuideId() + "\"");
+            }
+            if (dbChannel.hasAttribute(DbChannel.Attribute.hd)) {
+                out.print(" crop=1920x1080+0+0");
+            }
+            if (dbChannel.hasAttribute(DbChannel.Attribute.wide)) {
+                out.print(" aspect-ratio=16:9");
+            }
+            if (!group.equals(dbChannel.getGroup())) {
+                out.print(" group-title=\"" + dbChannel.getGroup() + "\"");
+                group = dbChannel.getGroup();
+            }
+
+            out.print(", " + dbChannel.getTvgName());
+            out.println();
+
+            //out.println("#EXTGRP:" + dbChannel.getGroup());
+            out.println(M3U_UDP_PREFIX + dbChannel.getUrl().substring(7));
+            out.println();
+        }
+    }
 }

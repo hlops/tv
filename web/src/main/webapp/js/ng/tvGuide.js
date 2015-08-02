@@ -6,6 +6,7 @@
         .controller('tvGuideChannelsCtrl', tvGuideChannelsCtrl)
         .controller('tvChannelsGroupCtrl', tvChannelsGroupCtrl)
         .factory('tvGuideService', tvGuideService)
+        .factory('tvGuideChannelsService', tvGuideChannelsService)
         .filter('tvGuideTime', tvGuideTime)
         .filter('channelsFilter', channelsFilter)
         .config(routeProvider)
@@ -62,7 +63,30 @@
 
     // ====== <tvGuideChannels> ======
 
-    function tvGuideChannelsCtrl() {
+    function tvGuideChannelsCtrl(tvGuideService, tvGuideChannelsService) {
+        tvGuideChannelsCtrl = this;
+        tvGuideChannelsCtrl.getModel = function () {
+            return tvGuideService.model;
+        };
+        tvGuideChannelsCtrl.setFilterGroup = function (value) {
+            tvGuideChannelsCtrl.filterGroup = value;
+        };
+
+        tvGuideChannelsCtrl.getGroups = function () {
+            return tvGuideChannelsService.model;
+        };
+
+        tvGuideChannelsCtrl.loadGroups = function () {
+            tvGuideChannelsService.load();
+        };
+
+        tvGuideChannelsCtrl.countUnbinded = function (items) {
+            var n = 0;
+            angular.forEach(items, function (item) {
+                if (!item.guideId) n++;
+            });
+            return n;
+        }
     }
 
     function channelsFilter() {
@@ -70,10 +94,9 @@
             var result = [];
             if (arr) {
                 for (var i = 0; i < arr.length; i++) {
-                    if ((!filterName && !filterGroup && !filterBinded) ||
-                        (filterName && arr[i].name.toLowerCase().indexOf(filterName.toLowerCase()) >= 0) ||
-                        (filterGroup && arr[i].group.toLowerCase().indexOf(filterGroup.toLowerCase()) >= 0) ||
-                        (filterBinded && !arr[i].guideId)) {
+                    if ((!filterName || arr[i].name.toLowerCase().indexOf(filterName.toLowerCase()) >= 0) &&
+                        (!filterGroup || arr[i].group.toLowerCase().indexOf(filterGroup.toLowerCase()) >= 0) &&
+                        (!filterBinded || !arr[i].guideId)) {
                         result.push(arr[i]);
                     }
                 }
@@ -82,9 +105,22 @@
         }
     }
 
+    function tvGuideChannelsService($http) {
+        var tvGuideChannelsService = {};
+
+        tvGuideChannelsService.load = function () {
+            return $http.get("tv/rest/channels")
+                .then(function (response) {
+                    tvGuideChannelsService.model = response.data;
+                });
+        };
+
+        return tvGuideChannelsService;
+    }
+
     // ====== </tvGuideChannels> ======
 
-    // ====== </tvChannelsGroupCtrl> ======
+    // ====== </tvChannelsGroup> ======
     function tvChannelsGroupCtrl(tvGuideService) {
         tvChannelsGroupCtrl = this;
 
@@ -107,7 +143,7 @@
         };
     }
 
-    // ====== </tvChannelsGroupCtrl> ======
+    // ====== </tvChannelsGroup> ======
 
     function routeProvider($routeProvider) {
         $routeProvider

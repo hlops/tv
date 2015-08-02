@@ -12,7 +12,7 @@ import java.util.Map;
 public class DbChannel implements Serializable, Cloneable {
     private static final long serialVersionUID = 3934814021150382405L;
 
-    enum Attribute {
+    public enum Attribute {
         wide, hd
     }
 
@@ -35,6 +35,15 @@ public class DbChannel implements Serializable, Cloneable {
 
     public void setAttributes(Attribute[] attributes) {
         this.attributes = attributes;
+    }
+
+    public boolean hasAttribute(Attribute attribute) {
+        if (getAttributes() != null) {
+            for (Attribute a : getAttributes()) {
+                if (a == attribute) return true;
+            }
+        }
+        return false;
     }
 
     public Boolean isEnabled() {
@@ -128,4 +137,5 @@ public class DbChannel implements Serializable, Cloneable {
         }
         return clone;
     }
+
 }

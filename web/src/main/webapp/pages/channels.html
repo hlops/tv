@@ -1,18 +1,42 @@
 <div class="jumbotron">
     <div class="row">
-        <span class="col-lg-3"><input type="text" placeholder="Название" ng-model="filterName"></span>
-        <span class="col-lg-2"><input type="text" placeholder="Группа" ng-model="filterGroup"></span>
-        <span class="col-lg-4">
-            <input type="checkbox" ng-model="filterBinded"/> Непривязанные к телепрограмме
+        <span class="col-md-2">
+            <input type="text" class="form-control" placeholder="Название" ng-model="gcc.filterName">
+        </span>
+        <span class="col-md-3">
+
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span style="opacity: 0.4;" ng-class="{hidden: gcc.filterGroup}">Группы</span>
+                    <span ng-class="{hidden: !gcc.filterGroup}" ng-bind="gcc.filterGroup"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a ng-click="gcc.setFilterGroup()">&nbsp;</a></li>
+                    <li ng-repeat="group in gcc.getModel().groups">
+                        <a ng-bind="group" ng-click="gcc.setFilterGroup(group)"></a></li>
+                </ul>
+            </div>
+
+        </span>
+        <span class="col-md-4" class="input-group-addon">
+            <input type="checkbox" ng-model="gcc.filterBinded"/> Непривязанные к телепрограмме
         </span>
     </div>
 </div>
 
-<ol class="channels">
-    Всего {{filtered.length}} каналов
-    <li ng-repeat="channel in filtered = (gc.tv.channels | channelsFilter:filterName:filterGroup:filterBinded)">
-        <h2>{{channel.name}}</h2>
-        {{channel.guideId}}
-        <a href="#/channels" editable-text="channel.name">{{ channel.name || 'empty' }}</a>
-    </li>
-</ol>
+<p>
+    Всего {{filtered.length}} каналов, {{gcc.countUnbinded(filtered)}} непривязанных
+<div class="row"
+     ng-repeat="channel in filtered = (gc.getModel().channels | channelsFilter:gcc.filterName:gcc.filterGroup:gcc.filterBinded) | orderBy: 'name'">
+        <span class="col-md-4">
+            <a editable-text="channel.name">{{ channel.name || 'empty' }}</a>
+        </span>
+        <span class="col-md-2">
+            <a editable-select="channel.guideId" onshow="gcc.loadGroups()"
+               e-ng-options="g.id as g.name for g in gcc.getGroups()">
+                {{channel.guideId || '&lt;пусто&gt;'}}
+            </a>
+        </span>
+</div>
+</p>

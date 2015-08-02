@@ -1,7 +1,9 @@
 package com.hlops.tv.core.service;
 
 import com.hlops.tv.core.bean.M3U;
+import com.hlops.tv.core.bean.db.DbChannel;
 
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 
 /**
@@ -24,4 +26,6 @@ public interface M3uService {
      * @param m3u M3U channels data
      */
     void parseChannels(M3U m3u);
+
+    void print(DbChannel[] channels, PrintStream printStream);
 }

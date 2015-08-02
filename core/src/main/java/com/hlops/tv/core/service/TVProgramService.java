@@ -18,8 +18,6 @@ public interface TVProgramService {
 
     void loadChannels() throws InterruptedException, BusinessException;
 
-    void print(M3U m3u, PrintStream out, Filter filter);
-
     DbChannel[] getChannels(Filter filter);
 
     DbGuide getDbGuide(String id);

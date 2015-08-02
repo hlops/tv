@@ -8,6 +8,7 @@ import com.hlops.tv.core.bean.db.DbGuide;
 import com.hlops.tv.core.bean.db.DbTvItem;
 import com.hlops.tv.core.exception.BusinessException;
 import com.hlops.tv.core.service.Filter;
+import com.hlops.tv.core.service.M3uService;
 import com.hlops.tv.core.service.TVProgramService;
 import com.hlops.tv.core.service.XmltvService;
 import com.hlops.tv.core.service.impl.filter.HtmlFilterFactory;
@@ -45,15 +46,28 @@ public class TvResource {
     XmltvService xmltvService;
 
     @Autowired
+    M3uService m3uService;
+
+    @Autowired
     HtmlFilterFactory filterFactory;
+    private HttpServletRequest request;
+
+    @Context
+    private void setContext(HttpServletRequest request) {
+        this.request = request;
+        try {
+            tvProgramService.loadChannels();
+        } catch (BusinessException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @GET
     @Path("playlist")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public Response parsePlaylist(@Context final HttpServletRequest request) throws InterruptedException {
-        //final M3U m3u = tvProgramService.loadChannels();
+    public Response parsePlaylist() throws InterruptedException {
         StreamingOutput streamingOutput = outputStream -> {
-            //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+            m3uService.print(tvProgramService.getChannels(filterFactory.createFilter(request.getParameterMap())), new PrintStream(outputStream));
         };
         return Response.ok(streamingOutput).build();
     }
@@ -61,10 +75,9 @@ public class TvResource {
     @GET
     @Path("playlist.m3u")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response parsePlaylistFile(@Context final HttpServletRequest request) throws InterruptedException {
-        //final M3U m3u = tvProgramService.loadChannels();
+    public Response parsePlaylistFile() throws InterruptedException {
         StreamingOutput streamingOutput = outputStream -> {
-            //tvProgramService.print(m3u, new PrintStream(outputStream), filterFactory.createFilter(request.getParameterMap()));
+            m3uService.print(tvProgramService.getChannels(filterFactory.createFilter(request.getParameterMap())), new PrintStream(outputStream));
         };
         return Response.ok(streamingOutput).
                 header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = playlist.m3u").build();
@@ -81,7 +94,7 @@ public class TvResource {
     @GET
     @Path("xmltv")
     @Produces(MediaType.APPLICATION_XML)
-    public Response parseXmltv(@Context final HttpServletRequest request) throws InterruptedException {
+    public Response parseXmltv() throws InterruptedException {
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
@@ -96,7 +109,7 @@ public class TvResource {
     @GET
     @Path("xmltv-test")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public Response parseXmltvTest(@Context final HttpServletRequest request) throws InterruptedException {
+    public Response parseXmltvTest() throws InterruptedException {
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 xmltvService.printXmltv(outputStream, filterFactory.createFilter(request.getParameterMap()));
@@ -110,7 +123,7 @@ public class TvResource {
     @GET
     @Path("xmltv.gz")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response parseXmltvGz(@Context final HttpServletRequest request) throws InterruptedException {
+    public Response parseXmltvGz() throws InterruptedException {
         StreamingOutput streamingOutput = outputStream -> {
             try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream, true)) {
                 xmltvService.printXmltv(gzipOutputStream, filterFactory.createFilter(request.getParameterMap()));
@@ -166,8 +179,7 @@ public class TvResource {
     @GET
     @Path("json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response parseJson(@Context final HttpServletRequest request) throws InterruptedException, BusinessException {
-        tvProgramService.loadChannels();
+    public Response parseJson() throws InterruptedException, BusinessException {
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 printJson(new GZIPOutputStream(outputStream, true), filterFactory.createFilter(request.getParameterMap()), false);
@@ -183,8 +195,7 @@ public class TvResource {
     @GET
     @Path("json-test")
     @Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-    public Response parseJsonTest(@Context final HttpServletRequest request) throws InterruptedException, BusinessException {
-        tvProgramService.loadChannels();
+    public Response parseJsonTest() throws InterruptedException, BusinessException {
         StreamingOutput streamingOutput = outputStream -> {
             try {
                 printJson(outputStream, filterFactory.createFilter(request.getParameterMap()), true);
@@ -201,4 +212,5 @@ public class TvResource {
         tvProgramService.saveGroups(groups);
         return Response.ok().build();
     }
+
 }

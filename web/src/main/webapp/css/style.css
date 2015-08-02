@@ -18,3 +18,14 @@ body {
     width: 100%;
 }
 
+a[ng-click] {
+    cursor: pointer;
+}
+
+div.editable-controls.form-group {
+    display: flex;
+}
+
+div.editable-controls.form-group select {
+    z-index: 100;
+}
