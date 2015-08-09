@@ -145,14 +145,19 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
         ConcurrentMap<String, DbGuide> guideChannels = dbService.getGuideChannels();
         Map<String, String> channelNames = new HashMap<>();
         for (ChannelWrapper wrapper : channels.values()) {
-            Set<DbTvItem> items = new HashSet<>(Arrays.asList(wrapper.guide.getItems()));
-            items.addAll(wrapper.items);
+            Set<DbTvItem> items = new HashSet<>(wrapper.items);
+            DbGuide guide = guideChannels.get(wrapper.guide.getId());
+            if (guide != null) {
+                items.addAll(Arrays.asList(guide.getItems()));
+            }
             for (Iterator<DbTvItem> it = items.iterator(); it.hasNext(); ) {
                 DbTvItem item = it.next();
                 if (startDate.compareTo(item.getStart()) > 0 || endDate.compareTo(item.getStart()) < 0) {
+                    log.debug(wrapper.guide.getName() + " deleted obsolete item: " + item.toString());
                     it.remove();
                 }
             }
+
             wrapper.guide.setItems(items.toArray(new DbTvItem[items.size()]));
             guideChannels.put(wrapper.guide.getId(), wrapper.guide);
 
@@ -175,7 +180,7 @@ public class RebindProgramTask extends TaskImpl<Void> implements CacheableTask<V
 
     private void addAssociatedNames(Map<String, String> channelNames, String name, String id) {
         for (String key : getAssociatedNames(name)) {
-            String key1 = key.replaceAll("\\s{2,}", " ").replaceAll("\\(\\*\\)" , "").trim().toUpperCase();
+            String key1 = key.replaceAll("\\s{2,}", " ").replaceAll("\\(\\*\\)", "").trim().toUpperCase();
             channelNames.put(key1, id);
             channelNames.put(key1.replaceAll("КАНАЛ", "").trim(), id);
         }

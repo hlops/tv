@@ -48,7 +48,6 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
     @Override
     public Void call() throws Exception {
         log.info("file " + file.getAbsolutePath());
-
         if (file.exists() && !(file.canRead()) && file.canWrite()) {
             throw new IllegalArgumentException("File " + file.getAbsolutePath() + " is protected");
         }
@@ -63,6 +62,7 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
             log.info("not modified");
         } else if (responseCode == HttpURLConnection.HTTP_OK) {
             log.info("200 ok");
+            FileCopyUtils.copy(file, new File(file.getParentFile(), file.getName() + "~"));
             FileCopyUtils.copy(connection.getInputStream(), new FileOutputStream(file));
             //noinspection ResultOfMethodCallIgnored
             file.setLastModified(connection.getLastModified());

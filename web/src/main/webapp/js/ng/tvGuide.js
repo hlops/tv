@@ -36,14 +36,14 @@
         tvGuideService.model = {};
 
         tvGuideService.loadJson = function () {
-            return $http.get("tv/json?stop.ge.time=-2m&start.le.time=%2B2h")
+            return $http.get("data/json?stop.ge.time=-2m&start.le.time=%2B2h")
                 .then(function (response) {
                     tvGuideService.model = response.data;
                 });
         };
 
         tvGuideService.saveGroups = function () {
-            $http.put("tv/groups", tvGuideService.model.groups)
+            $http.put("data/groups", tvGuideService.model.groups)
                 .error(function (err) {
                     console.error(err);
                 });
@@ -109,7 +109,7 @@
         var tvGuideChannelsService = {};
 
         tvGuideChannelsService.load = function () {
-            return $http.get("tv/rest/channels")
+            return $http.get("data/rest/channels")
                 .then(function (response) {
                     tvGuideChannelsService.model = response.data;
                 });

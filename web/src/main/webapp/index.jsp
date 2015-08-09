@@ -37,8 +37,8 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 TV<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/tv/playlist">M3U</a></li>
-                                <li><a href="/tv/xmltv-test">XmlTV</a></li>
+                                <li><a href="data/playlist" target="m3u">M3U</a></li>
+                                <li><a href="data/xmltv-test" target="xmltv">XmlTV</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -93,4 +93,13 @@ public class DbTvItem implements Serializable {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "DbTvItem{" +
+                "title='" + title + '\'' +
+                ", start='" + start + '\'' +
+                ", stop='" + stop + '\'' +
+                '}';
+    }
 }

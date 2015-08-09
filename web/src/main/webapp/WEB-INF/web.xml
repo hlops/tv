@@ -33,7 +33,7 @@
 
     <servlet-mapping>
         <servlet-name>TV</servlet-name>
-        <url-pattern>/tv/*</url-pattern>
+        <url-pattern>/data/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
