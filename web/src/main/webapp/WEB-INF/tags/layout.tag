@@ -27,7 +27,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-2.1.3.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/vendor/xeditable.js"></script>
     <jsp:invoke fragment="head"/>
 </head>
 <body ng-app="tvGuideApp">

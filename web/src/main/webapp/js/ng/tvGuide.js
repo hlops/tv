@@ -1,6 +1,6 @@
 {
     angular
-        .module('tvGuideApp', ['ngResource', 'ngRoute', 'xeditable'])
+        .module('tvGuideApp', ['ngResource', 'ngRoute'])
         .controller('tvGuideCtrl', tvGuideCtrl)
         .controller('tvGuideJumbotronCtrl', tvGuideJumbotronCtrl)
         .controller('tvGuideChannelsCtrl', tvGuideChannelsCtrl)
@@ -80,13 +80,15 @@
             tvGuideChannelsService.load();
         };
 
+        tvGuideChannelsCtrl.loadGroups();
+
         tvGuideChannelsCtrl.countUnbinded = function (items) {
             var n = 0;
             angular.forEach(items, function (item) {
                 if (!item.guideId) n++;
             });
             return n;
-        }
+        };
     }
 
     function channelsFilter() {
@@ -162,7 +164,7 @@
             })
     }
 
-    function tune(editableOptions) {
-        editableOptions.theme = 'bs3'
+    function tune() {
+        //editableOptions.theme = 'bs3'
     }
 }
