@@ -1,11 +1,12 @@
 package com.hlops.tv.core.bean.db;
 
-import com.hlops.tv.core.service.Filter;
-import org.apache.commons.beanutils.BeanUtilsBean;
-
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
+
+import com.hlops.tv.core.service.Filter;
 
 /**
  * Created by IntelliJ IDEA.
