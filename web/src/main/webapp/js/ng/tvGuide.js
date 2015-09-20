@@ -10,7 +10,7 @@
 		.filter('tvGuideTime', tvGuideTime)
 		.filter('channelsFilter', channelsFilter)
 		.config(routeProvider)
-		.run(tune)
+//		.run(tune)
 	;
 
 	// ====== <tvGuide> ======
