@@ -1,4 +1,4 @@
-{
+(function () {
 	angular
 		.module('tvGuideApp', ['ngResource', 'ngRoute'])
 		.controller('tvGuideCtrl', tvGuideCtrl)
@@ -9,6 +9,7 @@
 		.factory('tvGuideChannelsService', tvGuideChannelsService)
 		.filter('tvGuideTime', tvGuideTime)
 		.filter('channelsFilter', channelsFilter)
+		.directive('tvJsonEdit', tvJsonEdit)
 		.config(routeProvider)
 //		.run(tune)
 	;
@@ -50,11 +51,7 @@
 			return $http.get("data/json?stop.ge.time=-2m&start.le.time=%2B2h")
 				.then(function (response) {
 					tvGuideService.model = response.data;
-					if (response.data && response.data.channels) {
-						response.data.channels.forEach(function () {
-
-						});
-					}
+					tvGuideService.model.originGroups = angular.extend([], tvGuideService.model.groups);
 				});
 		};
 
@@ -72,7 +69,7 @@
 	function tvGuideTime() {
 		return function (t) {
 			return t ? t.slice(8, 10) + ":" + t.slice(10, 12) : "";
-		}
+		};
 	}
 
 	// ====== </tvGuide> ======
@@ -99,7 +96,9 @@
 		tvGuideChannelsCtrl.countUnbinded = function (items) {
 			var n = 0;
 			angular.forEach(items, function (item) {
-				if (!item.guideId) n++;
+				if (!item.guideId) {
+					n++;
+				}
 			});
 			return n;
 		};
@@ -110,7 +109,7 @@
 				if (!item.guideId) n++;
 			});
 			return n;
-		}
+		};
 	}
 
 	function channelsFilter() {
@@ -126,7 +125,7 @@
 				}
 			}
 			return result;
-		}
+		};
 	}
 
 	function tvGuideChannelsService($http) {
@@ -147,6 +146,11 @@
 	// ====== </tvChannelsGroup> ======
 	function tvChannelsGroupCtrl(tvGuideService) {
 		tvChannelsGroupCtrl = this;
+		var wasModified = false;
+
+		tvChannelsGroupCtrl.isModified = function () {
+			return wasModified;
+		};
 
 		tvChannelsGroupCtrl.getModel = function () {
 			return tvGuideService.model;
@@ -156,14 +160,18 @@
 			var s = tvGuideService.model.groups[index + 1];
 			tvGuideService.model.groups[index + 1] = tvGuideService.model.groups[index];
 			tvGuideService.model.groups[index] = s;
+
+			wasModified = !angular.equals(tvGuideService.model.groups, tvGuideService.model.originGroups);
 		};
 
 		tvChannelsGroupCtrl.save = function () {
 			tvGuideService.saveGroups();
+			wasModified = false;
 		};
 
 		tvChannelsGroupCtrl.revert = function () {
 			tvGuideService.loadJson();
+			wasModified = false;
 		};
 	}
 
@@ -183,10 +191,30 @@
 				templateUrl: 'pages/groups.html',
 				controller: 'tvChannelsGroupCtrl',
 				controllerAs: "cg"
-			})
+			});
 	}
 
-	function tune(editableOptions) {
-		editableOptions.theme = 'bs3'
+	function tune() {
 	}
-}
+
+	function tvJsonEdit() {
+		return {
+			restrict: 'E',
+			transclude: true,
+			templateUrl: 'pages/jsonEdit.html',
+			scope: {
+				json: '='
+			},
+			link: function ($scope, element, attrs) {
+				$scope.tab = 0;
+				$scope.initialStyle = {};
+				var firstChild = element.find('ng-transclude').children()[0];
+				$scope.$watch(function () {
+					$scope.initialStyle.height = (firstChild.offsetHeight - 33) + 'px';
+					$scope.data = JSON.stringify($scope.json, null, 4);
+				});
+			}
+		};
+	}
+
+})();

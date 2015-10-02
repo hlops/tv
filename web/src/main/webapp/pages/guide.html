@@ -3,61 +3,65 @@
 		<p class="pull-right visible-xs">
 			<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
 		</p>
-		<div class="jumbotron" ng-controller="tvGuideJumbotronCtrl as jc">
-
-			<div class="dropdown inline">
-				<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">
-					{{jc.getDayPart()}}
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dLabel">
-					<li ng-repeat="dp in jc.dayParts"
-						ng-class="{active: $index == jc.dayPart}"
-						ng-click="jc.setDayPart($index)">
-						<a href="#/">{{dp}}</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="dropdown inline">
-				<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">
-					{{jc.getDay()}}
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dLabel">
-					<li ng-repeat="day in jc.days"
-						ng-class="{active: $index == jc.currentDay}"
-						ng-click="jc.setDay($index)">
-						<a href="#/">{{day}}</a>
-					</li>
-				</ul>
-			</div>
-			<div class="dropdown inline">
-				<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dLabel">
-					<li ng-repeat="cat in gc.getModel().categories">
-						<a href="#/">{{cat}}</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Поиск...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-						<span class="glyphicon glyphicon-wrench"></span>
+		<div class="jumbotron container-fluid" ng-controller="tvGuideJumbotronCtrl as jc">
+			<div class="row">
+				<div class="dropdown inline">
+					<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+						{{jc.getDayPart()}}
+						<span class="caret"></span>
 					</button>
-                    <button class="btn btn-default" type="button">
-						<span class="glyphicon glyphicon-remove"></span>
+					<ul class="dropdown-menu" aria-labelledby="dLabel">
+						<li ng-repeat="dp in jc.dayParts"
+							ng-class="{active: $index == jc.dayPart}"
+							ng-click="jc.setDayPart($index)">
+							<a href="#/">{{dp}}</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="dropdown inline">
+					<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+						{{jc.getDay()}}
+						<span class="caret"></span>
 					</button>
-                </span>
+					<ul class="dropdown-menu" aria-labelledby="dLabel">
+						<li ng-repeat="day in jc.days"
+							ng-class="{active: $index == jc.currentDay}"
+							ng-click="jc.setDay($index)">
+							<a href="#/">{{day}}</a>
+						</li>
+					</ul>
+				</div>
+				<div class="dropdown inline">
+					<button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dLabel">
+						<li ng-repeat="cat in gc.getModel().categories">
+							<a href="#/">{{cat}}</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="inline">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Поиск...">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-wrench"></span>
+							</button>
+							<button class="btn btn-default" type="button">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
+
 		<div id="container">
 			<div ng-repeat="currentGroup in gc.getModel().groups">
 				<h2>{{currentGroup}}</h2>

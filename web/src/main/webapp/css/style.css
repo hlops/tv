@@ -34,6 +34,7 @@ div.editable-controls.form-group select {
 	padding: 0;
 }
 
-.jumbotron .dropdown {
+.jumbotron .inline {
 	display: inline-block;
+	vertical-align: middle;
 }

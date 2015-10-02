@@ -1,20 +1,23 @@
-<ol class="groups">
-    <li ng-repeat="group in cg.getModel().groups">
-        <h4>
-            <button type="button" class="btn btn-default" style="top: 24px; position: relative;"
-                    ng-class="$last?'invisible':''"
-                    ng-click="cg.reorder($index)">
-                <span class="glyphicon glyphicon-sort"></span>
-            </button>
-            <span class="group">{{group}}</span>
-        </h4>
-    </li>
-    <button class="btn btn-primary" ng-click="cg.save()">
-        <span class="glyphicon glyphicon-ok"></span>
-        Save
-    </button>
-    <button class="btn btn-default" ng-click="cg.revert()">
-        <span class="glyphicon glyphicon-refresh"></span>
-        Revert
-    </button>
-</ol>
+<h3>Группы</h3>
+<tv-json-edit json="cg.getModel().groups">
+	<ol class="groups">
+		<li ng-repeat="group in cg.getModel().groups">
+			<h4>
+				<button type="button" class="btn btn-default" style="top: 24px; position: relative;"
+						ng-class="$last?'invisible':''"
+						ng-click="cg.reorder($index)">
+					<span class="glyphicon glyphicon-sort"></span>
+				</button>
+				<span class="group">{{group}}</span>
+			</h4>
+		</li>
+	</ol>
+</tv-json-edit>
+<button class="btn btn-primary" ng-click="cg.save()" ng-disabled="!cg.isModified()">
+	<span class="glyphicon glyphicon-ok"></span>
+	Save
+</button>
+<button class="btn btn-default" ng-click="cg.revert()" ng-disabled="!cg.isModified()">
+	<span class="glyphicon glyphicon-refresh"></span>
+	Revert
+</button>

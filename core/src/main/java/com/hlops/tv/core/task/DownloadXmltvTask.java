@@ -1,12 +1,5 @@
 package com.hlops.tv.core.task;
 
-import com.hlops.tasker.task.CacheableTask;
-import com.hlops.tasker.task.impl.TaskImpl;
-import com.hlops.tv.core.service.XmltvService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.util.FileCopyUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
@@ -15,6 +8,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.util.FileCopyUtils;
+
+import com.hlops.tasker.task.CacheableTask;
+import com.hlops.tasker.task.impl.TaskImpl;
+import com.hlops.tv.core.service.XmltvService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,7 +63,9 @@ public class DownloadXmltvTask extends TaskImpl<Void> implements CacheableTask<V
             log.info("not modified");
         } else if (responseCode == HttpURLConnection.HTTP_OK) {
             log.info("200 ok");
-            FileCopyUtils.copy(file, new File(file.getParentFile(), file.getName() + "~"));
+            if (file.exists()) {
+                FileCopyUtils.copy(file, new File(file.getParentFile(), file.getName() + "~"));
+            }
             FileCopyUtils.copy(connection.getInputStream(), new FileOutputStream(file));
             //noinspection ResultOfMethodCallIgnored
             file.setLastModified(connection.getLastModified());
