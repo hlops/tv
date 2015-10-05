@@ -1,5 +1,5 @@
 <h3>Группы</h3>
-<tv-json-edit json="cg.getModel().groups">
+<tv-json-edit json="cg.getModel().groups" onsetjson="cg.checkModified" file-name="groups.json">
 	<ol class="groups">
 		<li ng-repeat="group in cg.getModel().groups">
 			<h4>
