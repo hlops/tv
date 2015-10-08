@@ -1,20 +1,22 @@
 <ul class="nav nav-pills nav-stacked col-sm-1">
-	<li ng-class="{active:tab===0}"><a ng-click="tvJsonEditCtrl.showData()"><span class="glyphicon glyphicon glyphicon-asterisk"></span></a>
+	<li ng-class="{active:tab===0}"><a ng-click="tvJsonEditCtrl.showData()"><span
+			class="glyphicon glyphicon glyphicon-asterisk"></span></a>
 	</li>
-	<li ng-class="{active:tab===1}"><a ng-click="tvJsonEditCtrl.showJson()"><span class="glyphicon glyphicon glyphicon-edit"></span></a>
+	<li ng-class="{active:tab===1}"><a ng-click="tvJsonEditCtrl.showJson()"><span
+			class="glyphicon glyphicon glyphicon-edit"></span></a>
 	</li>
 </ul>
 <div class="col-sm-11">
 	<ng-transclude ng-show="tab===0"></ng-transclude>
 	<div ng-show="tab===1" class="form-group">
 		<textarea class="form-control" ng-model="data" ng-style="initialStyle"></textarea>
-		<a class="btn btn-default" download="{{fileName}}" href="'{{downloadUrl}}'">
+		<a class="btn btn-default" download="{{fileName}}" href="{{downloadUrl}}">
 			<span class="glyphicon glyphicon-download"></span>
 			Download
 		</a>
-		<a class="btn btn-default pull-right">
+		<button class="btn btn-default pull-right" ng-click="upload()">
 			<span class="glyphicon glyphicon-upload"></span>
 			Upload
-		</a>
+		</button>
 	</div>
 </div>
