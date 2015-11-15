@@ -1,9 +1,9 @@
 <h3>Группы</h3>
 <tv-json-edit json="cg.getModel().groups" onsetjson="cg.checkModified" file-name="groups.json">
 	<ol class="groups">
-		<li ng-repeat="group in cg.getModel().groups">
-			<h4>
-				<button type="button" class="btn btn-default" style="top: 24px; position: relative;"
+		<li ng-repeat="group in cg.getModel().groups" style="padding-bottom: 20px;">
+			<h4 style="position: relative;">
+				<button type="button" class="btn btn-default" style="top: 25px; left: -38px; position: absolute;"
 						ng-class="$last?'invisible':''"
 						ng-click="cg.reorder($index)">
 					<span class="glyphicon glyphicon-sort"></span>
